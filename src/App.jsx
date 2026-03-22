@@ -735,14 +735,14 @@ const BLOG_POSTS = [
 ];
 
 const TEAM = [
-  {name:'Krish Narwani',role:'Founder & CEO',img:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'},{l:'tw',url:'https://twitter.com'}]},
-  {name:'Priya Sharma',role:'Head of Strategy',img:'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'},{l:'ig',url:'https://instagram.com'}]},
-  {name:'Aryan Mehta',role:'Creative Director',img:'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80',links:[{l:'be',url:'https://behance.net'},{l:'ig',url:'https://instagram.com'}]},
-  {name:'Sneha Kapoor',role:'Performance Lead',img:'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'},{l:'tw',url:'https://twitter.com'}]},
-  {name:'Rohit Verma',role:'SEO Strategist',img:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'}]},
-  {name:'Meera Joshi',role:'Content Director',img:'https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'},{l:'ig',url:'https://instagram.com'}]},
-  {name:'Aarav Shah',role:'Paid Media Lead',img:'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'}]},
-  {name:'Nisha Patel',role:'Brand Strategist',img:'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'},{l:'ig',url:'https://instagram.com'}]},
+  {name:'Krish Narwani',role:'Founder & CEO',img:'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'},{l:'tw',url:'https://twitter.com'}]},
+  {name:'Priya Sharma',role:'Head of Strategy',img:'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'},{l:'ig',url:'https://instagram.com'}]},
+  {name:'Aryan Mehta',role:'Creative Director',img:'https://images.unsplash.com/photo-1548449112-96a38a643324?w=400&auto=format&fit=crop&q=80',links:[{l:'be',url:'https://behance.net'},{l:'ig',url:'https://instagram.com'}]},
+  {name:'Sneha Kapoor',role:'Performance Lead',img:'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'},{l:'tw',url:'https://twitter.com'}]},
+  {name:'Rohit Verma',role:'SEO Strategist',img:'https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'}]},
+  {name:'Meera Joshi',role:'Content Director',img:'https://images.unsplash.com/photo-1598550874175-4d0ef436c909?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'},{l:'ig',url:'https://instagram.com'}]},
+  {name:'Aarav Shah',role:'Paid Media Lead',img:'https://images.unsplash.com/photo-1500048993953-d23a436266cf?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'}]},
+  {name:'Nisha Patel',role:'Brand Strategist',img:'https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?w=400&auto=format&fit=crop&q=80',links:[{l:'in',url:'https://linkedin.com'},{l:'ig',url:'https://instagram.com'}]},
 ];
 
 const CLIENT_TESTIMONIALS = [
@@ -885,7 +885,7 @@ function PageTransition({ state }) {
 function Header({ page, nav, openContact }) {
   const scrolled = useScrollNav();
   const [mob, setMob] = useState(false);
-  const pages = [{ k: 'home', l: 'Home' }, { k: 'about', l: 'About' }, { k: 'services', l: 'Services' }, { k: 'projects', l: 'Work' }, { k: 'process', l: 'Process' }, { k: 'team', l: 'Team' }, { k: 'clients', l: 'Clients' }, { k: 'blog', l: 'Blog' }];
+  const pages = [{ k: 'home', l: 'Home' }, { k: 'about', l: 'About' }, { k: 'services', l: 'Services' }, { k: 'projects', l: 'Work' }, { k: 'clients', l: 'Clients' }, { k: 'blog', l: 'Blog' }];
   return (
     <>
       <nav className={scrolled ? 'sc' : ''}>
@@ -1057,7 +1057,7 @@ function PageHero({ label, title, strokeWord, sub }) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// ABOUT SECTION
+// ABOUT SECTION (Home page version — short intro only)
 // ═══════════════════════════════════════════════════════════
 function AboutSection({ nav, openSvc }) {
   useReveal();
@@ -1067,10 +1067,10 @@ function AboutSection({ nav, openSvc }) {
         <svg style={{ position: 'absolute', top: '5%', right: '3%', width: '140px', height: '140px', opacity: '.042', pointerEvents: 'none' }} viewBox="0 0 140 140"><circle cx="70" cy="70" r="64" stroke="#0e104b" strokeWidth="1" fill="none" /><circle cx="70" cy="70" r="40" stroke="#0e104b" strokeWidth=".5" fill="none" /><circle cx="70" cy="70" r="18" stroke="#0e104b" strokeWidth=".5" fill="none" /><line x1="6" y1="70" x2="134" y2="70" stroke="#0e104b" strokeWidth=".5" /><line x1="70" y1="6" x2="70" y2="134" stroke="#0e104b" strokeWidth=".5" /></svg>
         <div className="ab-grid">
           <div className="ab-vis rev-l">
-            <div className="ab-img-a shimmer"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=700&auto=format&fit=crop&q=80" alt="Team" /></div>
+            <div className="ab-img-a shimmer"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&auto=format&fit=crop&q=80" alt="Agency team at work" /></div>
             <div className="ab-stat-a"><div className="ab-stat-n">7+</div><div className="ab-stat-l">Years</div></div>
             <div className="ab-badge">🦊</div>
-            <div className="ab-img-b shimmer"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&auto=format&fit=crop&q=80" alt="Analytics" /></div>
+            <div className="ab-img-b shimmer"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&auto=format&fit=crop&q=80" alt="Analytics dashboard" /></div>
             <div className="ab-stat-b"><div className="ab-stat-n">200+</div><div className="ab-stat-l">Brands Scaled</div></div>
           </div>
           <div className="ab-txt rev-r">
@@ -1086,7 +1086,7 @@ function AboutSection({ nav, openSvc }) {
               <div className="team-avs">{['1507003211169-0a1dd7228f2d', '1494790108755-2616b612b786', '1472099645785-5658abf4ff4e', '1527980965255-d3b416303d12'].map((id, i) => <div key={i} className="tav"><img src={`https://images.unsplash.com/photo-${id}?w=80&h=80&auto=format&fit=crop&q=80`} alt="" /></div>)}</div>
               <div className="team-cp"><strong>25+ Specialists</strong>Ready to grow your brand</div>
             </div>
-            <div style={{ marginTop: '18px' }}><button className="btn-out" onClick={() => nav('team')}><span>Meet the Team</span><span>→</span></button></div>
+            <div style={{ marginTop: '18px' }}><button className="btn-out" onClick={() => nav('about')}><span>Our Full Story</span><span>→</span></button></div>
           </div>
         </div>
       </section>
@@ -1291,14 +1291,14 @@ function Stats() {
 // ═══════════════════════════════════════════════════════════
 function ImageBand() {
   const items = [
-    { url: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&auto=format&fit=crop&q=80', tag: 'Social Media' },
-    { url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&auto=format&fit=crop&q=80', tag: 'Analytics' },
-    { url: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400&auto=format&fit=crop&q=80', tag: 'SEO' },
-    { url: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&auto=format&fit=crop&q=80', tag: 'Strategy' },
-    { url: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=400&auto=format&fit=crop&q=80', tag: 'Web Design' },
-    { url: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&auto=format&fit=crop&q=80', tag: 'Branding' },
-    { url: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&auto=format&fit=crop&q=80', tag: 'Content' },
-    { url: 'https://images.unsplash.com/photo-1573164574572-cb89e39749b4?w=400&auto=format&fit=crop&q=80', tag: 'Paid Ads' },
+    { url: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=400&auto=format&fit=crop&q=80', tag: 'Social Media' },
+    { url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80', tag: 'Analytics' },
+    { url: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&auto=format&fit=crop&q=80', tag: 'SEO' },
+    { url: 'https://images.unsplash.com/photo-1542626991-cbc4e32524cc?w=400&auto=format&fit=crop&q=80', tag: 'Strategy' },
+    { url: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&auto=format&fit=crop&q=80', tag: 'Web Design' },
+    { url: 'https://images.unsplash.com/photo-1634942537034-2531766767d1?w=400&auto=format&fit=crop&q=80', tag: 'Branding' },
+    { url: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&auto=format&fit=crop&q=80', tag: 'Content' },
+    { url: 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=400&auto=format&fit=crop&q=80', tag: 'Paid Ads' },
   ];
   return (
     <div className="imgband">
@@ -1338,7 +1338,7 @@ function ProcessShort({ nav }) {
           ))}
         </div>
         <div style={{ marginTop: '28px', textAlign: 'center' }}>
-          <button className="btn-g" onClick={() => nav('process')}>See Full Process →</button>
+          <button className="btn-g" onClick={() => nav('services')}>See Full Process →</button>
         </div>
       </section>
     </div>
@@ -1352,7 +1352,7 @@ function ProcessFull() {
   useReveal();
   const steps = [
     {
-      img: 'https://images.unsplash.com/photo-1434626881859-194d67b2b86f?w=800&auto=format&fit=crop&q=80',
+      img: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop&q=80',
       n: '01', t: 'Discover',
       d: "We don't assume — we investigate. Before a single ad or post, we conduct a comprehensive brand audit, audience analysis, competitor mapping, and goal-setting workshop.",
       items: ['Brand & digital audit', 'Audience persona research', 'Competitor gap analysis', 'Goal setting & KPI definition', 'Budget allocation planning']
@@ -1364,13 +1364,13 @@ function ProcessFull() {
       items: ['Channel selection & mix', '90-day content roadmap', 'Campaign architecture', 'Creative strategy brief', 'Attribution framework setup']
     },
     {
-      img: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop&q=80',
+      img: 'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&auto=format&fit=crop&q=80',
       n: '03', t: 'Execute',
       d: 'Our specialists roll out every element with precision — no cutting corners, no skipped steps. Every campaign, content piece, and ad set is quality-checked before launch.',
       items: ['Campaign launch & QA', 'Creative production', 'Landing page development', 'Tracking & pixel setup', 'Cross-channel coordination']
     },
     {
-      img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80',
+      img: 'https://images.unsplash.com/photo-1591696205602-2f950c417cb9?w=800&auto=format&fit=crop&q=80',
       n: '04', t: 'Optimise',
       d: 'We analyse continuously, refine relentlessly, and scale what works. Monthly strategy reviews ensure your campaign evolves as your business grows.',
       items: ['Weekly performance analysis', 'A/B testing ongoing', 'Budget reallocation', 'Monthly strategy review', 'Quarterly growth planning']
@@ -1409,32 +1409,67 @@ function ProcessFull() {
 // ═══════════════════════════════════════════════════════════
 function WorkSection({ openCamp, showViewAll, nav }) {
   useReveal();
-  const projects = [
-    { k: 'novabrand', img: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=1600&auto=format&fit=crop&q=80', tag: 'Performance Marketing', title: 'NovaBrand — 10x ROI', meta: 'Google Ads · Meta Ads · Landing Page · Analytics', feat: true },
+  const all = [
+    { k: 'novabrand', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80', tag: 'Performance Marketing', title: 'NovaBrand — 10x ROI', meta: 'Google Ads · Meta Ads · Landing Page · Analytics', feat: true },
     { k: 'luxethreads', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&auto=format&fit=crop&q=80', tag: 'Social Media', title: 'LuxeThreads — 340% Sales', meta: 'Instagram · Reels · Influencer · Content' },
-    { k: 'technest', img: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=900&auto=format&fit=crop&q=80', tag: 'SEO + Content', title: 'TechNest — 225x Traffic', meta: 'Technical SEO · Blog Strategy · Link Building' },
-    { k: 'growfast', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&auto=format&fit=crop&q=80', tag: 'Performance Ads', title: 'GrowFast — -60% CPL', meta: 'Google Ads · Meta Ads · CRO · Analytics' },
-    { k: 'eduspark', img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop&q=80', tag: 'Content + SEO', title: 'EduSpark — 225x Blog Growth', meta: 'Content Strategy · SEO · Blog · 6 Months' },
+    { k: 'technest', img: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=900&auto=format&fit=crop&q=80', tag: 'SEO + Content', title: 'TechNest — 225x Traffic', meta: 'Technical SEO · Blog Strategy · Link Building' },
+    { k: 'growfast', img: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=900&auto=format&fit=crop&q=80', tag: 'Performance Ads', title: 'GrowFast — -60% CPL', meta: 'Google Ads · Meta Ads · CRO · Analytics' },
+    { k: 'eduspark', img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=900&auto=format&fit=crop&q=80', tag: 'Content + SEO', title: 'EduSpark — 225x Blog Growth', meta: 'Content Strategy · SEO · Blog · 6 Months' },
   ];
+  // Home: compact — featured + 2 side cards only. Projects page: all 5
+  const projects = showViewAll ? all.slice(0, 3) : all;
+
   return (
     <div className="work-bg">
       <section className="sec on-yellow">
-        <div className="reveal">
-          <div className="sec-label"><span>Selected Work</span></div>
-          <h2 className="sec-title">Our <span className="out">Campaigns</span></h2>
+        <div className="reveal" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '32px' }}>
+          <div>
+            <div className="sec-label"><span>Selected Work</span></div>
+            <h2 className="sec-title">Our <span className="out">Campaigns</span></h2>
+          </div>
+          {showViewAll && nav && (
+            <button className="btn-out" onClick={() => nav('projects')}><span>View All 5 Projects</span><span>→</span></button>
+          )}
         </div>
-        <div className="work-grid">
-          {projects.map(p => (
-            <div key={p.k} className={`wi reveal ${p.feat ? 'feat' : ''}`} onClick={() => openCamp(p.k)}>
-              <div className="wi-bg"><img src={p.img} alt={p.title} /></div>
-              <div className="wi-ov"><span className="wi-tag">{p.tag}</span><h3 className="wi-title">{p.title}</h3><p className="wi-meta">{p.meta}</p></div>
+
+        {showViewAll ? (
+          /* ── HOME compact layout: 1 featured + 2 side-by-side ── */
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+            {/* Featured card */}
+            <div className="wi feat reveal" onClick={() => openCamp(projects[0].k)}>
+              <div className="wi-bg"><img src={projects[0].img} alt={projects[0].title} /></div>
+              <div className="wi-ov">
+                <span className="wi-tag">{projects[0].tag}</span>
+                <h3 className="wi-title">{projects[0].title}</h3>
+                <p className="wi-meta">{projects[0].meta}</p>
+              </div>
               <div className="wi-arr">→</div>
             </div>
-          ))}
-        </div>
-        {showViewAll && nav && (
-          <div style={{ marginTop: '32px', textAlign: 'center' }}>
-            <button className="btn-out" onClick={() => nav('projects')}><span>View All Projects</span><span>→</span></button>
+            {/* Two smaller cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3px' }}>
+              {projects.slice(1).map(p => (
+                <div key={p.k} className="wi reveal" onClick={() => openCamp(p.k)}>
+                  <div className="wi-bg"><img src={p.img} alt={p.title} /></div>
+                  <div className="wi-ov">
+                    <span className="wi-tag">{p.tag}</span>
+                    <h3 className="wi-title">{p.title}</h3>
+                    <p className="wi-meta">{p.meta}</p>
+                  </div>
+                  <div className="wi-arr">→</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          /* ── PROJECTS PAGE: full 5-card grid ── */
+          <div className="work-grid">
+            {projects.map(p => (
+              <div key={p.k} className={`wi reveal ${p.feat ? 'feat' : ''}`} onClick={() => openCamp(p.k)}>
+                <div className="wi-bg"><img src={p.img} alt={p.title} /></div>
+                <div className="wi-ov"><span className="wi-tag">{p.tag}</span><h3 className="wi-title">{p.title}</h3><p className="wi-meta">{p.meta}</p></div>
+                <div className="wi-arr">→</div>
+              </div>
+            ))}
           </div>
         )}
       </section>
@@ -1490,12 +1525,12 @@ function ClientsSection({ openCamp }) {
   useReveal();
   return (
     <div className="clients-bg">
-      <p className="cl-lbl">Trusted by forward-thinking brands across India</p>
-      <div className="cl-row">
+      <p className="cl-lbl reveal">Trusted by forward-thinking brands across India</p>
+      <div className="cl-row reveal">
         {clients.map((c, i) => <span key={i} className="clogo">{c.n}</span>)}
       </div>
       {/* Testimonial carousel */}
-      <div className="ct-carousel">
+      <div className="ct-carousel reveal">
         <div className="ct-track" style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}>
           {CLIENT_TESTIMONIALS.map((t, i) => (
             <div key={i} className="ct-slide">
@@ -1554,7 +1589,7 @@ function FAQ({ nav }) {
             <p style={{ fontSize: '14px', lineHeight: '1.8', color: 'rgba(240,200,69,.44)', marginTop: '12px' }}>Can't find what you're looking for? Our team is always ready to answer questions about services, pricing, or process.</p>
             <p style={{ fontSize: '14px', lineHeight: '1.8', color: 'rgba(240,200,69,.44)', marginTop: '11px' }}>As <strong style={{ color: 'var(--Y)' }}>India's sharpest digital agency</strong>, we believe in full transparency — no jargon, no fluff.</p>
             <div style={{ marginTop: '22px' }}><button className="btn-p" onClick={() => nav('contact')}><span>Ask Us Directly</span><span>→</span></button></div>
-            <div style={{ marginTop: '26px' }}>
+            <div style={{ marginTop: '26px' }} className="reveal">
               <div className="faq-c-item">📍 Udaipur, Rajasthan, India</div>
               <div className="faq-c-item">📧 <a href="mailto:hello@ereynard.com">hello@ereynard.com</a></div>
               <div className="faq-c-item">📞 <a href="tel:+919876543210">+91 98765 43210</a></div>
@@ -1600,13 +1635,13 @@ function Contact() {
             <div className="sec-label"><span>Get In Touch</span></div>
             <h2 className="sec-title">Let's Build <span className="out">Together.</span></h2>
             <p style={{ fontSize: '14px', lineHeight: '1.78', color: 'rgba(240,200,69,.48)', marginTop: '14px' }}>Ready to outfox your competition? Tell us about your brand and we'll craft a strategy that gets you there — faster, sharper, smarter.</p>
-            <div className="eq-det">
+            <div className="eq-det reveal">
               <div className="eq-di">📍 Udaipur, Rajasthan, India</div>
               <div className="eq-di">📧 <a href="mailto:hello@ereynard.com">hello@ereynard.com</a></div>
               <div className="eq-di">📞 <a href="tel:+919876543210">+91 98765 43210</a></div>
               <div className="eq-di">💬 <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer">WhatsApp Us</a></div>
             </div>
-            <div className="eq-img-wrap shimmer"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=700&auto=format&fit=crop&q=80" alt="Team" /></div>
+            <div className="eq-img-wrap shimmer reveal"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=700&auto=format&fit=crop&q=80" alt="Team" /></div>
           </div>
           <div className="eq-form rev-r">
             <div className="frow">
@@ -1855,27 +1890,6 @@ LANGUAGE: Auto-detect. Hindi → Hindi. English → English. Hinglish → Hingli
 }
 
 // ═══════════════════════════════════════════════════════════
-// FOOTER
-// ═══════════════════════════════════════════════════════════
-function Footer({ nav, openSvc }) {
-  return (
-    <footer>
-      <div className="ft-grid">
-        <div className="ft-brand">
-          <button className="ft-logo" onClick={() => nav('home')}>🦊 ereynard.</button>
-          <p>Smart like a fox. Sharp in digital. We build brands that dominate the digital landscape.</p>
-          <div className="ft-soc">{[['in', 'https://linkedin.com'], ['ig', 'https://instagram.com'], ['fb', 'https://facebook.com'], ['yt', 'https://youtube.com']].map(([l, u]) => <a key={l} href={u} target="_blank" rel="noopener noreferrer" className="ft-sl">{l}</a>)}</div>
-        </div>
-        <div className="ft-col"><h4>Services</h4><ul>{[['SEO', 'seo'], ['Social Media', 'social'], ['Performance Ads', 'performance'], ['Content Strategy', 'content'], ['Web Design', 'web'], ['Branding', 'branding']].map(([l, k]) => <li key={k}><button onClick={() => openSvc(k)}>{l}</button></li>)}</ul></div>
-        <div className="ft-col"><h4>Company</h4><ul>{[['About Us', 'about'], ['Our Story', 'about'], ['Our Work', 'projects'], ['Our Process', 'process'], ['Our Team', 'team'], ['Clients', 'clients']].map(([l, p], i) => <li key={i}><button onClick={() => nav(p)}>{l}</button></li>)}</ul></div>
-        <div className="ft-col"><h4>Contact</h4><ul><li><a href="mailto:ereynardofficial@gmail.com">ereynardofficial@gmail.com</a></li><li><a href="tel:+918619189335">+91 86191 89335</a></li><li><a href="#">Udaipur, Rajasthan</a></li><li><button onClick={() => nav('contact')}>Enquire Now</button></li></ul></div>
-      </div>
-      <div className="ft-bot"><span>© 2025 <strong>Ereynard</strong>. All rights reserved.</span><span>Smart like a fox. <strong>Sharp in digital.</strong></span></div>
-    </footer>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════
 // PAGES — Clean, no repetition, unique per page
 // ═══════════════════════════════════════════════════════════
 function HomePage({ nav, openSvc, openCamp, openContact }) {
@@ -1896,25 +1910,197 @@ function HomePage({ nav, openSvc, openCamp, openContact }) {
   );
 }
 
-function AboutPage({ nav, openSvc }) {
-  useTilt(); useRipple();
+// ═══════════════════════════════════════════════════════════
+// ABOUT PAGE — Unique fresh content + Mission & Vision + Full Team
+// ═══════════════════════════════════════════════════════════
+function AboutPage({ nav, openSvc, openContact }) {
+  useTilt(); useRipple(); useReveal();
+
+  const values = [
+    { icon: '🎯', title: 'Results Above All', desc: 'Every decision, every campaign, every rupee — optimised for measurable outcomes. Vanity metrics are not our currency.' },
+    { icon: '🦊', title: 'Cunning by Nature', desc: 'We move fast, think three steps ahead, and find the angles others miss. Being sharp is not just a tagline — it is our operating system.' },
+    { icon: '🤝', title: 'Radical Transparency', desc: 'You see everything: reports, data, strategy, spend. No black boxes, no jargon. Just clear numbers and honest insights.' },
+    { icon: '🌱', title: 'Growth That Compounds', desc: "We build systems, not one-offs. The brands that work with us long-term don't just grow — they compound. Each month builds on the last." },
+    { icon: '🏆', title: 'Obsessive Quality', desc: "We would rather do fewer things brilliantly than many things adequately. Every deliverable goes through the same standard we'd hold our own brand to." },
+    { icon: '🇮🇳', title: 'Built for India', desc: 'Deep understanding of Indian consumer psychology, regional markets, festive cycles, and the D2C landscape. Strategy with cultural intelligence.' },
+  ];
+
   return (
     <>
-      <PageHero label="Who We Are" title="About Ereynard" strokeWord="Ereynard" sub="India's sharpest digital agency — cunning, precise, always a few moves ahead." />
-      <AboutSection nav={nav} openSvc={openSvc} />
-      <BrandStory nav={nav} />
-      <Stats />
+      <PageHero label="Who We Are" title="The Ereynard" strokeWord="Ereynard" sub="Not just an agency — a growth partner obsessed with making Indian brands unstoppable." />
+
+      {/* ── Fresh Who We Are Section ─────────────────────────── */}
+      <div style={{ background: 'var(--B3)' }}>
+        <section className="sec on-navy">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }}>
+            <div className="rev-l">
+              <div className="sec-label"><span>Our Identity</span></div>
+              <h2 className="sec-title">Born to <span className="out">Outfox.</span></h2>              <p style={{ fontSize: '14px', lineHeight: '1.86', color: 'rgba(240,200,69,.52)', marginTop: '16px', marginBottom: '14px' }}>
+                Ereynard Digital was founded in Udaipur, Rajasthan with one belief: <strong style={{ color: 'var(--Y)' }}>Indian brands deserve world-class digital strategy without world-class price tags.</strong>
+              </p>
+              <p style={{ fontSize: '14px', lineHeight: '1.86', color: 'rgba(240,200,69,.52)', marginBottom: '14px' }}>
+                Our name is rooted in Reynard — the cunning fox of European folklore. Like Reynard, we use intelligence, agility, and strategy to outmanoeuvre bigger, slower competitors. Seven years, 200+ brands, and ₹50Cr+ in managed ad spend later — the fox still wins.
+              </p>
+              <p style={{ fontSize: '14px', lineHeight: '1.86', color: 'rgba(240,200,69,.52)' }}>
+                We are not a vendor. We are the external growth team that thinks like a founder, works like a startup, and delivers like an enterprise.
+              </p>
+              <div style={{ marginTop: '28px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <button className="btn-p" onClick={() => nav('contact')}><span>Work With Us</span><span>→</span></button>
+                <button className="btn-g" onClick={() => nav('projects')}>See Our Work ↓</button>
+              </div>
+            </div>
+            <div className="rev-r" style={{ position: 'relative' }}>
+              <div style={{ overflow: 'hidden', clipPath: 'polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%)', height: '380px' }}>
+                <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&auto=format&fit=crop&q=80" alt="Ereynard team collaboration" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(.5) contrast(1.1)' }} />
+              </div>
+              <div style={{ position: 'absolute', bottom: '-18px', left: '-18px', background: 'var(--Y)', padding: '18px 24px' }}>
+                <div style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: '40px', color: 'var(--B)', lineHeight: 1 }}>2017</div>
+                <div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(14,16,75,.52)', marginTop: '3px' }}>Founded in Udaipur</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* ── Mission & Vision ─────────────────────────────────── */}
+      <div style={{ background: 'var(--Y)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(14,16,75,.04) 1px,transparent 1px)', backgroundSize: '24px 24px', pointerEvents: 'none' }} />
+        <section className="sec on-yellow" style={{ position: 'relative', zIndex: 1 }}>
+          <div className="reveal" style={{ textAlign: 'center', marginBottom: '52px' }}>
+            <div className="sec-label" style={{ justifyContent: 'center' }}><span>What Drives Us</span></div>
+            <h2 className="sec-title">Mission & <span className="out">Vision</span></h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3px' }}>
+            {/* Mission */}
+            <div className="rev-l" style={{ background: '#0e104b', padding: '48px', clipPath: 'polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%)', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: '-12px', right: '-8px', fontFamily: 'var(--FM)', fontWeight: 900, fontSize: '130px', color: 'rgba(240,200,69,.024)', userSelect: 'none', lineHeight: 1 }}>M</div>
+              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '52px', height: '52px', background: 'var(--Y)', fontSize: '24px', marginBottom: '20px' }}>🎯</div>
+              <div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '.28em', textTransform: 'uppercase', color: 'rgba(240,200,69,.38)', marginBottom: '10px' }}>Our Mission</div>
+              <h3 style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: 'clamp(22px,2.8vw,38px)', color: 'var(--Y)', lineHeight: 1.1, marginBottom: '18px' }}>Make Every Indian Brand Impossible to Ignore</h3>
+              <p style={{ fontSize: '14px', lineHeight: 1.84, color: 'rgba(240,200,69,.52)', marginBottom: '14px' }}>
+                To democratise world-class digital marketing for Indian businesses — from ambitious startups to growing enterprises — by delivering custom strategies, transparent execution, and ROI that actually moves the needle.
+              </p>
+              <p style={{ fontSize: '14px', lineHeight: 1.84, color: 'rgba(240,200,69,.52)' }}>
+                We exist to replace generic, template-driven marketing with deeply customised growth engines that reflect each brand's unique story, audience, and ambition.
+              </p>
+            </div>
+            {/* Vision */}
+            <div className="rev-r" style={{ background: '#0e104b', padding: '48px', border: '1px solid rgba(240,200,69,.1)', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: '-12px', right: '-8px', fontFamily: 'var(--FM)', fontWeight: 900, fontSize: '130px', color: 'rgba(240,200,69,.024)', userSelect: 'none', lineHeight: 1 }}>V</div>
+              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '52px', height: '52px', background: 'var(--Y)', fontSize: '24px', marginBottom: '20px' }}>🌟</div>
+              <div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '.28em', textTransform: 'uppercase', color: 'rgba(240,200,69,.38)', marginBottom: '10px' }}>Our Vision</div>
+              <h3 style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: 'clamp(22px,2.8vw,38px)', color: 'var(--Y)', lineHeight: 1.1, marginBottom: '18px' }}>India's Most Trusted Growth Partner by 2030</h3>
+              <p style={{ fontSize: '14px', lineHeight: 1.84, color: 'rgba(240,200,69,.52)', marginBottom: '14px' }}>
+                To be the agency that 1,000+ Indian brands credit as the inflection point in their growth story — a name synonymous with sharp thinking, relentless execution, and results that compound.
+              </p>
+              <p style={{ fontSize: '14px', lineHeight: 1.84, color: 'rgba(240,200,69,.52)' }}>
+                We envision a world where every Indian D2C brand, startup, and business has access to the same quality of digital strategy that Fortune 500 companies receive — at a fair, accessible price.
+              </p>
+            </div>
+          </div>
+          {/* The Numbers Strip */}
+          <div className="reveal" style={{ marginTop: '3px', background: '#0e104b', padding: '32px 48px', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '2px' }}>
+            {[['7+', 'Years in Business'], ['200+', 'Brands Scaled'], ['₹50Cr+', 'Ad Spend Managed'], ['98%', 'Client Retention']].map(([n, l], i) => (
+              <div key={i} style={{ textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(240,200,69,.09)' : 'none', padding: '8px 16px' }}>
+                <div style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: 'clamp(28px,3.5vw,48px)', color: 'var(--Y)', lineHeight: 1 }}>{n}</div>
+                <div style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(240,200,69,.36)', marginTop: '5px' }}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      {/* ── Our Values ───────────────────────────────────────── */}
+      <div style={{ background: 'var(--B)' }}>
+        <section className="sec on-navy">
+          <div className="reveal">
+            <div className="sec-label"><span>How We Operate</span></div>
+            <h2 className="sec-title">Our Core <span className="out">Values</span></h2>
+            <p className="sec-intro">Six principles that guide every decision, every campaign, every client relationship.</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '2px', marginTop: '40px' }}>
+            {values.map((v, i) => (
+              <div key={i} className="reveal" style={{ background: 'var(--B4)', border: '1px solid rgba(240,200,69,.07)', padding: '32px 28px', transition: 'all .3s', cursor: 'default' }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(240,200,69,.2)'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(240,200,69,.07)'}
+              >
+                <div style={{ fontSize: '32px', marginBottom: '14px', lineHeight: 1 }}>{v.icon}</div>
+                <h4 style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: '16px', color: 'var(--Y)', marginBottom: '9px' }}>{v.title}</h4>
+                <p style={{ fontSize: '13px', lineHeight: 1.76, color: 'rgba(240,200,69,.42)' }}>{v.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      {/* ── Office & Culture Image Strip ─────────────────────── */}
+      <div style={{ background: 'var(--B3)', overflow: 'hidden' }}>
+        <div className="reveal" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', height: '280px' }}>
+          {[
+            'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=500&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=500&auto=format&fit=crop&q=80',
+          ].map((url, i) => (
+            <div key={i} style={{ overflow: 'hidden', position: 'relative', borderRight: i < 3 ? '2px solid var(--B3)' : 'none', opacity: 0, transform: 'translateY(28px)', transition: `opacity .7s ${i * .12}s ease, transform .7s ${i * .12}s ease` }}
+              ref={el => { if (el) { const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.style.opacity = '1'; el.style.transform = 'none'; io.unobserve(el); } }, { threshold: .1 }); io.observe(el); } }}
+            >
+              <img src={url} alt="Office culture" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(.2) contrast(1.2)', transition: 'filter .5s, transform .5s' }}
+                onMouseEnter={e => { e.currentTarget.style.filter = 'saturate(.8) contrast(1)'; e.currentTarget.style.transform = 'scale(1.05)'; }}
+                onMouseLeave={e => { e.currentTarget.style.filter = 'saturate(.2) contrast(1.2)'; e.currentTarget.style.transform = 'scale(1)'; }}
+              />
+              <div style={{ position: 'absolute', inset: 0, background: 'rgba(8,9,48,.36)' }} />
+            </div>
+          ))}
+        </div>
+        <div className="reveal" style={{ padding: '22px 56px', borderTop: '1px solid rgba(240,200,69,.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <p style={{ fontFamily: 'var(--FI)', fontStyle: 'italic', fontSize: '15px', color: 'rgba(240,200,69,.38)' }}>Built in Udaipur. Trusted across India.</p>
+          <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(240,200,69,.28)' }}>Ereynard Digital · Since 2017</p>
+        </div>
+      </div>
+
+      {/* ── Full Team Section ─────────────────────────────────── */}
+      <TeamSection showAll={true} />
+
+      {/* ── CTA Strip ────────────────────────────────────────── */}
+      <div className="reveal" style={{ background: 'var(--B3)', padding: '72px 56px', textAlign: 'center' }}>
+        <p style={{ fontFamily: 'var(--FI)', fontStyle: 'italic', fontSize: 'clamp(17px,2.2vw,26px)', color: 'rgba(240,200,69,.46)', marginBottom: '8px', lineHeight: 1.5 }}>
+          A fox never chases. It positions, waits, and strikes perfectly.
+        </p>
+        <p style={{ fontFamily: 'var(--FM)', fontWeight: 700, fontSize: 'clamp(22px,3vw,38px)', color: 'var(--Y)', marginBottom: '28px', lineHeight: 1.15 }}>
+          Ready to be in the right position?
+        </p>
+        <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <button className="btn-p" onClick={openContact}><span>Start a Project</span><span>→</span></button>
+          <button className="btn-g" onClick={() => nav('clients')}>Meet Our Clients →</button>
+        </div>
+      </div>
     </>
   );
 }
 
+// ═══════════════════════════════════════════════════════════
+// SERVICES PAGE — Services + Process merged into one page
+// ═══════════════════════════════════════════════════════════
 function ServicesPage({ openSvc, nav }) {
   useTilt(); useRipple();
   return (
     <>
-      <PageHero label="What We Do" title="Our Services" strokeWord="Services" sub="9 specialised services. One obsession — your growth." />
+      <PageHero label="What We Do" title="Services & Process" strokeWord="Process" sub="9 specialised services + the Fox Method — every tool and tactic we use to grow your brand." />
       <ServicesFull openSvc={openSvc} />
       <ImageBand />
+      <div style={{ background: 'var(--B3)' }}>
+        <section className="sec on-navy" style={{ paddingBottom: '24px' }}>
+          <div className="reveal" style={{ textAlign: 'center' }}>
+            <div className="sec-label" style={{ justifyContent: 'center' }}><span>How It All Works</span></div>
+            <h2 className="sec-title">The Fox <span className="out">Method</span></h2>
+            <p style={{ fontFamily: 'var(--FI)', fontStyle: 'italic', fontSize: '15px', color: 'rgba(240,200,69,.42)', marginTop: '8px', maxWidth: '540px', margin: '8px auto 0' }}>
+              Every service we offer follows the same four-phase framework that turns strategy into compounding results.
+            </p>
+          </div>
+        </section>
+      </div>
+      <ProcessFull />
       <Stats />
       <FAQ nav={nav} />
     </>
@@ -1927,31 +2113,6 @@ function ProjectsPage({ openCamp }) {
     <>
       <PageHero label="Selected Work" title="Our Campaigns" strokeWord="Campaigns" sub="Real brands. Real results. Real growth." />
       <WorkSection openCamp={openCamp} />
-    </>
-  );
-}
-
-function ProcessPage({ nav }) {
-  useRipple();
-  return (
-    <>
-      <PageHero label="How We Work" title="The Fox Method" strokeWord="Method" sub="Four deliberate steps from brand audit to compounding growth." />
-      <ProcessFull />
-      <Stats />
-    </>
-  );
-}
-
-function TeamPage({ openContact }) {
-  useRipple();
-  return (
-    <>
-      <PageHero label="The Pack" title="Meet The Foxes" strokeWord="Foxes" sub="25+ specialists. One shared obsession — your brand's growth." />
-      <TeamSection showAll={true} />
-      <div style={{ background: 'var(--B3)', padding: '56px', textAlign: 'center' }}>
-        <p style={{ fontFamily: 'var(--FI)', fontStyle: 'italic', fontSize: 'clamp(15px,2vw,22px)', color: 'rgba(240,200,69,.42)', marginBottom: '22px', lineHeight: '1.6' }}>Ready to work with the pack?</p>
-        <button className="btn-p" onClick={openContact}><span>Start a Project</span><span>→</span></button>
-      </div>
     </>
   );
 }
@@ -1983,6 +2144,27 @@ function ContactPage() {
       <PageHero label="Get In Touch" title="Let's Build Together" strokeWord="Together" sub="Ready to outfox your competition? Let's start the conversation." />
       <Contact />
     </>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
+// FOOTER (updated — Process/Team removed, About handles both)
+// ═══════════════════════════════════════════════════════════
+function Footer({ nav, openSvc }) {
+  return (
+    <footer>
+      <div className="ft-grid">
+        <div className="ft-brand">
+          <button className="ft-logo" onClick={() => nav('home')}>🦊 ereynard.</button>
+          <p>Smart like a fox. Sharp in digital. We build brands that dominate the digital landscape.</p>
+          <div className="ft-soc">{[['in', 'https://linkedin.com'], ['ig', 'https://instagram.com'], ['fb', 'https://facebook.com'], ['yt', 'https://youtube.com']].map(([l, u]) => <a key={l} href={u} target="_blank" rel="noopener noreferrer" className="ft-sl">{l}</a>)}</div>
+        </div>
+        <div className="ft-col"><h4>Services</h4><ul>{[['SEO', 'seo'], ['Social Media', 'social'], ['Performance Ads', 'performance'], ['Content Strategy', 'content'], ['Web Design', 'web'], ['Branding', 'branding']].map(([l, k]) => <li key={k}><button onClick={() => openSvc(k)}>{l}</button></li>)}</ul></div>
+        <div className="ft-col"><h4>Company</h4><ul>{[['About Us', 'about'], ['Mission & Vision', 'about'], ['Our Work', 'projects'], ['Our Team', 'about'], ['Services & Process', 'services'], ['Clients', 'clients']].map(([l, p], i) => <li key={i}><button onClick={() => nav(p)}>{l}</button></li>)}</ul></div>
+        <div className="ft-col"><h4>Contact</h4><ul><li><a href="mailto:hello@ereynard.com">hello@ereynard.com</a></li><li><a href="tel:+919876543210">+91 98765 43210</a></li><li><a href="#">Udaipur, Rajasthan</a></li><li><button onClick={() => nav('contact')}>Enquire Now</button></li></ul></div>
+      </div>
+      <div className="ft-bot"><span>© 2025 <strong>Ereynard</strong>. All rights reserved.</span><span>Smart like a fox. <strong>Sharp in digital.</strong></span></div>
+    </footer>
   );
 }
 
@@ -2028,16 +2210,17 @@ export default function App() {
     const p = { nav, openSvc, openCamp, openContact };
     if (page === 'blog-post') return <BlogPost postId={blogPostId} nav={nav} />;
     switch (page) {
-      case 'home': return <HomePage {...p} />;
-      case 'about': return <AboutPage {...p} />;
+      case 'home':     return <HomePage    {...p} />;
+      case 'about':    return <AboutPage   {...p} />;
       case 'services': return <ServicesPage {...p} />;
       case 'projects': return <ProjectsPage {...p} />;
-      case 'process': return <ProcessPage {...p} />;
-      case 'team': return <TeamPage {...p} />;
-      case 'clients': return <ClientsPage {...p} />;
-      case 'blog': return <BlogPage {...p} />;
-      case 'contact': return <ContactPage {...p} />;
-      default: return <HomePage {...p} />;
+      case 'clients':  return <ClientsPage  {...p} />;
+      case 'blog':     return <BlogPage     {...p} />;
+      case 'contact':  return <ContactPage  {...p} />;
+      // Legacy redirects — old links in footer still work
+      case 'process':  return <ServicesPage {...p} />;
+      case 'team':     return <AboutPage    {...p} />;
+      default:         return <HomePage     {...p} />;
     }
   };
 
