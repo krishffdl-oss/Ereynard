@@ -1,12 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-// ═══════════════════════════════════════════════════════════════════
-// GLOBAL STYLES — Montserrat + Playfair Display, balanced typography
-// ═══════════════════════════════════════════════════════════════════
 const GlobalStyles = () => (
   <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
     :root{
       --Y:#f0c845;--Y2:#ffd966;--Y3:#d4a800;
       --B:#080930;--B2:#0e104b;--B3:#080a38;--B4:#12145a;
@@ -22,15 +18,11 @@ const GlobalStyles = () => (
     ::-webkit-scrollbar-track{background:var(--B3);}
     ::-webkit-scrollbar-thumb{background:var(--Y);border-radius:2px;}
     a{text-decoration:none;color:inherit;}
-
-    /* ─── CURSOR ─── */
     #cur{position:fixed;width:9px;height:9px;background:var(--Y);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .18s,height .18s;top:0;left:0;}
     #cur-r{position:fixed;width:36px;height:36px;border:1.5px solid rgba(240,200,69,.38);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .28s,height .28s,opacity .28s;top:0;left:0;}
     body.hov #cur{width:16px;height:16px;}
     body.hov #cur-r{width:58px;height:58px;opacity:.22;}
     .ctr{position:fixed;border-radius:50%;pointer-events:none;z-index:99997;transform:translate(-50%,-50%);}
-
-    /* ─── PAGE TRANSITION ─── */
     .pt-overlay{position:fixed;inset:0;z-index:99990;pointer-events:none;display:flex;}
     .pt-panel{flex:1;background:var(--Y);transform:scaleY(0);transform-origin:bottom;}
     .pt-enter .pt-panel{animation:ptIn .5s var(--ease) forwards;}
@@ -41,8 +33,6 @@ const GlobalStyles = () => (
     .pt-exit .pt-panel:nth-child(3){animation-delay:.1s;}
     @keyframes ptIn{from{transform:scaleY(0);transform-origin:bottom;}to{transform:scaleY(1);transform-origin:bottom;}}
     @keyframes ptOut{from{transform:scaleY(1);transform-origin:top;}to{transform:scaleY(0);transform-origin:top;}}
-
-    /* ─── LOADER ─── */
     #loader{position:fixed;inset:0;background:var(--B3);z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;overflow:hidden;transition:opacity .6s ease;}
     #loader.hide{opacity:0;pointer-events:none;}
     #loader::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,200,69,.04) 1px,transparent 1px);background-size:32px 32px;}
@@ -58,8 +48,6 @@ const GlobalStyles = () => (
     @keyframes lbarFill{to{width:100%;}}
     .ld-tagline{font-family:var(--FI);font-style:italic;font-size:15px;color:rgba(240,200,69,.38);animation:fadeInA 1s 1.2s forwards;opacity:0;}
     @keyframes fadeInA{to{opacity:1;}}
-
-    /* ─── NAV ─── */
     nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 56px;display:flex;align-items:center;justify-content:space-between;transition:all .4s var(--ease);}
     nav.sc{background:rgba(8,9,48,.97);backdrop-filter:blur(20px);padding:13px 56px;border-bottom:1px solid rgba(240,200,69,.1);box-shadow:0 4px 32px rgba(0,0,0,.4);}
     .nav-logo{font-family:var(--FM);font-size:20px;font-weight:800;letter-spacing:.06em;color:var(--Y);display:flex;align-items:center;gap:7px;transition:transform .3s;cursor:pointer;background:none;border:none;}
@@ -83,8 +71,6 @@ const GlobalStyles = () => (
     .mob-menu.open{clip-path:circle(150% at 95% 5%);}
     .mob-menu button{font-family:var(--FM);font-weight:800;font-size:clamp(32px,6vw,52px);color:var(--Y);letter-spacing:.04em;transition:all .3s;background:none;border:none;cursor:pointer;text-transform:uppercase;}
     .mob-menu button:hover{color:transparent;-webkit-text-stroke:1.5px var(--Y);}
-
-    /* ─── SECTION COMMONS ─── */
     .sec{padding:84px 56px;position:relative;}
     .sec-label{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:10px;letter-spacing:.28em;text-transform:uppercase;font-weight:600;}
     .sec-label::before{content:'';width:20px;height:1.5px;flex-shrink:0;}
@@ -103,8 +89,6 @@ const GlobalStyles = () => (
     .sec-intro{font-size:14px;line-height:1.82;margin-top:12px;max-width:640px;}
     .on-navy .sec-intro{color:rgba(240,200,69,.5);}
     .on-yellow .sec-intro{color:rgba(14,16,75,.58);}
-
-    /* ─── REVEAL ANIMATIONS ─── */
     .reveal{opacity:0;transform:translateY(44px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
     .reveal.v{opacity:1;transform:none;}
     .rev-l{opacity:0;transform:translateX(-44px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
@@ -113,8 +97,6 @@ const GlobalStyles = () => (
     .rev-r.v{opacity:1;transform:none;}
     .rev-scale{opacity:0;transform:scale(.94);transition:opacity .8s var(--ease),transform .8s var(--ease);}
     .rev-scale.v{opacity:1;transform:none;}
-
-    /* ─── BUTTONS ─── */
     .btn-p{background:var(--Y);color:var(--B);font-family:var(--FM);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:14px 38px;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:9px;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%);transition:all .3s;position:relative;overflow:hidden;}
     .btn-p::after{content:'';position:absolute;inset:0;background:var(--B3);transform:translateX(-105%);transition:transform .3s;}
     .btn-p:hover::after{transform:translateX(0);}
@@ -127,16 +109,12 @@ const GlobalStyles = () => (
     .btn-out:hover{opacity:1;gap:14px;border-bottom-color:var(--B);}
     .ripple{position:absolute;border-radius:50%;background:rgba(240,200,69,.2);transform:scale(0);animation:rippleA .6s linear;pointer-events:none;}
     @keyframes rippleA{to{transform:scale(4);opacity:0;}}
-
-    /* ─── MARQUEE ─── */
     .mq{background:var(--Y);padding:12px 0;overflow:hidden;}
     .mq-t{display:flex;width:max-content;animation:mqScroll 22s linear infinite;}
     .mq-t:hover{animation-play-state:paused;}
     .mq-item{font-family:var(--FM);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--B);padding:0 22px;white-space:nowrap;display:flex;align-items:center;gap:22px;}
     .mq-dot{width:4px;height:4px;border-radius:50%;background:rgba(14,16,75,.28);}
     @keyframes mqScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-
-    /* ─── HERO SLIDER ─── */
     .hero-wrap{min-height:100vh;position:relative;overflow:hidden;background:var(--B3);}
     .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s var(--ease);pointer-events:none;}
     .hero-slide.active{opacity:1;pointer-events:all;}
@@ -157,12 +135,11 @@ const GlobalStyles = () => (
     .hero-headline .accent{font-family:var(--FI);font-style:italic;font-weight:400;font-size:.72em;}
     .hero-sub{font-size:15px;line-height:1.75;color:rgba(240,200,69,.52);margin-top:14px;max-width:520px;}
     .hero-actions{margin-top:36px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;opacity:0;animation:slideUp .8s 1.1s var(--ease) forwards;}
-    .hero-stats-row{display:flex;gap:0;margin-top:48px;opacity:0;animation:slideUp .8s 1.3s var(--ease) forwards;}
+    .hero-stats-row{display:flex;gap:0;margin-top:48px;opacity:0;animation:slideUp .8s 1.3s var(--ease) forwards;flex-wrap:wrap;}
     .hs-stat{padding:16px 24px;border-right:1px solid rgba(240,200,69,.12);background:rgba(8,9,48,.55);backdrop-filter:blur(12px);}
     .hs-stat:last-child{border-right:none;}
     .hs-stat-n{font-family:var(--FM);font-size:28px;font-weight:800;color:var(--Y);line-height:1;}
     .hs-stat-l{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,200,69,.38);margin-top:3px;}
-    /* Slider nav */
     .slider-nav{position:absolute;bottom:36px;left:56px;z-index:12;display:flex;gap:8px;align-items:center;}
     .sn-dot{width:28px;height:3px;background:rgba(240,200,69,.25);transition:all .4s;cursor:pointer;border:none;}
     .sn-dot.active{background:var(--Y);width:48px;}
@@ -172,7 +149,6 @@ const GlobalStyles = () => (
     .hero-scroll{position:absolute;bottom:42px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeInA 1s 2s forwards;z-index:12;}
     .h-scl{width:1px;height:52px;background:linear-gradient(to bottom,transparent,var(--Y));animation:scrollAnim 2.2s ease-in-out infinite;}
     .hero-scroll span{font-size:8px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,200,69,.28);writing-mode:vertical-rl;}
-    /* Deco shapes */
     .h-deco{position:absolute;pointer-events:none;z-index:5;}
     .h-deco1{top:12%;right:7%;opacity:0;animation:decoIn 1s 1.5s forwards;}
     .h-deco2{bottom:20%;right:15%;opacity:0;animation:decoIn 1s 1.7s forwards;}
@@ -180,8 +156,6 @@ const GlobalStyles = () => (
     @keyframes decoIn{to{opacity:.28;}}
     @keyframes slideUp{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:none;}}
     @keyframes scrollAnim{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
-
-    /* ─── ABOUT ─── */
     .about-bg{background:var(--Y);position:relative;overflow:hidden;}
     .about-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(14,16,75,.035) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;}
     .ab-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:68px;align-items:center;}
@@ -214,8 +188,6 @@ const GlobalStyles = () => (
     .shimmer{position:relative;overflow:hidden;}
     .shimmer::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);transform:skewX(-20deg);transition:left .8s ease;}
     .shimmer:hover::after{left:160%;}
-
-    /* ─── BRAND STORY ─── */
     .bs-bg{background:var(--B3);position:relative;overflow:hidden;}
     .bs-bg-txt{position:absolute;bottom:-16px;left:-10px;font-family:var(--FM);font-weight:900;font-size:clamp(68px,11vw,185px);color:rgba(240,200,69,.016);user-select:none;pointer-events:none;white-space:nowrap;line-height:1;z-index:0;}
     .bs-two{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:64px;}
@@ -226,7 +198,7 @@ const GlobalStyles = () => (
     .bs-img-lbl{position:absolute;bottom:14px;left:14px;font-size:8px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,200,69,.58);background:rgba(240,200,69,.08);border:1px solid rgba(240,200,69,.22);padding:4px 9px;z-index:1;}
     .bs-inspo{background:var(--Y);padding:44px 48px;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,0 100%);margin-bottom:64px;position:relative;overflow:hidden;}
     .bs-inspo-inner{display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center;position:relative;z-index:1;}
-    .bs-inspo-icon{font-size:clamp(52px,7vw,76px);line-height:1;filter:drop-shadow(0 5px 12px rgba(14,16,75,.16));}
+    .bs-inspo-icon{font-size:clamp(52px,7vw,76px);line-height:1;}
     .bs-inspo-title{font-family:var(--FM);font-weight:800;font-size:clamp(22px,3.2vw,40px);color:var(--B);line-height:1.1;margin-bottom:12px;}
     .bs-inspo-text{font-size:13px;line-height:1.82;color:rgba(14,16,75,.6);max-width:640px;}
     .bs-1945{position:absolute;top:-22px;right:10px;font-family:var(--FM);font-weight:900;font-size:clamp(76px,12vw,162px);color:rgba(14,16,75,.048);user-select:none;pointer-events:none;line-height:1;}
@@ -251,8 +223,6 @@ const GlobalStyles = () => (
     .bs-p-icon{font-size:24px;flex-shrink:0;line-height:1;}
     .bs-p-title{font-family:var(--FM);font-weight:700;font-size:16px;color:var(--Y);margin-bottom:4px;}
     .bs-p-txt{font-size:12px;line-height:1.7;color:rgba(240,200,69,.38);}
-
-    /* ─── SERVICES MINI (home) ─── */
     .svc-bg{background:var(--B2);}
     .svc-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:32px;}
     .svc-mini-card{background:rgba(240,200,69,.04);border:1px solid rgba(240,200,69,.07);padding:20px 22px;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:12px;}
@@ -261,8 +231,6 @@ const GlobalStyles = () => (
     .svc-mini-name{font-family:var(--FM);font-size:13px;font-weight:700;color:var(--Y);letter-spacing:.02em;}
     .svc-mini-arrow{margin-left:auto;font-size:12px;color:rgba(240,200,69,.3);transition:transform .3s;}
     .svc-mini-card:hover .svc-mini-arrow{transform:translateX(3px);color:var(--Y);}
-
-    /* ─── SERVICES FULL (services page) ─── */
     .svc-full-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px;}
     .scard{background:var(--B4);padding:36px 30px;border:1px solid rgba(240,200,69,.07);position:relative;overflow:hidden;cursor:pointer;transition:all .4s var(--ease);}
     .scard::before{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:var(--Y);transition:height .4s var(--ease);z-index:0;}
@@ -276,7 +244,6 @@ const GlobalStyles = () => (
     .sd{font-size:12px;line-height:1.7;color:rgba(240,200,69,.34);}
     .sa{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,200,69,.48);transition:gap .3s,color .4s;opacity:.75;}
     .scard:hover .sa{gap:13px;opacity:1;}
-    /* Services page detailed list */
     .svc-detail-list{display:flex;flex-direction:column;gap:2px;margin-top:40px;}
     .svc-detail-row{display:grid;grid-template-columns:280px 1fr auto;gap:32px;align-items:center;background:var(--B4);border:1px solid rgba(240,200,69,.07);padding:26px 32px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;}
     .svc-detail-row::after{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--Y);transition:width .4s var(--ease);z-index:0;}
@@ -290,8 +257,6 @@ const GlobalStyles = () => (
     .sdr-desc{font-size:13px;line-height:1.68;color:rgba(240,200,69,.42);}
     .sdr-tags{display:flex;gap:6px;flex-wrap:wrap;}
     .sdr-tag{font-size:9px;font-weight:600;letter-spacing:.08em;background:rgba(240,200,69,.07);border:1px solid rgba(240,200,69,.14);color:rgba(240,200,69,.55);padding:3px 9px;}
-
-    /* ─── STATS ─── */
     .stats-bg{background:var(--Y);padding:64px 56px;}
     .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);}
     .s-item{padding:28px 20px;border-right:1.5px solid rgba(14,16,75,.1);text-align:center;position:relative;overflow:hidden;}
@@ -300,8 +265,6 @@ const GlobalStyles = () => (
     .s-item:hover::before{transform:scaleX(1);}
     .s-num{font-family:var(--FM);font-weight:800;font-size:64px;color:var(--B);line-height:1;}
     .s-lbl{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(14,16,75,.42);margin-top:4px;}
-
-    /* ─── IMAGE BAND ─── */
     .imgband{background:var(--B);overflow:hidden;display:flex;height:240px;}
     .ibt{display:flex;width:max-content;animation:ibScroll 28s linear infinite;height:100%;}
     .ibt:hover{animation-play-state:paused;}
@@ -312,8 +275,6 @@ const GlobalStyles = () => (
     .ib-item:hover::after{background:rgba(8,9,48,.07);}
     .ib-tag{position:absolute;bottom:11px;left:11px;font-size:8px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(240,200,69,.58);background:rgba(8,9,48,.68);padding:3px 8px;}
     @keyframes ibScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-
-    /* ─── PROCESS SHORT (home) ─── */
     .process-bg{background:var(--B);}
     .proc-steps-short{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:36px;}
     .pstep-s{padding:28px 22px;background:var(--B4);border:1px solid rgba(240,200,69,.07);position:relative;overflow:hidden;transition:background .3s;cursor:default;}
@@ -323,7 +284,6 @@ const GlobalStyles = () => (
     .ps-num{font-family:var(--FM);font-weight:800;font-size:48px;color:rgba(240,200,69,.06);line-height:1;margin-bottom:12px;}
     .pstep-s h3{font-family:var(--FM);font-weight:800;font-size:16px;color:var(--Y);margin-bottom:7px;}
     .pstep-s p{font-size:12px;line-height:1.7;color:rgba(240,200,69,.34);}
-    /* PROCESS FULL (process page) */
     .proc-steps-full{display:grid;grid-template-columns:repeat(2,1fr);gap:3px;margin-top:40px;}
     .pstep-f{background:var(--B4);border:1px solid rgba(240,200,69,.07);overflow:hidden;position:relative;transition:border-color .3s;}
     .pstep-f:hover{border-color:rgba(240,200,69,.22);}
@@ -339,7 +299,25 @@ const GlobalStyles = () => (
     .pstep-f-item{display:flex;align-items:center;gap:9px;font-size:12px;color:rgba(240,200,69,.5);}
     .pstep-f-item::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--Y);flex-shrink:0;}
 
-    /* ─── WORK ─── */
+    /* ─── WORK TEASER (homepage only) ─── */
+    .wt-bg{background:var(--B2);position:relative;overflow:hidden;}
+    .wt-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(240,200,69,.018) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;}
+    .wt-inner{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:36px;}
+    .wt-kpi{background:var(--B4);border:1px solid rgba(240,200,69,.08);padding:28px 24px;position:relative;overflow:hidden;transition:border-color .4s,transform .4s var(--ease);}
+    .wt-kpi:hover{border-color:rgba(240,200,69,.22);transform:translateY(-4px);}
+    .wt-kpi::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--Y);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease);}
+    .wt-kpi:hover::after{transform:scaleX(1);}
+    .wt-kpi-icon{font-size:26px;display:block;margin-bottom:12px;transition:transform .4s;}
+    .wt-kpi:hover .wt-kpi-icon{transform:scale(1.14) rotate(-6deg);}
+    .wt-kpi-tag{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,200,69,.28);margin-bottom:5px;}
+    .wt-kpi-num{font-family:var(--FM);font-weight:800;font-size:clamp(28px,3.5vw,44px);color:var(--Y);line-height:1;margin-bottom:4px;}
+    .wt-kpi-desc{font-size:12px;line-height:1.6;color:rgba(240,200,69,.38);}
+    .wt-cta-row{display:flex;gap:16px;align-items:center;margin-top:28px;flex-wrap:wrap;}
+    .wt-quote{border-left:2px solid var(--Y);background:rgba(240,200,69,.04);padding:18px 22px;margin-top:32px;}
+    .wt-quote-txt{font-family:var(--FI);font-style:italic;font-size:14px;line-height:1.72;color:rgba(240,200,69,.58);margin-bottom:8px;}
+    .wt-quote-by{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,200,69,.3);}
+
+    /* ─── WORK (projects page) ─── */
     .work-bg{background:var(--Y);}
     .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:3px;margin-top:40px;}
     .wi{position:relative;overflow:hidden;cursor:pointer;aspect-ratio:16/10;background:var(--B);}
@@ -357,7 +335,6 @@ const GlobalStyles = () => (
     .wi-arr{position:absolute;top:16px;right:16px;width:38px;height:38px;background:var(--Y);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--B);transform:scale(0) rotate(-45deg);transition:transform .36s var(--spring);}
     .wi:hover .wi-arr{transform:scale(1) rotate(0);}
 
-    /* ─── TEAM ─── */
     .team-bg{background:var(--B3);}
     .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:40px;}
     .tm-card{position:relative;overflow:hidden;cursor:pointer;aspect-ratio:3/4;}
@@ -373,27 +350,10 @@ const GlobalStyles = () => (
     .tm-card:hover .tm-lnks{transform:none;opacity:1;}
     .tm-lnk{width:26px;height:26px;background:rgba(240,200,69,.1);border:1px solid rgba(240,200,69,.22);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--Y);transition:all .3s;text-decoration:none;}
     .tm-lnk:hover{background:var(--Y);color:var(--B);}
-
-    /* ─── REVIEWS ─── */
-    .reviews-bg{background:var(--B2);}
-    .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px;}
-    .rcard{background:var(--B4);border-top:2px solid transparent;padding:28px 24px;position:relative;overflow:hidden;transition:border-color .4s,transform .4s;}
-    .rcard::before{content:'\\201C';font-family:var(--FI);font-size:100px;color:rgba(240,200,69,.042);position:absolute;top:-18px;left:11px;line-height:1;}
-    .rcard:hover{border-top-color:var(--Y);transform:translateY(-6px);}
-    .r-stars{color:var(--Y);font-size:12px;letter-spacing:2px;margin-bottom:11px;}
-    .r-txt{font-family:var(--FI);font-style:italic;font-size:13px;line-height:1.82;color:rgba(240,200,69,.46);margin-bottom:16px;}
-    .r-auth{display:flex;align-items:center;gap:9px;border-top:1px solid rgba(240,200,69,.06);padding-top:13px;}
-    .r-av{width:38px;height:38px;border-radius:50%;overflow:hidden;border:2px solid rgba(240,200,69,.22);flex-shrink:0;}
-    .r-av img{width:100%;height:100%;object-fit:cover;filter:saturate(.28);}
-    .r-nm{font-weight:700;font-size:12px;color:var(--Y);}
-    .r-rl{font-size:10px;color:rgba(240,200,69,.32);}
-
-    /* ─── CLIENTS ─── */
     .clients-bg{background:var(--Y);padding:60px 56px;}
     .cl-lbl{text-align:center;font-size:9px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:rgba(14,16,75,.36);margin-bottom:32px;}
     .cl-row{display:flex;justify-content:center;align-items:center;gap:44px;flex-wrap:wrap;margin-bottom:40px;}
     .clogo{font-family:var(--FM);font-weight:800;font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:rgba(14,16,75,.24);transition:color .3s,transform .3s;cursor:default;background:none;border:none;}
-    /* Client testimonials carousel */
     .ct-carousel{margin-top:8px;position:relative;overflow:hidden;}
     .ct-track{display:flex;transition:transform .5s var(--ease);}
     .ct-slide{min-width:100%;padding:0 4px;}
@@ -407,15 +367,12 @@ const GlobalStyles = () => (
     .ct-nav{display:flex;justify-content:center;gap:7px;margin-top:16px;}
     .ct-dot{width:24px;height:2.5px;background:rgba(14,16,75,.2);cursor:pointer;border:none;transition:all .3s;}
     .ct-dot.active{background:var(--B);width:40px;}
-    /* Awards grid */
     .awards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px;}
     .award-card{background:rgba(240,200,69,.06);border:1px solid rgba(240,200,69,.12);padding:24px 22px;text-align:center;transition:all .3s;}
     .award-card:hover{background:rgba(240,200,69,.12);border-color:rgba(240,200,69,.25);}
     .award-icon{font-size:32px;display:block;margin-bottom:10px;}
     .award-title{font-family:var(--FM);font-weight:700;font-size:13px;color:var(--Y);margin-bottom:4px;}
     .award-sub{font-size:11px;color:rgba(240,200,69,.38);}
-
-    /* ─── FAQ ─── */
     .faq-bg{background:var(--B);}
     .faq-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;align-items:start;margin-top:40px;}
     .faq-c-item{display:flex;align-items:center;gap:9px;font-size:13px;color:rgba(240,200,69,.42);margin-top:10px;}
@@ -431,8 +388,6 @@ const GlobalStyles = () => (
     .faq-a{max-height:0;overflow:hidden;transition:max-height .4s var(--ease);padding:0 20px;}
     .faq-a-inner{font-size:13px;line-height:1.78;color:rgba(240,200,69,.46);padding-bottom:16px;}
     .faq-a-inner strong{color:var(--Y);}
-
-    /* ─── CONTACT ─── */
     .contact-bg{background:var(--B3);position:relative;overflow:hidden;}
     .eq-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
     .eq-det{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
@@ -458,8 +413,6 @@ const GlobalStyles = () => (
     .btn-sub:hover{transform:translateY(-2px);}
     .btn-sub>*{position:relative;z-index:1;}
     .eq-bg-txt{position:absolute;bottom:-40px;right:-12px;font-family:var(--FM);font-weight:900;font-size:clamp(90px,13vw,200px);color:rgba(240,200,69,.018);user-select:none;pointer-events:none;white-space:nowrap;}
-
-    /* ─── FOOTER ─── */
     footer{background:var(--Y);padding:56px 56px 28px;}
     .ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;padding-bottom:40px;border-bottom:1px solid rgba(14,16,75,.09);margin-bottom:22px;}
     .ft-logo{font-family:var(--FM);font-weight:800;font-size:26px;letter-spacing:.04em;color:var(--B);display:block;margin-bottom:9px;background:none;border:none;cursor:pointer;}
@@ -474,8 +427,6 @@ const GlobalStyles = () => (
     .ft-col ul li button:hover,.ft-col ul li a:hover{color:var(--B);}
     .ft-bot{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:rgba(14,16,75,.36);}
     .ft-bot strong{color:var(--B);font-weight:700;}
-
-    /* ─── PAGE HERO (inner pages) ─── */
     .page-hero{min-height:32vh;background:var(--B3);display:flex;align-items:flex-end;padding:120px 56px 44px;position:relative;overflow:hidden;}
     .page-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(240,200,69,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(240,200,69,.014) 1px,transparent 1px);background-size:52px 52px;}
     .ph-orb{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;}
@@ -488,8 +439,6 @@ const GlobalStyles = () => (
     .page-hero-title .solid{color:var(--Y);}
     .page-hero-title .stroke{color:transparent;-webkit-text-stroke:1.5px rgba(240,200,69,.25);}
     .page-hero-sub{font-family:var(--FI);font-style:italic;font-size:15px;color:rgba(240,200,69,.38);margin-top:10px;max-width:460px;line-height:1.6;}
-
-    /* ─── SERVICE MODAL ─── */
     .svc-ov{position:fixed;inset:0;background:rgba(8,9,48,.96);z-index:8000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(10px);}
     .svc-ov.open{opacity:1;pointer-events:all;}
     .svc-modal{background:var(--B4);border:1px solid rgba(240,200,69,.15);max-width:640px;width:90%;max-height:86vh;overflow-y:auto;clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,0 100%);transform:translateY(26px) scale(.96);transition:transform .36s var(--spring);scrollbar-width:thin;scrollbar-color:rgba(240,200,69,.15) transparent;}
@@ -512,8 +461,6 @@ const GlobalStyles = () => (
     .sm-r-l{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(14,16,75,.46);margin-top:2px;}
     .sm-cta{display:inline-flex;align-items:center;gap:8px;background:var(--Y);color:var(--B);font-family:var(--FM);font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:12px 28px;border:none;cursor:pointer;clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,0 100%);transition:all .3s;}
     .sm-cta:hover{background:var(--B3);color:var(--Y);transform:translateY(-2px);}
-
-    /* ─── CAMPAIGN MODAL ─── */
     .camp-ov{position:fixed;inset:0;background:rgba(8,9,48,.97);z-index:8000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(12px);}
     .camp-ov.open{opacity:1;pointer-events:all;}
     .camp-modal{background:var(--B4);border:1px solid rgba(240,200,69,.13);max-width:780px;width:92%;max-height:86vh;overflow-y:auto;clip-path:polygon(0 0,calc(100% - 26px) 0,100% 26px,100% 100%,0 100%);transform:translateY(34px) scale(.95);transition:transform .4s var(--spring);scrollbar-width:thin;scrollbar-color:rgba(240,200,69,.15) transparent;}
@@ -551,11 +498,9 @@ const GlobalStyles = () => (
     .camp-cta-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
     .btn-ghost{color:var(--Y);font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid rgba(240,200,69,.22);border-top:none;border-left:none;border-right:none;padding-bottom:2px;transition:all .3s;opacity:.62;background:none;cursor:pointer;font-family:var(--FM);}
     .btn-ghost:hover{opacity:1;gap:15px;border-bottom-color:var(--Y);}
-
-    /* ─── BLOG ─── */
     .blog-bg{background:var(--B2);}
     .blog-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:40px;}
-    .blog-card{background:var(--B4);overflow:hidden;cursor:pointer;border:1px solid rgba(240,200,69,.06);transition:border-color .3s;animation:none;}
+    .blog-card{background:var(--B4);overflow:hidden;cursor:pointer;border:1px solid rgba(240,200,69,.06);transition:border-color .3s;}
     .blog-card:hover{border-color:rgba(240,200,69,.18);}
     .blog-card.featured{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;}
     .blog-img{overflow:hidden;position:relative;}
@@ -571,26 +516,6 @@ const GlobalStyles = () => (
     .blog-excerpt{font-size:12px;line-height:1.68;color:rgba(240,200,69,.34);margin-bottom:16px;}
     .blog-read{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgba(240,200,69,.48);transition:all .3s;}
     .blog-card:hover .blog-read{color:var(--Y);gap:11px;}
-
-    /* ─── BLOG POST ─── */
-    .blog-post-wrap{background:var(--B3);}
-    .blog-post-hero{height:50vh;overflow:hidden;position:relative;}
-    .blog-post-hero img{width:100%;height:100%;object-fit:cover;filter:saturate(.32) contrast(1.1);}
-    .blog-post-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--B3) 0%,rgba(8,9,48,.55) 60%,transparent);}
-    .bp-content{max-width:740px;margin:0 auto;padding:48px 56px 80px;}
-    .bp-cat{font-size:9px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--Y);background:rgba(240,200,69,.1);border:1px solid rgba(240,200,69,.28);padding:4px 10px;display:inline-block;margin-bottom:14px;}
-    .bp-title{font-family:var(--FM);font-weight:800;font-size:clamp(30px,4.5vw,58px);color:var(--Y);line-height:1.1;margin-bottom:12px;}
-    .bp-meta{font-size:10px;font-weight:600;color:rgba(240,200,69,.33);letter-spacing:.06em;display:flex;gap:12px;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid rgba(240,200,69,.07);}
-    .bp-lead{font-family:var(--FI);font-style:italic;font-size:17px;line-height:1.7;color:rgba(240,200,69,.62);margin-bottom:26px;}
-    .bp-body h2{font-family:var(--FM);font-weight:800;font-size:24px;color:var(--Y);margin:28px 0 11px;}
-    .bp-body h3{font-family:var(--FM);font-weight:700;font-size:18px;color:var(--Y);margin:20px 0 9px;}
-    .bp-body p{font-size:14px;line-height:1.86;color:rgba(240,200,69,.52);margin-bottom:16px;}
-    .bp-body strong{color:var(--Y);}
-    .bp-body blockquote{border-left:2px solid var(--Y);background:rgba(240,200,69,.04);padding:16px 20px;margin:22px 0;font-family:var(--FI);font-style:italic;font-size:15px;color:rgba(240,200,69,.62);}
-    .bp-divider{height:1px;background:rgba(240,200,69,.07);margin:28px 0;}
-    .bp-back{margin-top:40px;padding-top:28px;border-top:1px solid rgba(240,200,69,.07);}
-
-    /* ─── CHATBOT ─── */
     #bot-btn{position:fixed;bottom:26px;right:26px;z-index:9000;width:56px;height:56px;background:var(--Y);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 32px rgba(240,200,69,.35);transition:transform .32s var(--spring),box-shadow .32s;border:none;animation:botPop .6s 3s both;}
     @keyframes botPop{from{transform:scale(0) rotate(-25deg);opacity:0;}to{transform:scale(1);opacity:1;}}
     #bot-btn:hover{transform:scale(1.09) rotate(-5deg);box-shadow:0 11px 44px rgba(240,200,69,.48);}
@@ -654,8 +579,7 @@ const GlobalStyles = () => (
       .proc-steps-short{grid-template-columns:1fr 1fr;}
       .proc-steps-full{grid-template-columns:1fr;}
       .stats-grid{grid-template-columns:1fr 1fr;}
-      .work-grid{grid-template-columns:1fr;}.wi.feat{grid-column:span 1;}
-      .rev-grid{grid-template-columns:1fr 1fr;}
+      .work-grid{grid-template-columns:1fr;}.wi.feat{grid-column:span 1;aspect-ratio:16/9;}
       .team-grid{grid-template-columns:repeat(2,1fr);}
       .ft-grid{grid-template-columns:1fr 1fr;gap:26px;}
       .bs-scoops{grid-template-columns:1fr 1fr!important;}
@@ -665,19 +589,22 @@ const GlobalStyles = () => (
       .blog-grid{grid-template-columns:1fr;}
       .blog-card.featured{grid-template-columns:1fr;}
       .hero-content-wrap{padding:0 20px;}
-      .slider-nav,.slider-arrows{left:20px;right:20px;}
+      .slider-nav{left:20px;}
+      .slider-arrows{right:20px;}
       .ct-card{grid-template-columns:1fr;}
       .awards-grid{grid-template-columns:1fr 1fr;}
-      .bp-content{padding:32px 20px 60px;}
+      .wt-inner{grid-template-columns:1fr 1fr;}
+      .bs-two{gap:28px;}
+      .bs-img-wrap{height:220px;}
     }
     @media(max-width:640px){
-      .sec{padding:44px 14px;}
-      .svc-full-grid,.rev-grid,.svc-mini,.awards-grid{grid-template-columns:1fr;}
+      .sec{padding:44px 16px;}
+      .svc-full-grid,.svc-mini,.awards-grid{grid-template-columns:1fr;}
       .proc-steps-short{grid-template-columns:1fr;}
       .stats-grid{grid-template-columns:1fr 1fr;}
       .team-grid{grid-template-columns:1fr 1fr;}
       .ft-grid{grid-template-columns:1fr;}
-      .stats-bg{padding:44px 14px;}.clients-bg{padding:44px 14px;}
+      .stats-bg{padding:44px 16px;}.clients-bg{padding:44px 16px;}
       .bs-scoops{grid-template-columns:1fr!important;}
       #bot-win{right:7px;left:7px;width:auto;bottom:78px;}
       #bot-btn{right:12px;bottom:14px;width:50px;height:50px;}
@@ -686,6 +613,18 @@ const GlobalStyles = () => (
       .camp-kpis,.camp-tl{grid-template-columns:1fr 1fr;}
       .hero-stats-row{flex-wrap:wrap;}
       .slider-arrows{display:none;}
+      .wt-inner{grid-template-columns:1fr;}
+      .hero-content-wrap{padding:0 16px;}
+      .ab-vis{height:240px;}
+      .ab-stat-b{right:12px;}
+      .bs-two{grid-template-columns:1fr;}
+      .bs-promise-grid{grid-template-columns:1fr;}
+      .bs-inspo{padding:28px 20px;}
+      .ct-card{padding:22px 18px;}
+      .eq-form{padding:24px 18px;}
+      .hs-stat{padding:12px 16px;}
+      .hs-stat-n{font-size:22px;}
+      .slider-nav{left:16px;}
     }
   `}</style>
 );
@@ -707,11 +646,11 @@ const SVC_DATA = {
 };
 
 const CAMP_DATA = {
-  novabrand:{img:'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=1400&auto=format&fit=crop&q=80',tag:'Performance Marketing',ttl:'NovaBrand — 10x ROI',sub:'Google Ads · Meta Ads · Landing Page · Analytics · 4 Months',kpis:[{n:'10x',l:'ROI Delivered'},{n:'3x',l:'Organic Traffic'},{n:'₹2.4Cr',l:'Revenue Generated'},{n:'4mo',l:'Timeline'}],ov:"NovaBrand India came to us with one problem: their previous agency was burning ₹8 lakh/month with zero measurable ROI. We rebuilt everything — strategy, creative, landing pages, tracking — turning paid channels into a consistent revenue machine delivering 10x ROAS in 4 months.",chals:[{i:'🔥',t:'Zero conversion tracking — no idea what was working or why'},{i:'💸',t:'Ad creative fatigue — same visuals running 6+ months with no testing'},{i:'🚨',t:'Landing pages converting under 1% with no CRO strategy'},{i:'🎯',t:'Audience targeting too broad — spending on cold, unqualified traffic'}],svcs:['Google Search Ads','Meta Ads','Landing Page CRO','GA4 & Attribution','Creative Strategy','Audience Research'],tl:[{p:'Month 1',a:'Full audit, pixel setup, GA4 config, audience research & creative brief'},{p:'Month 2',a:'New landing pages live, A/B tests launched, campaigns rebuilt'},{p:'Month 3',a:'Scale winning ad sets, retargeting activated, CPL drops 60%'},{p:'Month 4',a:'10x ROAS achieved; full dashboard delivered to client team'}],q:'"Ereynard completely transformed our digital presence. In just 4 months, organic traffic tripled and ad campaigns started printing money. Not just an agency — a growth partner."',qby:'— Rahul Mehta, Founder, NovaBrand India'},
-  luxethreads:{img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&auto=format&fit=crop&q=80',tag:'Social Media Marketing',ttl:'LuxeThreads — Brand Explosion',sub:'Instagram · Reels · Influencer · Content Strategy · 6 Months',kpis:[{n:'340%',l:'Sales Increase'},{n:'80K+',l:'New Followers'},{n:'18M',l:'Reel Reach'},{n:'12x',l:'Influencer ROAS'}],ov:'LuxeThreads, premium Indian ethnic wear, had 4,200 followers and flat sales. We built a full social identity, reels-first strategy, and influencer program that turned them into one of the most talked-about ethnic wear brands on Indian Instagram in 6 months.',chals:[{i:'😴',t:'No consistent visual identity — feed looked unprofessional'},{i:'📉',t:'Content getting under 50 likes per post — zero viral potential'},{i:'🙈',t:'Zero influencer strategy — random collabs with no ROI tracking'},{i:'💡',t:'Brand story not being told — no emotional connection with audience'}],svcs:['Instagram Management','Reels Production','Influencer Campaign','Content Calendar','Brand Storytelling','Community Management'],tl:[{p:'Month 1-2',a:'Brand voice, visual identity refresh, content templates & calendar'},{p:'Month 3',a:'8 micro-influencers launched, reels strategy activated'},{p:'Month 4',a:'Viral reel 2.3M views; follower growth 5,000/week'},{p:'Month 5-6',a:'3 macro-influencer campaigns, sales up 340%, featured in Vogue India'}],q:'"Sharp, creative and deeply strategic. Understood our brand voice from day one and created campaigns that resonated perfectly. Sales went up 340%."',qby:'— Sneha Kapoor, CMO, LuxeThreads'},
-  technest:{img:'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1400&auto=format&fit=crop&q=80',tag:'SEO + Content Strategy',ttl:'TechNest — Organic Domination',sub:'Technical SEO · Blog Strategy · Link Building · 6 Months',kpis:[{n:'225x',l:'Blog Traffic Growth'},{n:'#1',l:'Rankings Achieved'},{n:'45K+',l:'Monthly Visitors'},{n:'280%',l:'Lead Increase'}],ov:'TechNest started at 200 monthly visitors, invisible on Google. We executed a comprehensive SEO and content programme — fixing their technical foundation, building topical authority, earning quality backlinks — growing them to 45,000+ monthly organic visitors with #1 rankings in 6 months.',chals:[{i:'🐢',t:'Critical technical issues — slow load times, broken links, no schema markup'},{i:'🔍',t:'Zero keyword strategy — targeting generic terms with no buying intent'},{i:'📝',t:'Blog had 12 posts, none ranking, all targeting wrong audience'},{i:'🔗',t:'Domain authority of 8 with virtually no backlinks'}],svcs:['Technical SEO Audit','Blog Content Strategy','Link Building','On-Page Optimisation','Topical Authority Mapping','Monthly Reporting'],tl:[{p:'Month 1',a:'Full technical audit, 87 issues fixed, GA4 and GSC configured'},{p:'Month 2',a:'Topical cluster strategy built, 20-article editorial calendar launched'},{p:'Month 3-4',a:'Articles hit page 1; link building yields 35 quality backlinks'},{p:'Month 5-6',a:'Core keywords reach #1; 45K+/month traffic; 280% more inbound leads'}],q:'"Working with Ereynard felt like having a world-class team in-house. Their Fox Method is real — every step deliberate, data-backed, and exceeded every expectation."',qby:'— Aryan Desai, CEO, TechNest Solutions'},
-  growfast:{img:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1400&auto=format&fit=crop&q=80',tag:'Performance Advertising',ttl:'GrowFast — 60% Lead Cost Cut',sub:'Google Ads · Meta Ads · CRO · Analytics · 3 Months',kpis:[{n:'-60%',l:'Cost Per Lead'},{n:'4.2x',l:'ROAS'},{n:'₹18L',l:'Budget Saved'},{n:'3mo',l:'Timeline'}],ov:"GrowFast, a B2B SaaS company, was spending heavily on digital ads with sky-high cost per lead. Campaigns lacked structure, creative refresh, and conversion tracking. We audited, rebuilt, and optimised — cutting CPL by 60% within 90 days.",chals:[{i:'💰',t:'CPL of ₹4,200 — far above industry benchmark of ₹800'},{i:'🎨',t:'No creative testing — same ads running for 8 months'},{i:'📊',t:'Broken conversion tracking — could not attribute leads'},{i:'🎯',t:'No audience segmentation — one campaign targeting everyone'}],svcs:['Google Search Ads','Meta Lead Gen','Conversion Rate Optimisation','Creative Strategy','Attribution Setup','Weekly Reporting'],tl:[{p:'Week 1-2',a:'Full audit, tracking rebuild, audience research and new creative briefs'},{p:'Week 3-6',a:'New campaigns live, 12 ad variants tested, landing pages optimised'},{p:'Week 7-12',a:'CPL drops 60%, best performers scaled, reporting dashboard live'}],q:'"Most agencies overpromise. Ereynard overdelivers. Our cost per lead dropped 60% within the first campaign. Always available, reporting crystal clear."',qby:'— Priya Nair, Head of Marketing, GrowFast'},
-  eduspark:{img:'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&auto=format&fit=crop&q=80',tag:'Content + SEO',ttl:'EduSpark — 225x Blog Growth',sub:'Content Strategy · SEO · Blog · 6 Months',kpis:[{n:'225x',l:'Traffic Growth'},{n:'45K+',l:'Monthly Readers'},{n:'380%',l:'Enrollment Lift'},{n:'6mo',l:'To Results'}],ov:"EduSpark Academy's blog had 200 monthly visitors and zero domain authority. We built a topical authority strategy, rewrote all existing content, launched a 24-article editorial calendar, and built quality backlinks — propelling them to 45,000+ monthly readers in 6 months.",chals:[{i:'📝',t:'12 blog posts, none ranking, all written without keyword strategy'},{i:'🔗',t:'Domain Authority of 7 — invisible to Google'},{i:'🏃',t:'Competing with ed-tech giants with massive budgets'},{i:'📉',t:'Zero enrollment from organic — 100% dependent on paid ads'}],svcs:['Topical Authority Mapping','Content Creation','On-Page SEO','Link Building','Technical SEO','Content Calendar Management'],tl:[{p:'Month 1',a:'Content audit, keyword research, topical cluster strategy and editorial calendar'},{p:'Month 2-3',a:'20 new articles published, existing content rewritten and optimised'},{p:'Month 4-6',a:'Link building campaign yields 28 quality backlinks; 3 articles hit #1 on Google'}],q:'"Their content strategy alone was worth every penny. Blog went from 200 to 45,000+ monthly visitors in 6 months. Phenomenal SEO and content work."',qby:'— Vikram Shah, Director, EduSpark Academy'}
+  novabrand:{img:'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=1400&auto=format&fit=crop&q=80',tag:'Performance Marketing',ttl:'NovaBrand — 10x ROI',sub:'Google Ads · Meta Ads · Landing Page · Analytics · 4 Months',kpis:[{n:'10x',l:'ROI Delivered'},{n:'3x',l:'Organic Traffic'},{n:'₹2.4Cr',l:'Revenue Generated'},{n:'4mo',l:'Timeline'}],ov:"NovaBrand India came to us with one problem: their previous agency was burning ₹8 lakh/month with zero measurable ROI. We rebuilt everything — strategy, creative, landing pages, tracking — turning paid channels into a consistent revenue machine delivering 10x ROAS in 4 months.",chals:[{i:'🔥',t:'Zero conversion tracking — no idea what was working or why'},{i:'💸',t:'Ad creative fatigue — same visuals running 6+ months with no testing'},{i:'🚨',t:'Landing pages converting under 1% with no CRO strategy'},{i:'🎯',t:'Audience targeting too broad — spending on cold, unqualified traffic'}],svcs:['Google Search Ads','Meta Ads','Landing Page CRO','GA4 & Attribution','Creative Strategy','Audience Research'],tl:[{p:'Month 1',a:'Full audit, pixel setup, GA4 config, audience research & creative brief'},{p:'Month 2',a:'New landing pages live, A/B tests launched, campaigns rebuilt'},{p:'Month 3',a:'Scale winning ad sets, retargeting activated, CPL drops 60%'},{p:'Month 4',a:'10x ROAS achieved; full dashboard delivered to client team'}],q:'"Ereynard completely transformed our digital presence. In just 4 months, organic traffic tripled and ad campaigns started printing money."',qby:'— Rahul Mehta, Founder, NovaBrand India'},
+  luxethreads:{img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&auto=format&fit=crop&q=80',tag:'Social Media Marketing',ttl:'LuxeThreads — Brand Explosion',sub:'Instagram · Reels · Influencer · Content Strategy · 6 Months',kpis:[{n:'340%',l:'Sales Increase'},{n:'80K+',l:'New Followers'},{n:'18M',l:'Reel Reach'},{n:'12x',l:'Influencer ROAS'}],ov:'LuxeThreads, premium Indian ethnic wear, had 4,200 followers and flat sales. We built a full social identity, reels-first strategy, and influencer program that turned them into one of the most talked-about ethnic wear brands on Indian Instagram in 6 months.',chals:[{i:'😴',t:'No consistent visual identity — feed looked unprofessional'},{i:'📉',t:'Content getting under 50 likes per post — zero viral potential'},{i:'🙈',t:'Zero influencer strategy — random collabs with no ROI tracking'},{i:'💡',t:'Brand story not being told — no emotional connection with audience'}],svcs:['Instagram Management','Reels Production','Influencer Campaign','Content Calendar','Brand Storytelling','Community Management'],tl:[{p:'Month 1-2',a:'Brand voice, visual identity refresh, content templates & calendar'},{p:'Month 3',a:'8 micro-influencers launched, reels strategy activated'},{p:'Month 4',a:'Viral reel 2.3M views; follower growth 5,000/week'},{p:'Month 5-6',a:'3 macro-influencer campaigns, sales up 340%, featured in Vogue India'}],q:'"Sharp, creative and deeply strategic. Understood our brand voice from day one and created campaigns that resonated perfectly."',qby:'— Sneha Kapoor, CMO, LuxeThreads'},
+  technest:{img:'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1400&auto=format&fit=crop&q=80',tag:'SEO + Content Strategy',ttl:'TechNest — Organic Domination',sub:'Technical SEO · Blog Strategy · Link Building · 6 Months',kpis:[{n:'225x',l:'Blog Traffic Growth'},{n:'#1',l:'Rankings Achieved'},{n:'45K+',l:'Monthly Visitors'},{n:'280%',l:'Lead Increase'}],ov:'TechNest started at 200 monthly visitors, invisible on Google. We executed a comprehensive SEO and content programme — fixing their technical foundation, building topical authority, earning quality backlinks — growing them to 45,000+ monthly organic visitors.',chals:[{i:'🐢',t:'Critical technical issues — slow load times, broken links, no schema markup'},{i:'🔍',t:'Zero keyword strategy — targeting generic terms with no buying intent'},{i:'📝',t:'Blog had 12 posts, none ranking, all targeting wrong audience'},{i:'🔗',t:'Domain authority of 8 with virtually no backlinks'}],svcs:['Technical SEO Audit','Blog Content Strategy','Link Building','On-Page Optimisation','Topical Authority Mapping','Monthly Reporting'],tl:[{p:'Month 1',a:'Full technical audit, 87 issues fixed, GA4 and GSC configured'},{p:'Month 2',a:'Topical cluster strategy built, 20-article editorial calendar launched'},{p:'Month 3-4',a:'Articles hit page 1; link building yields 35 quality backlinks'},{p:'Month 5-6',a:'Core keywords reach #1; 45K+/month traffic; 280% more inbound leads'}],q:'"Working with Ereynard felt like having a world-class team in-house. Their Fox Method is real — every step deliberate, data-backed."',qby:'— Aryan Desai, CEO, TechNest Solutions'},
+  growfast:{img:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1400&auto=format&fit=crop&q=80',tag:'Performance Advertising',ttl:'GrowFast — 60% Lead Cost Cut',sub:'Google Ads · Meta Ads · CRO · Analytics · 3 Months',kpis:[{n:'-60%',l:'Cost Per Lead'},{n:'4.2x',l:'ROAS'},{n:'₹18L',l:'Budget Saved'},{n:'3mo',l:'Timeline'}],ov:"GrowFast, a B2B SaaS company, was spending heavily on digital ads with sky-high cost per lead. We audited, rebuilt, and optimised — cutting CPL by 60% within 90 days.",chals:[{i:'💰',t:'CPL of ₹4,200 — far above industry benchmark of ₹800'},{i:'🎨',t:'No creative testing — same ads running for 8 months'},{i:'📊',t:'Broken conversion tracking — could not attribute leads'},{i:'🎯',t:'No audience segmentation — one campaign targeting everyone'}],svcs:['Google Search Ads','Meta Lead Gen','Conversion Rate Optimisation','Creative Strategy','Attribution Setup','Weekly Reporting'],tl:[{p:'Week 1-2',a:'Full audit, tracking rebuild, audience research and new creative briefs'},{p:'Week 3-6',a:'New campaigns live, 12 ad variants tested, landing pages optimised'},{p:'Week 7-12',a:'CPL drops 60%, best performers scaled, reporting dashboard live'}],q:'"Most agencies overpromise. Ereynard overdelivers. Our cost per lead dropped 60% within the first campaign."',qby:'— Priya Nair, Head of Marketing, GrowFast'},
+  eduspark:{img:'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&auto=format&fit=crop&q=80',tag:'Content + SEO',ttl:'EduSpark — 225x Blog Growth',sub:'Content Strategy · SEO · Blog · 6 Months',kpis:[{n:'225x',l:'Traffic Growth'},{n:'45K+',l:'Monthly Readers'},{n:'380%',l:'Enrollment Lift'},{n:'6mo',l:'To Results'}],ov:"EduSpark Academy's blog had 200 monthly visitors and zero domain authority. We built a topical authority strategy, rewrote all existing content, launched a 24-article editorial calendar — propelling them to 45,000+ monthly readers in 6 months.",chals:[{i:'📝',t:'12 blog posts, none ranking, all written without keyword strategy'},{i:'🔗',t:'Domain Authority of 7 — invisible to Google'},{i:'🏃',t:'Competing with ed-tech giants with massive budgets'},{i:'📉',t:'Zero enrollment from organic — 100% dependent on paid ads'}],svcs:['Topical Authority Mapping','Content Creation','On-Page SEO','Link Building','Technical SEO','Content Calendar Management'],tl:[{p:'Month 1',a:'Content audit, keyword research, topical cluster strategy'},{p:'Month 2-3',a:'20 new articles published, existing content rewritten and optimised'},{p:'Month 4-6',a:'Link building yields 28 quality backlinks; 3 articles hit #1 on Google'}],q:'"Their content strategy alone was worth every penny. Blog went from 200 to 45,000+ monthly visitors in 6 months."',qby:'— Vikram Shah, Director, EduSpark Academy'}
 };
 
 const FAQS_DATA = [
@@ -727,10 +666,10 @@ const FAQS_DATA = [
 
 const BLOG_POSTS = [
   {id:'google-invisible',cat:'SEO',title:"Why Your Brand is Invisible on Google — And How to Fix It in 90 Days",date:'March 10, 2025',read:'8 min read',img:'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=900&auto=format&fit=crop&q=80',excerpt:"If you're not on page 1, you don't exist. Here's the exact framework we use to take brands from zero to #1 rankings.",lead:"Here's the uncomfortable truth: 91.5% of search traffic goes to page 1 results. If you're on page 2, you may as well not exist online.",content:[{h2:"The Three Root Causes of Google Invisibility"},{p:"Most brands suffering from poor Google rankings share three core problems: technical barriers that prevent Google from even crawling the site properly, zero keyword strategy, and a complete absence of link authority."},{h3:"1. Technical SEO Failures"},{p:"Before Google can rank you, it needs to understand you. That means fast load times (under 3 seconds), proper mobile experience, no broken links, correct canonical tags, and structured data markup."},{blockquote:"In our experience, fixing technical issues alone can bump a site from page 4 to page 2 within weeks — without creating a single new piece of content."},{h3:"2. The Wrong Keywords"},{p:"We see this constantly: brands targeting generic terms like 'digital marketing agency' instead of intent-driven terms like 'digital marketing agency for D2C brands in India'. The long-tail is where buyers live."},{h3:"3. Zero Domain Authority"},{p:"Google uses backlinks as votes of confidence. Building real, white-hat backlinks from relevant industry sites is a 3–6 month investment that pays for years."},{h2:"The 90-Day Fix Framework"},{p:"<strong>Month 1:</strong> Full technical audit + fix. Keyword research and topical cluster mapping. Set up GA4 and Google Search Console properly."},{p:"<strong>Month 2:</strong> Launch the content calendar. Publish 6–8 high-quality SEO articles targeting buyer-intent keywords. Begin outreach for 8–10 quality backlinks."},{p:"<strong>Month 3:</strong> Analyse what's ranking. Double down on winning topics. Continue link building. Refine on-page elements based on click-through rate data."},{h2:"The One Thing That Changes Everything"},{p:"Consistency. SEO is a compound investment. The brands that dominate Google built systematic, month-over-month content and authority. The best time to start was 6 months ago. The second-best time is today."}]},
-  {id:'reels-formula',cat:'Social Media',title:"The Reels Formula That Got Our Client 2.3M Views Overnight",date:'Feb 28, 2025',read:'6 min read',img:'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=900&auto=format&fit=crop&q=80',excerpt:"The hook, structure, and strategy behind a viral reel — deconstructed for Indian D2C brands.",lead:"In February 2024, a LuxeThreads reel about 'Why Indian women are choosing ethnic over western for office wear' hit 2.3 million views in 48 hours.",content:[{h2:"The Anatomy of a Viral Reel"},{p:"Viral content isn't luck. It's architecture. Every reel that breaks through shares four components: a disruptive hook (first 2 seconds), a relatable conflict, a satisfying resolution, and a CTA that doesn't feel like a CTA."},{h3:"The Hook Formula"},{p:"<strong>Controversy Hook:</strong> 'Why I stopped wearing western to the office' — creates immediate curiosity and mild controversy."},{p:"<strong>Relatability Hook:</strong> 'POV: You spent 45 mins getting ready but still feel underdressed' — makes the viewer feel seen."},{blockquote:"The LuxeThreads reel opened with: 'Indian offices are finally getting it.' That's controversy + relatability in 6 words."},{h2:"Why Most Brand Reels Fail"},{p:"Brand reels fail because they open with the logo, focus on the product instead of the story, use promotional language instead of authentic voice, and ignore the algorithm's need for watch-time and replays."},{p:"The algorithm doesn't promote your product. It promotes content that gets rewatched, commented on, and shared."},{h2:"The 5-Reel Weekly System"},{p:"For LuxeThreads, we built a weekly system: 2 educational (styling tips), 1 trend commentary, 1 behind-the-scenes, 1 UGC repost. This mix ensures consistency while not over-relying on any one content type."}]},
-  {id:'google-ads-mistakes',cat:'Performance Ads',title:"Why Your Google Ads Are Burning Money — 7 Mistakes We Fixed",date:'Feb 15, 2025',read:'10 min read',img:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&auto=format&fit=crop&q=80',excerpt:"Most Indian SMBs are throwing ₹50,000/month into Google Ads with no return. Here's exactly why.",lead:"In 2024 alone, we audited 34 Google Ads accounts across India. The average wasted spend was 67%. Here are the 7 mistakes we see most often.",content:[{h2:"Mistake 1: Broad Match Keywords Without Negative Keywords"},{p:"Running broad match keywords without an extensive negative keyword list is like leaving your tap running. We've seen accounts paying ₹150/click for searches that will never convert."},{blockquote:"If you don't know which keyword, ad, or audience is generating your leads, you're flying blind."},{h2:"Mistake 2: No Conversion Tracking"},{p:"41% of the accounts we audit have either broken conversion tracking or no tracking at all. They're optimising for clicks — a vanity metric — instead of leads or sales."},{h2:"Mistake 3: Sending Traffic to the Homepage"},{p:"The homepage is a starting point, not a landing page. Sending ad traffic to your homepage versus a purpose-built landing page typically doubles (or more) your cost per lead."},{h2:"Mistake 4: No Remarketing"},{p:"Only 2–3% of visitors convert on the first visit. A well-structured remarketing campaign typically delivers 3–5x better ROAS than prospecting campaigns."}]},
-  {id:'brand-identity',cat:'Branding',title:"Building a Brand Identity That Outlasts Your Competitors",date:'Jan 30, 2025',read:'7 min read',img:'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&auto=format&fit=crop&q=80',excerpt:"Brand isn't your logo. It's every touchpoint your customer experiences. Here's the framework we use.",lead:"We've built 50+ brand identities. The ones that outlast their competitors share one thing: strategic clarity before creative execution.",content:[{h2:"Why Most Brand Identities Fail"},{p:"Most brand identities fail not because they look bad, but because they were built backwards. Founders choose a colour they like, hire a designer for a logo, and call it 'branding.' The result is a visual skin with no soul underneath."},{blockquote:"Strategy without creative is invisible. Creative without strategy is decoration."},{h2:"The Six Brand Identity Deliverables"},{p:"A complete brand identity system includes: Logo (primary, secondary, icon, favicon), Colour palette, Typography system, Iconography and illustration style, Photography and visual direction, and Brand voice and tone guidelines."},{h2:"The Competitive Moat"},{p:"A strong brand identity is one of the hardest things a competitor can copy. They can match your price. They can replicate your product. They cannot copy your brand's relationship with its audience."}]},
-  {id:'31-content-ideas',cat:'Content Strategy',title:"31 Content Ideas for Indian D2C Brands That Actually Convert",date:'Jan 18, 2025',read:'12 min read',img:'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=900&auto=format&fit=crop&q=80',excerpt:"Content doesn't have to be boring. Here are 31 frameworks to turn your content into a lead and sales engine.",lead:"We manage content for 40+ Indian brands. These are the formats that consistently outperform everything else across Instagram, LinkedIn, and YouTube.",content:[{h2:"The Content Pyramid"},{p:"Before the 31 ideas, understand the pyramid: 70% educational/entertainment (top of funnel), 20% trust-building case studies/testimonials (middle), 10% direct offer content (bottom). Most brands invert this."},{h3:"Awareness Content (10 Ideas)"},{p:"1. Industry myth-busting  2. Trend commentary  3. Behind-the-scenes  4. Founder origin story  5. Day in the life  6. Industry data made visual  7. Before/after transformation  8. 'What nobody tells you'  9. Comparison: old way vs your way  10. Cultural relevance content"},{h3:"Conversion Content (10 Ideas)"},{p:"11. Limited-time offer  12. Social proof reel  13. Objection handling  14. Risk-reversal content  15. 'We just restocked'  16. Bundle/value content  17. Urgency content  18. Direct CTA post (keep rare)  19. Partnership announcement  20. Milestone celebration"},{h2:"The Distribution Rule"},{p:"Great content with poor distribution is a tree falling in an empty forest. For every piece you create, spend equal time on distribution: cross-posting, reposting, repurposing, and amplifying through paid spend on the top 20% of organic performers."}]},
+  {id:'reels-formula',cat:'Social Media',title:"The Reels Formula That Got Our Client 2.3M Views Overnight",date:'Feb 28, 2025',read:'6 min read',img:'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=900&auto=format&fit=crop&q=80',excerpt:"The hook, structure, and strategy behind a viral reel — deconstructed for Indian D2C brands.",lead:"In February 2024, a LuxeThreads reel about 'Why Indian women are choosing ethnic over western for office wear' hit 2.3 million views in 48 hours.",content:[{h2:"The Anatomy of a Viral Reel"},{p:"Viral content isn't luck. It's architecture. Every reel that breaks through shares four components: a disruptive hook (first 2 seconds), a relatable conflict, a satisfying resolution, and a CTA that doesn't feel like a CTA."},{h3:"The Hook Formula"},{p:"<strong>Controversy Hook:</strong> 'Why I stopped wearing western to the office' — creates immediate curiosity and mild controversy."},{p:"<strong>Relatability Hook:</strong> 'POV: You spent 45 mins getting ready but still feel underdressed' — makes the viewer feel seen."},{blockquote:"The LuxeThreads reel opened with: 'Indian offices are finally getting it.' That's controversy + relatability in 6 words."},{h2:"Why Most Brand Reels Fail"},{p:"Brand reels fail because they open with the logo, focus on the product instead of the story, use promotional language instead of authentic voice, and ignore the algorithm's need for watch-time and replays."},{h2:"The 5-Reel Weekly System"},{p:"For LuxeThreads, we built a weekly system: 2 educational, 1 trend commentary, 1 behind-the-scenes, 1 UGC repost. This mix ensures consistency while not over-relying on any one content type."}]},
+  {id:'google-ads-mistakes',cat:'Performance Ads',title:"Why Your Google Ads Are Burning Money — 7 Mistakes We Fixed",date:'Feb 15, 2025',read:'10 min read',img:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&auto=format&fit=crop&q=80',excerpt:"Most Indian SMBs are throwing ₹50,000/month into Google Ads with no return. Here's exactly why.",lead:"In 2024 alone, we audited 34 Google Ads accounts across India. The average wasted spend was 67%. Here are the 7 mistakes we see most often.",content:[{h2:"Mistake 1: Broad Match Without Negative Keywords"},{p:"Running broad match keywords without an extensive negative keyword list is like leaving your tap running. We've seen accounts paying ₹150/click for searches that will never convert."},{blockquote:"If you don't know which keyword, ad, or audience is generating your leads, you're flying blind."},{h2:"Mistake 2: No Conversion Tracking"},{p:"41% of the accounts we audit have either broken conversion tracking or no tracking at all. They're optimising for clicks — a vanity metric — instead of leads or sales."},{h2:"Mistake 3: Sending Traffic to the Homepage"},{p:"The homepage is a starting point, not a landing page. Sending ad traffic to your homepage versus a purpose-built landing page typically doubles your cost per lead."},{h2:"Mistake 4: No Remarketing"},{p:"Only 2–3% of visitors convert on the first visit. A well-structured remarketing campaign typically delivers 3–5x better ROAS than prospecting campaigns."}]},
+  {id:'brand-identity',cat:'Branding',title:"Building a Brand Identity That Outlasts Your Competitors",date:'Jan 30, 2025',read:'7 min read',img:'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&auto=format&fit=crop&q=80',excerpt:"Brand isn't your logo. It's every touchpoint your customer experiences. Here's the framework we use.",lead:"We've built 50+ brand identities. The ones that outlast their competitors share one thing: strategic clarity before creative execution.",content:[{h2:"Why Most Brand Identities Fail"},{p:"Most brand identities fail not because they look bad, but because they were built backwards. Founders choose a colour they like, hire a designer for a logo, and call it 'branding.' The result is a visual skin with no soul underneath."},{blockquote:"Strategy without creative is invisible. Creative without strategy is decoration."},{h2:"The Six Brand Identity Deliverables"},{p:"A complete brand identity system includes: Logo (primary, secondary, icon, favicon), Colour palette, Typography system, Iconography and illustration style, Photography direction, and Brand voice guidelines."},{h2:"The Competitive Moat"},{p:"A strong brand identity is one of the hardest things a competitor can copy. They can match your price. They can replicate your product. They cannot copy your brand's relationship with its audience."}]},
+  {id:'31-content-ideas',cat:'Content Strategy',title:"31 Content Ideas for Indian D2C Brands That Actually Convert",date:'Jan 18, 2025',read:'12 min read',img:'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=900&auto=format&fit=crop&q=80',excerpt:"Content doesn't have to be boring. Here are 31 frameworks to turn your content into a lead and sales engine.",lead:"We manage content for 40+ Indian brands. These are the formats that consistently outperform everything else across Instagram, LinkedIn, and YouTube.",content:[{h2:"The Content Pyramid"},{p:"Before the 31 ideas, understand the pyramid: 70% educational/entertainment (top of funnel), 20% trust-building case studies/testimonials (middle), 10% direct offer content (bottom). Most brands invert this."},{h3:"Awareness Content (10 Ideas)"},{p:"1. Industry myth-busting  2. Trend commentary  3. Behind-the-scenes  4. Founder origin story  5. Day in the life  6. Industry data made visual  7. Before/after transformation  8. 'What nobody tells you'  9. Comparison: old way vs your way  10. Cultural relevance content"},{h3:"Conversion Content (10 Ideas)"},{p:"11. Limited-time offer  12. Social proof reel  13. Objection handling  14. Risk-reversal content  15. 'We just restocked'  16. Bundle/value content  17. Urgency content  18. Direct CTA post  19. Partnership announcement  20. Milestone celebration"},{h2:"The Distribution Rule"},{p:"Great content with poor distribution is a tree falling in an empty forest. For every piece you create, spend equal time on distribution: cross-posting, reposting, repurposing, and amplifying through paid spend on the top 20% of organic performers."}]},
   {id:'email-open-rates',cat:'Email Marketing',title:"How We Achieved 42% Email Open Rates for Our Clients in 2024",date:'Jan 5, 2025',read:'9 min read',img:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&auto=format&fit=crop&q=80',excerpt:"The average email open rate in India is under 20%. We consistently hit 42%+. Here's the full playbook.",lead:"Email is still the highest-ROI digital channel when done right. The key word is 'right.' Most brands are doing it profoundly wrong.",content:[{h2:"The Subject Line Architecture"},{p:"Your subject line is 80% of your open rate. We use three formats that consistently outperform: Curiosity Gap, Personalisation + Specificity, and Direct and Honest."},{blockquote:"Never trick subscribers into opening with a misleading subject line. Your open rates spike once and your trust erodes permanently."},{h2:"List Segmentation: The Game Changer"},{p:"Sending the same email to your entire list is the single biggest email mistake most brands make. We segment by: purchase history, engagement level, geographic location, product category interest, and customer lifecycle stage."},{h2:"The Deliverability Foundation"},{p:"All the great subject lines in the world won't help if your emails land in spam. Warm your domain properly, authenticate with DKIM/SPF/DMARC, maintain a healthy bounce rate below 2%, and never buy email lists."}]}
 ];
 
@@ -763,11 +702,11 @@ function useReveal() {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
         e.target.classList.add('v');
-        ['scard','rcard','pstep-s','pstep-f','s-item','wi','tm-card','bs-scoop','blog-card','svc-mini-card','award-card','svc-detail-row'].forEach(cls => {
+        ['scard','rcard','pstep-s','pstep-f','s-item','wi','tm-card','bs-scoop','blog-card','svc-mini-card','award-card','svc-detail-row','wt-kpi'].forEach(cls => {
           e.target.querySelectorAll('.' + cls).forEach((c, i) => {
             c.style.opacity = '0';
             c.style.transform = 'translateY(26px)';
-            c.style.transition = `opacity .6s ${i * .07}s ease,transform .6s ${i * .07}s ease`;
+            c.style.transition = `opacity .6s ${i * .09}s ease,transform .6s ${i * .09}s ease`;
             setTimeout(() => { c.style.opacity = '1'; c.style.transform = 'none'; }, 40);
           });
         });
@@ -849,7 +788,7 @@ function Cursor() {
     tl();
     const hov = () => document.body.classList.add('hov');
     const unhov = () => document.body.classList.remove('hov');
-    document.querySelectorAll('a,button,.scard,.rcard,.wi,.tm-card,.ib-item,.bs-scoop,.pill,.clogo,.blog-card,.svc-mini-card,.svc-detail-row').forEach(el => { el.addEventListener('mouseenter', hov); el.addEventListener('mouseleave', unhov); });
+    document.querySelectorAll('a,button,.scard,.rcard,.wi,.tm-card,.ib-item,.bs-scoop,.pill,.clogo,.blog-card,.svc-mini-card,.svc-detail-row,.wt-kpi').forEach(el => { el.addEventListener('mouseenter', hov); el.addEventListener('mouseleave', unhov); });
     return () => { document.removeEventListener('mousemove', mm); document.removeEventListener('mousemove', tm); cancelAnimationFrame(raf); tEls.forEach(t => t.el.remove()); };
   }, []);
   return <><div id="cur" /><div id="cur-r" /></>;
@@ -871,9 +810,6 @@ function Loader({ onDone }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════
-// PAGE TRANSITION
-// ═══════════════════════════════════════════════════════════
 function PageTransition({ state }) {
   if (!state) return null;
   return <div className={`pt-overlay ${state}`}><div className="pt-panel" /><div className="pt-panel" /><div className="pt-panel" /></div>;
@@ -904,9 +840,6 @@ function Header({ page, nav, openContact }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════
-// MARQUEE
-// ═══════════════════════════════════════════════════════════
 function Marquee() {
   const items = ['SEO', 'Social Media', 'Performance Ads', 'Branding', 'Content Strategy', 'Web Design', 'Email Marketing', 'Analytics', 'Influencer Marketing', 'Video Production'];
   return (
@@ -919,7 +852,7 @@ function Marquee() {
 }
 
 // ═══════════════════════════════════════════════════════════
-// HERO CANVAS (particle network)
+// HERO CANVAS
 // ═══════════════════════════════════════════════════════════
 function HeroCanvas() {
   const ref = useRef(null);
@@ -942,49 +875,26 @@ function HeroCanvas() {
 // HERO SLIDER
 // ═══════════════════════════════════════════════════════════
 const HERO_SLIDES = [
-  {
-    bg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&auto=format&fit=crop&q=80',
-    kicker: 'India\'s Sharpest Digital Agency',
-    headline: <><span>Outfox</span><br /><span className="stroke-txt">Your</span><br /><span>Competition</span></>,
-    sub: 'Data-driven strategies that turn brands into category leaders. Smart, sharp, results-obsessed.',
-  },
-  {
-    bg: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1920&auto=format&fit=crop&q=80',
-    kicker: '200+ Brands Scaled Across India',
-    headline: <><span>Growth</span><br /><span className="stroke-txt">That</span><br /><span><span className="accent">Compounds.</span></span></>,
-    sub: 'Every campaign engineered for real ROI — not vanity metrics. Your brand deserves better than vanilla.',
-  },
-  {
-    bg: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&auto=format&fit=crop&q=80',
-    kicker: '7+ Years · ₹50Cr+ Ad Spend Managed',
-    headline: <><span>Results</span><br /><span className="stroke-txt">Not</span><br /><span>Excuses.</span></>,
-    sub: '10x ROI. 340% sales. 225x traffic. Real numbers from real clients who trusted us to deliver.',
-  },
+  { bg:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&auto=format&fit=crop&q=80', kicker:"India's Sharpest Digital Agency", headline:<><span>Outfox</span><br /><span className="stroke-txt">Your</span><br /><span>Competition</span></>, sub:'Data-driven strategies that turn brands into category leaders. Smart, sharp, results-obsessed.' },
+  { bg:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1920&auto=format&fit=crop&q=80', kicker:'200+ Brands Scaled Across India', headline:<><span>Growth</span><br /><span className="stroke-txt">That</span><br /><span><span className="accent">Compounds.</span></span></>, sub:'Every campaign engineered for real ROI — not vanity metrics. Your brand deserves better than vanilla.' },
+  { bg:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&auto=format&fit=crop&q=80', kicker:'7+ Years · ₹50Cr+ Ad Spend Managed', headline:<><span>Results</span><br /><span className="stroke-txt">Not</span><br /><span>Excuses.</span></>, sub:'10x ROI. 340% sales. 225x traffic. Real numbers from real clients who trusted us to deliver.' },
 ];
 
 function Hero({ nav, openContact }) {
   const [slide, setSlide] = useState(0);
   const [key, setKey] = useState(0);
   const timerRef = useRef(null);
-
-  const goTo = useCallback((idx) => {
-    setSlide(idx);
-    setKey(k => k + 1);
-  }, []);
-
+  const goTo = useCallback((idx) => { setSlide(idx); setKey(k => k + 1); }, []);
   useEffect(() => {
     timerRef.current = setInterval(() => goTo(s => (s + 1) % HERO_SLIDES.length), 6000);
     return () => clearInterval(timerRef.current);
   }, [goTo]);
-
   const handleArrow = (dir) => {
     clearInterval(timerRef.current);
     goTo((slide + dir + HERO_SLIDES.length) % HERO_SLIDES.length);
     timerRef.current = setInterval(() => goTo(s => (s + 1) % HERO_SLIDES.length), 6000);
   };
-
   const s = HERO_SLIDES[slide];
-
   return (
     <div className="hero-wrap">
       {HERO_SLIDES.map((sl, i) => (
@@ -995,11 +905,9 @@ function Hero({ nav, openContact }) {
       ))}
       <HeroCanvas />
       <div className="h-grid" />
-      {/* Deco SVGs */}
       <svg className="h-deco h-deco1" width="96" height="96" viewBox="0 0 96 96"><rect x="2" y="2" width="92" height="92" stroke="#f0c845" strokeWidth="1" strokeDasharray="4 5" fill="none" opacity=".8" /><rect x="15" y="15" width="66" height="66" stroke="#f0c845" strokeWidth=".5" fill="none" opacity=".4" /></svg>
       <svg className="h-deco h-deco2" width="62" height="62" viewBox="0 0 62 62"><circle cx="31" cy="31" r="29" stroke="#f0c845" strokeWidth="1" strokeDasharray="3 4" fill="none" opacity=".7" /><circle cx="31" cy="31" r="15" stroke="#f0c845" strokeWidth=".5" fill="none" opacity=".35" /></svg>
       <svg className="h-deco h-deco3" width="48" height="48" viewBox="0 0 48 48"><polygon points="24,2 46,46 2,46" stroke="#f0c845" strokeWidth="1" fill="none" opacity=".55" /></svg>
-
       <div className="hero-content-wrap">
         <div className="hero-content">
           <p className="hero-eyebrow"><span>{s.kicker}</span></p>
@@ -1013,15 +921,14 @@ function Hero({ nav, openContact }) {
             <button className="btn-g" onClick={() => nav('projects')}>View Our Work ↓</button>
           </div>
           <div className="hero-stats-row">
-            {[['200+', 'Brands Scaled'], ['₹50Cr+', 'Ad Spend Managed'], ['98%', 'Client Retention'], ['7+', 'Years of Excellence']].map(([n, l], i) => (
+            {[['200+','Brands Scaled'],['₹50Cr+','Ad Spend Managed'],['98%','Client Retention'],['7+','Years of Excellence']].map(([n,l],i) => (
               <div key={i} className="hs-stat"><div className="hs-stat-n">{n}</div><div className="hs-stat-l">{l}</div></div>
             ))}
           </div>
         </div>
       </div>
-
       <div className="slider-nav">
-        {HERO_SLIDES.map((_, i) => <button key={i} className={`sn-dot ${i === slide ? 'active' : ''}`} onClick={() => handleArrow(i - slide)} />)}
+        {HERO_SLIDES.map((_,i) => <button key={i} className={`sn-dot ${i===slide?'active':''}`} onClick={() => handleArrow(i-slide)} />)}
       </div>
       <div className="slider-arrows">
         <button className="sl-arr" onClick={() => handleArrow(-1)}>←</button>
@@ -1032,11 +939,7 @@ function Hero({ nav, openContact }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════
-// PAGE HERO BANNER (inner pages) — single clean headline
-// ═══════════════════════════════════════════════════════════
 function PageHero({ label, title, strokeWord, sub }) {
-  // title = main line, strokeWord = the word in stroke style
   const titleParts = strokeWord ? title.split(strokeWord) : [title];
   return (
     <div className="page-hero">
@@ -1044,11 +947,7 @@ function PageHero({ label, title, strokeWord, sub }) {
       <div className="page-hero-content">
         <div className="page-hero-label">{label}</div>
         <div className="page-hero-title">
-          {strokeWord ? (
-            <>{titleParts[0]}<span className="stroke">{strokeWord}</span>{titleParts[1]}</>
-          ) : (
-            <span className="solid">{title}</span>
-          )}
+          {strokeWord ? <>{titleParts[0]}<span className="stroke">{strokeWord}</span>{titleParts[1]}</> : <span className="solid">{title}</span>}
         </div>
         {sub && <p className="page-hero-sub">{sub}</p>}
       </div>
@@ -1057,36 +956,36 @@ function PageHero({ label, title, strokeWord, sub }) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// ABOUT SECTION (Home page version — short intro only)
+// ABOUT SECTION (Home)
 // ═══════════════════════════════════════════════════════════
 function AboutSection({ nav, openSvc }) {
   useReveal();
   return (
     <div className="about-bg">
       <section className="sec on-yellow">
-        <svg style={{ position: 'absolute', top: '5%', right: '3%', width: '140px', height: '140px', opacity: '.042', pointerEvents: 'none' }} viewBox="0 0 140 140"><circle cx="70" cy="70" r="64" stroke="#0e104b" strokeWidth="1" fill="none" /><circle cx="70" cy="70" r="40" stroke="#0e104b" strokeWidth=".5" fill="none" /><circle cx="70" cy="70" r="18" stroke="#0e104b" strokeWidth=".5" fill="none" /><line x1="6" y1="70" x2="134" y2="70" stroke="#0e104b" strokeWidth=".5" /><line x1="70" y1="6" x2="70" y2="134" stroke="#0e104b" strokeWidth=".5" /></svg>
+        <svg style={{ position:'absolute',top:'5%',right:'3%',width:'140px',height:'140px',opacity:'.042',pointerEvents:'none' }} viewBox="0 0 140 140"><circle cx="70" cy="70" r="64" stroke="#0e104b" strokeWidth="1" fill="none" /><circle cx="70" cy="70" r="40" stroke="#0e104b" strokeWidth=".5" fill="none" /><circle cx="70" cy="70" r="18" stroke="#0e104b" strokeWidth=".5" fill="none" /><line x1="6" y1="70" x2="134" y2="70" stroke="#0e104b" strokeWidth=".5" /><line x1="70" y1="6" x2="70" y2="134" stroke="#0e104b" strokeWidth=".5" /></svg>
         <div className="ab-grid">
           <div className="ab-vis rev-l">
-            <div className="ab-img-a shimmer"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&auto=format&fit=crop&q=80" alt="Agency team at work" /></div>
+            <div className="ab-img-a shimmer"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&auto=format&fit=crop&q=80" alt="Agency team" /></div>
             <div className="ab-stat-a"><div className="ab-stat-n">7+</div><div className="ab-stat-l">Years</div></div>
             <div className="ab-badge">🦊</div>
-            <div className="ab-img-b shimmer"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&auto=format&fit=crop&q=80" alt="Analytics dashboard" /></div>
+            <div className="ab-img-b shimmer"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&auto=format&fit=crop&q=80" alt="Analytics" /></div>
             <div className="ab-stat-b"><div className="ab-stat-n">200+</div><div className="ab-stat-l">Brands Scaled</div></div>
           </div>
           <div className="ab-txt rev-r">
             <div className="sec-label"><span>Who We Are</span></div>
             <h2 className="sec-title">We Hunt <span className="out">Results.</span></h2>
-            <p style={{ marginTop: '16px' }}>At <strong>Ereynard</strong>, we don't just run campaigns — we engineer growth. Like a fox in the digital wild, we're cunning, precise, and always a few moves ahead.</p>
+            <p style={{ marginTop:'16px' }}>At <strong>Ereynard</strong>, we don't just run campaigns — we engineer growth. Like a fox in the digital wild, we're cunning, precise, and always a few moves ahead.</p>
             <p>A full-service agency built on <strong>data-driven strategy</strong>, sharp creative thinking, and an obsession with your brand's success.</p>
             <p>Our team blends analytical minds with creative souls to craft campaigns that don't just look good — they <strong>perform exceptionally</strong>.</p>
             <div className="pills">
-              {[['strategy', 'Strategy First'], ['analytics', 'Data-Driven'], ['branding', 'Creative Bold'], ['performance', 'Results Focused']].map(([k, l]) => <button key={k} className="pill" onClick={() => openSvc(k)}>{l}</button>)}
+              {[['strategy','Strategy First'],['analytics','Data-Driven'],['branding','Creative Bold'],['performance','Results Focused']].map(([k,l]) => <button key={k} className="pill" onClick={() => openSvc(k)}>{l}</button>)}
             </div>
             <div className="team-row">
-              <div className="team-avs">{['1507003211169-0a1dd7228f2d', '1494790108755-2616b612b786', '1472099645785-5658abf4ff4e', '1527980965255-d3b416303d12'].map((id, i) => <div key={i} className="tav"><img src={`https://images.unsplash.com/photo-${id}?w=80&h=80&auto=format&fit=crop&q=80`} alt="" /></div>)}</div>
+              <div className="team-avs">{['1507003211169-0a1dd7228f2d','1494790108755-2616b612b786','1472099645785-5658abf4ff4e','1527980965255-d3b416303d12'].map((id,i) => <div key={i} className="tav"><img src={`https://images.unsplash.com/photo-${id}?w=80&h=80&auto=format&fit=crop&q=80`} alt="" /></div>)}</div>
               <div className="team-cp"><strong>25+ Specialists</strong>Ready to grow your brand</div>
             </div>
-            <div style={{ marginTop: '18px' }}><button className="btn-out" onClick={() => nav('about')}><span>Our Full Story</span><span>→</span></button></div>
+            <div style={{ marginTop:'18px' }}><button className="btn-out" onClick={() => nav('about')}><span>Our Full Story</span><span>→</span></button></div>
           </div>
         </div>
       </section>
@@ -1103,40 +1002,40 @@ function BrandStory({ nav }) {
     <div className="bs-bg">
       <section className="sec on-navy">
         <div className="bs-bg-txt">31 FLAVORS</div>
-        <div className="reveal" style={{ position: 'relative', zIndex: 1, marginBottom: '48px' }}>
+        <div className="reveal" style={{ position:'relative',zIndex:1,marginBottom:'48px' }}>
           <div className="sec-label"><span>Our Origin</span></div>
           <h2 className="sec-title">The Brand <span className="out">Story</span></h2>
         </div>
-        <div className="bs-two reveal" style={{ position: 'relative', zIndex: 1 }}>
+        <div className="bs-two reveal" style={{ position:'relative',zIndex:1 }}>
           <div className="bs-img-wrap rev-l">
-            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=700&auto=format&fit=crop&q=80" alt="Generic marketing" />
+            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=700&auto=format&fit=crop&q=80" alt="Old way" />
             <div className="bs-img-lbl">The Old Way</div>
           </div>
           <div className="rev-r">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '11px' }}><span style={{ width: '18px', height: '1.5px', background: 'rgba(240,200,69,.36)', display: 'inline-block' }} /><span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '.24em', textTransform: 'uppercase', color: 'rgba(240,200,69,.42)' }}>The Problem</span></div>
-            <h3 style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: 'clamp(30px,3.8vw,50px)', color: 'var(--Y)', lineHeight: '1.05', marginBottom: '16px' }}>Settling for <span style={{ color: 'transparent', WebkitTextStroke: '1.5px rgba(240,200,69,.3)' }}>Vanilla</span></h3>
-            <p style={{ fontSize: '14px', lineHeight: '1.8', color: 'rgba(240,200,69,.48)', marginBottom: '11px' }}>Too many businesses are served the same thing: <strong style={{ color: 'var(--Y)' }}>Vanilla Content.</strong> Endless posts, generic strategies, high invoices — but zero engagement, no new customers, stagnant sales.</p>
-            <p style={{ fontSize: '14px', lineHeight: '1.8', color: 'rgba(240,200,69,.48)' }}>They're paying for <em style={{ fontFamily: 'var(--FI)', fontStyle: 'italic', color: 'rgba(240,200,69,.68)' }}>activity</em>, not for <strong style={{ color: 'var(--Y)' }}>results.</strong></p>
+            <div style={{ display:'flex',alignItems:'center',gap:'8px',marginBottom:'11px' }}><span style={{ width:'18px',height:'1.5px',background:'rgba(240,200,69,.36)',display:'inline-block' }} /><span style={{ fontSize:'10px',fontWeight:700,letterSpacing:'.24em',textTransform:'uppercase',color:'rgba(240,200,69,.42)' }}>The Problem</span></div>
+            <h3 style={{ fontFamily:'var(--FM)',fontWeight:800,fontSize:'clamp(30px,3.8vw,50px)',color:'var(--Y)',lineHeight:'1.05',marginBottom:'16px' }}>Settling for <span style={{ color:'transparent',WebkitTextStroke:'1.5px rgba(240,200,69,.3)' }}>Vanilla</span></h3>
+            <p style={{ fontSize:'14px',lineHeight:'1.8',color:'rgba(240,200,69,.48)',marginBottom:'11px' }}>Too many businesses are served the same thing: <strong style={{ color:'var(--Y)' }}>Vanilla Content.</strong> Endless posts, generic strategies, high invoices — but zero engagement, no new customers, stagnant sales.</p>
+            <p style={{ fontSize:'14px',lineHeight:'1.8',color:'rgba(240,200,69,.48)' }}>They're paying for <em style={{ fontFamily:'var(--FI)',fontStyle:'italic',color:'rgba(240,200,69,.68)' }}>activity</em>, not for <strong style={{ color:'var(--Y)' }}>results.</strong></p>
           </div>
         </div>
-        <div className="bs-inspo reveal" style={{ position: 'relative', zIndex: 1 }}>
+        <div className="bs-inspo reveal" style={{ position:'relative',zIndex:1 }}>
           <div className="bs-1945">1945</div>
           <div className="bs-inspo-inner">
             <div className="bs-inspo-icon">🍨</div>
             <div>
-              <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '.28em', textTransform: 'uppercase', color: 'rgba(14,16,75,.38)', marginBottom: '8px' }}>The Inspiration</p>
+              <p style={{ fontSize:'9px',fontWeight:700,letterSpacing:'.28em',textTransform:'uppercase',color:'rgba(14,16,75,.38)',marginBottom:'8px' }}>The Inspiration</p>
               <div className="bs-inspo-title">The Joy of 31 Flavors</div>
-              <p className="bs-inspo-text" style={{ marginBottom: '9px' }}>In 1945, Baskin & Robbins transformed ice cream by offering 31 Flavors — a different choice for every day of the month. They promised variety, quality, and the perfect fit for every craving.</p>
-              <p className="bs-inspo-text"><strong style={{ color: 'var(--B)' }}>At Ereynard Digital, we believe your brand deserves that same commitment.</strong> We founded this agency to break the cycle of vanilla marketing and deliver strategies designed purely to grow your brand.</p>
+              <p className="bs-inspo-text" style={{ marginBottom:'9px' }}>In 1945, Baskin & Robbins transformed ice cream by offering 31 Flavors — a different choice for every day of the month. They promised variety, quality, and the perfect fit for every craving.</p>
+              <p className="bs-inspo-text"><strong style={{ color:'var(--B)' }}>At Ereynard Digital, we believe your brand deserves that same commitment.</strong> We founded this agency to break the cycle of vanilla marketing.</p>
             </div>
           </div>
         </div>
-        <div className="reveal" style={{ marginBottom: '34px', position: 'relative', zIndex: 1 }}>
-          <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '.28em', textTransform: 'uppercase', color: 'rgba(240,200,69,.4)', marginBottom: '8px' }}>Our Philosophy</p>
-          <h3 style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: 'clamp(32px,4.5vw,62px)', color: 'var(--Y)', lineHeight: '1.05' }}>Three Scoops <span style={{ color: 'transparent', WebkitTextStroke: '1px rgba(240,200,69,.22)' }}>of Growth</span></h3>
+        <div className="reveal" style={{ marginBottom:'34px',position:'relative',zIndex:1 }}>
+          <p style={{ fontSize:'9px',fontWeight:700,letterSpacing:'.28em',textTransform:'uppercase',color:'rgba(240,200,69,.4)',marginBottom:'8px' }}>Our Philosophy</p>
+          <h3 style={{ fontFamily:'var(--FM)',fontWeight:800,fontSize:'clamp(32px,4.5vw,62px)',color:'var(--Y)',lineHeight:'1.05' }}>Three Scoops <span style={{ color:'transparent',WebkitTextStroke:'1px rgba(240,200,69,.22)' }}>of Growth</span></h3>
         </div>
-        <div className="bs-scoops reveal" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '2px', marginBottom: '64px', position: 'relative', zIndex: 1 }}>
-          {[{ bg: '💰', icon: '💰', n: 'Scoop 01', t: 'Pocket-Friendly', sub: 'Partnership', d: 'Premium agency expertise without the inflated cost. Genuine ROI delivered.', a: 'Value & ROI →' }, { bg: '👑', icon: '👑', n: 'Scoop 02', t: 'Quality', sub: 'Obsession', d: "We don't do content volume — we do engagement quality that converts.", a: 'Trust & Depth →' }, { bg: '🎨', icon: '🎨', n: 'Scoop 03', t: 'Custom', sub: 'Strategy', d: 'Every brand is unique. We refuse templates. SEO + Social + Ads + Branding built for you.', a: 'Clarity & Results →' }].map((s, i) => (
+        <div className="bs-scoops reveal" style={{ display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'2px',marginBottom:'64px',position:'relative',zIndex:1 }}>
+          {[{bg:'💰',icon:'💰',n:'Scoop 01',t:'Pocket-Friendly',sub:'Partnership',d:'Premium agency expertise without the inflated cost. Genuine ROI delivered.',a:'Value & ROI →'},{bg:'👑',icon:'👑',n:'Scoop 02',t:'Quality',sub:'Obsession',d:"We don't do content volume — we do engagement quality that converts.",a:'Trust & Depth →'},{bg:'🎨',icon:'🎨',n:'Scoop 03',t:'Custom',sub:'Strategy',d:'Every brand is unique. We refuse templates. SEO + Social + Ads + Branding built for you.',a:'Clarity & Results →'}].map((s,i) => (
             <div key={i} className="bs-scoop">
               <div className="bs-sc-bg">{s.bg}</div>
               <div className="bs-icon-w">{s.icon}</div>
@@ -1147,17 +1046,17 @@ function BrandStory({ nav }) {
             </div>
           ))}
         </div>
-        <div className="bs-promise reveal" style={{ position: 'relative', zIndex: 1 }}>
+        <div className="bs-promise reveal" style={{ position:'relative',zIndex:1 }}>
           <div className="bs-promise-grid">
             <div>
-              <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '.28em', textTransform: 'uppercase', color: 'rgba(240,200,69,.38)', marginBottom: '8px' }}>Our Promise</p>
-              <h3 style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: 'clamp(30px,4vw,54px)', color: 'var(--Y)', lineHeight: '1.05', marginBottom: '16px' }}>The Ereynard <span style={{ color: 'transparent', WebkitTextStroke: '1px rgba(240,200,69,.24)' }}>Difference</span></h3>
-              <p style={{ fontSize: '14px', lineHeight: '1.8', color: 'rgba(240,200,69,.48)', marginBottom: '10px' }}>We are the <strong style={{ color: 'var(--Y)' }}>"31 Flavours"</strong> for your brand's digital existence — every ingredient chosen with purpose, every campaign a perfectly customised scoop.</p>
-              <p style={{ fontSize: '14px', lineHeight: '1.8', color: 'rgba(240,200,69,.48)', marginBottom: '22px' }}>Ereynard Digital makes your brand's growth <strong style={{ color: 'var(--Y)' }}>exciting, customised, and — most importantly — profitable.</strong></p>
+              <p style={{ fontSize:'9px',fontWeight:700,letterSpacing:'.28em',textTransform:'uppercase',color:'rgba(240,200,69,.38)',marginBottom:'8px' }}>Our Promise</p>
+              <h3 style={{ fontFamily:'var(--FM)',fontWeight:800,fontSize:'clamp(30px,4vw,54px)',color:'var(--Y)',lineHeight:'1.05',marginBottom:'16px' }}>The Ereynard <span style={{ color:'transparent',WebkitTextStroke:'1px rgba(240,200,69,.24)' }}>Difference</span></h3>
+              <p style={{ fontSize:'14px',lineHeight:'1.8',color:'rgba(240,200,69,.48)',marginBottom:'10px' }}>We are the <strong style={{ color:'var(--Y)' }}>"31 Flavours"</strong> for your brand's digital existence — every ingredient chosen with purpose.</p>
+              <p style={{ fontSize:'14px',lineHeight:'1.8',color:'rgba(240,200,69,.48)',marginBottom:'22px' }}>Ereynard Digital makes your brand's growth <strong style={{ color:'var(--Y)' }}>exciting, customised, and — most importantly — profitable.</strong></p>
               <button className="btn-p" onClick={() => nav('contact')}><span>Start Your Flavour</span><span>→</span></button>
             </div>
             <div>
-              {[{ i: '🥄', t: 'We Give You the Pink Spoon', d: 'We constantly test, analyse, and refine — ensuring every rupee invested delivers the highest conversion rates.' }, { i: '🍦', t: 'We Deliver the Full Cone', d: "Our focus is never post count — it's the new customer, increased sales, and growth that compounds month after month." }].map((p, i) => (
+              {[{i:'🥄',t:'We Give You the Pink Spoon',d:'We constantly test, analyse, and refine — ensuring every rupee invested delivers the highest conversion rates.'},{i:'🍦',t:'We Deliver the Full Cone',d:"Our focus is never post count — it's the new customer, increased sales, and growth that compounds month after month."}].map((p,i) => (
                 <div key={i} className="bs-p-item"><div className="bs-p-icon">{p.i}</div><div><div className="bs-p-title">{p.t}</div><p className="bs-p-txt">{p.d}</p></div></div>
               ))}
             </div>
@@ -1169,11 +1068,11 @@ function BrandStory({ nav }) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// SERVICES MINI (homepage — compact)
+// SERVICES MINI
 // ═══════════════════════════════════════════════════════════
 function ServicesMini({ nav, openSvc }) {
   useReveal();
-  const svcs = [{ k: 'seo', i: '🔍', t: 'SEO' }, { k: 'social', i: '📱', t: 'Social Media' }, { k: 'performance', i: '🎯', t: 'Performance Ads' }, { k: 'content', i: '✍️', t: 'Content Strategy' }, { k: 'web', i: '🌐', t: 'Web Design' }, { k: 'analytics', i: '📊', t: 'Analytics' }, { k: 'branding', i: '🎨', t: 'Branding' }, { k: 'email', i: '📧', t: 'Email Marketing' }, { k: 'influencer', i: '🤝', t: 'Influencer Marketing' }];
+  const svcs = [{k:'seo',i:'🔍',t:'SEO'},{k:'social',i:'📱',t:'Social Media'},{k:'performance',i:'🎯',t:'Performance Ads'},{k:'content',i:'✍️',t:'Content Strategy'},{k:'web',i:'🌐',t:'Web Design'},{k:'analytics',i:'📊',t:'Analytics'},{k:'branding',i:'🎨',t:'Branding'},{k:'email',i:'📧',t:'Email Marketing'},{k:'influencer',i:'🤝',t:'Influencer Marketing'}];
   return (
     <div className="svc-bg">
       <section className="sec on-navy">
@@ -1191,7 +1090,7 @@ function ServicesMini({ nav, openSvc }) {
             </div>
           ))}
         </div>
-        <div style={{ marginTop: '28px', textAlign: 'center' }}>
+        <div style={{ marginTop:'28px',textAlign:'center' }}>
           <button className="btn-p" onClick={() => nav('services')}><span>Explore All Services</span><span>→</span></button>
         </div>
       </section>
@@ -1200,21 +1099,19 @@ function ServicesMini({ nav, openSvc }) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// SERVICES FULL (services page — detailed row list)
+// SERVICES FULL
 // ═══════════════════════════════════════════════════════════
 function ServicesFull({ openSvc }) {
-  useReveal();
-  useTilt();
-  const svcs = Object.entries(SVC_DATA).map(([k, v]) => ({ k, ...v }));
+  useReveal(); useTilt();
+  const svcs = Object.entries(SVC_DATA).map(([k,v]) => ({ k,...v }));
   return (
     <div className="svc-bg">
       <section className="sec on-navy">
         <div className="reveal">
           <div className="sec-label"><span>Complete Service Offering</span></div>
           <h2 className="sec-title">Everything We <span className="out">Deliver</span></h2>
-          <p className="sec-intro">9 specialised services, each a complete growth engine. Click any service to see the full breakdown — deliverables, strategy, and proven results.</p>
+          <p className="sec-intro">9 specialised services, each a complete growth engine. Click any service to see the full breakdown.</p>
         </div>
-        {/* Full card grid for services */}
         <div className="svc-full-grid">
           {svcs.filter(s => s.k !== 'strategy').map(s => (
             <div key={s.k} className="scard reveal" onClick={() => openSvc(s.k)}>
@@ -1226,26 +1123,17 @@ function ServicesFull({ openSvc }) {
             </div>
           ))}
         </div>
-        {/* Detailed list view below */}
-        <div style={{ marginTop: '56px' }}>
-          <div className="sec-label" style={{ marginBottom: '6px' }}><span>Service Details</span></div>
-          <h3 style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: '28px', color: 'var(--Y)', marginBottom: '4px' }}>What's Included in Each Service</h3>
-          <p style={{ fontSize: '13px', color: 'rgba(240,200,69,.44)', marginBottom: '0' }}>Click any row to see full scope, deliverables, and case study results.</p>
+        <div style={{ marginTop:'56px' }}>
+          <div className="sec-label" style={{ marginBottom:'6px' }}><span>Service Details</span></div>
+          <h3 style={{ fontFamily:'var(--FM)',fontWeight:800,fontSize:'28px',color:'var(--Y)',marginBottom:'4px' }}>What's Included in Each Service</h3>
+          <p style={{ fontSize:'13px',color:'rgba(240,200,69,.44)',marginBottom:'0' }}>Click any row to see full scope, deliverables, and case study results.</p>
         </div>
         <div className="svc-detail-list">
           {svcs.map(s => (
             <div key={s.k} className="svc-detail-row reveal" onClick={() => openSvc(s.k)}>
-              <div className="sdr-left">
-                <span className="sdr-icon">{s.icon}</span>
-                <div>
-                  <div className="sdr-num">{s.num}</div>
-                  <div className="sdr-name">{s.title}</div>
-                </div>
-              </div>
+              <div className="sdr-left"><span className="sdr-icon">{s.icon}</span><div><div className="sdr-num">{s.num}</div><div className="sdr-name">{s.title}</div></div></div>
               <div className="sdr-desc">{s.desc}</div>
-              <div className="sdr-tags">
-                {s.tags.map((tag, i) => <span key={i} className="sdr-tag">{tag}</span>)}
-              </div>
+              <div className="sdr-tags">{s.tags.map((tag,i) => <span key={i} className="sdr-tag">{tag}</span>)}</div>
             </div>
           ))}
         </div>
@@ -1278,7 +1166,7 @@ function Stats() {
   return (
     <div className="stats-bg" ref={ref}>
       <div className="stats-grid">
-        {[{ t: 200, s: '+', l: 'Brands Scaled' }, { t: 7, s: '+', l: 'Years of Expertise' }, { t: 98, s: '%', l: 'Client Retention' }, { t: 50, s: 'Cr+', l: 'Ad Spend Managed' }].map((s, i) => (
+        {[{t:200,s:'+',l:'Brands Scaled'},{t:7,s:'+',l:'Years of Expertise'},{t:98,s:'%',l:'Client Retention'},{t:50,s:'Cr+',l:'Ad Spend Managed'}].map((s,i) => (
           <div key={i} className="s-item"><div className="s-num" data-t={s.t} data-s={s.s}>0</div><div className="s-lbl">{s.l}</div></div>
         ))}
       </div>
@@ -1291,34 +1179,34 @@ function Stats() {
 // ═══════════════════════════════════════════════════════════
 function ImageBand() {
   const items = [
-    { url: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=400&auto=format&fit=crop&q=80', tag: 'Social Media' },
-    { url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80', tag: 'Analytics' },
-    { url: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&auto=format&fit=crop&q=80', tag: 'SEO' },
-    { url: 'https://images.unsplash.com/photo-1542626991-cbc4e32524cc?w=400&auto=format&fit=crop&q=80', tag: 'Strategy' },
-    { url: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&auto=format&fit=crop&q=80', tag: 'Web Design' },
-    { url: 'https://images.unsplash.com/photo-1634942537034-2531766767d1?w=400&auto=format&fit=crop&q=80', tag: 'Branding' },
-    { url: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&auto=format&fit=crop&q=80', tag: 'Content' },
-    { url: 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=400&auto=format&fit=crop&q=80', tag: 'Paid Ads' },
+    {url:'https://images.unsplash.com/photo-1553484771-371a605b060b?w=400&auto=format&fit=crop&q=80',tag:'Social Media'},
+    {url:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80',tag:'Analytics'},
+    {url:'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&auto=format&fit=crop&q=80',tag:'SEO'},
+    {url:'https://images.unsplash.com/photo-1542626991-cbc4e32524cc?w=400&auto=format&fit=crop&q=80',tag:'Strategy'},
+    {url:'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&auto=format&fit=crop&q=80',tag:'Web Design'},
+    {url:'https://images.unsplash.com/photo-1634942537034-2531766767d1?w=400&auto=format&fit=crop&q=80',tag:'Branding'},
+    {url:'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&auto=format&fit=crop&q=80',tag:'Content'},
+    {url:'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=400&auto=format&fit=crop&q=80',tag:'Paid Ads'},
   ];
   return (
     <div className="imgband">
       <div className="ibt">
-        {[...items, ...items].map((item, i) => <div key={i} className="ib-item"><img src={item.url} alt={item.tag} /><span className="ib-tag">{item.tag}</span></div>)}
+        {[...items,...items].map((item,i) => <div key={i} className="ib-item"><img src={item.url} alt={item.tag} /><span className="ib-tag">{item.tag}</span></div>)}
       </div>
     </div>
   );
 }
 
 // ═══════════════════════════════════════════════════════════
-// PROCESS SHORT (homepage)
+// PROCESS SHORT
 // ═══════════════════════════════════════════════════════════
 function ProcessShort({ nav }) {
   useReveal();
   const steps = [
-    { n: '01', t: 'Discover', d: 'Deep-dive into your brand, audience, and goals. Only intelligence from real data.' },
-    { n: '02', t: 'Strategise', d: 'A bespoke digital roadmap tailored to your objectives. Every move intentional.' },
-    { n: '03', t: 'Execute', d: 'Our specialists launch campaigns with precision across all chosen channels.' },
-    { n: '04', t: 'Optimise', d: "Track, refine, scale. What works gets amplified. Growth never stops." },
+    {n:'01',t:'Discover',d:'Deep-dive into your brand, audience, and goals. Only intelligence from real data.'},
+    {n:'02',t:'Strategise',d:'A bespoke digital roadmap tailored to your objectives. Every move intentional.'},
+    {n:'03',t:'Execute',d:'Our specialists launch campaigns with precision across all chosen channels.'},
+    {n:'04',t:'Optimise',d:"Track, refine, scale. What works gets amplified. Growth never stops."},
   ];
   return (
     <div className="process-bg">
@@ -1329,7 +1217,7 @@ function ProcessShort({ nav }) {
           <p className="sec-intro">Four deliberate steps from discovery to compounding growth.</p>
         </div>
         <div className="proc-steps-short">
-          {steps.map((s, i) => (
+          {steps.map((s,i) => (
             <div key={i} className="pstep-s reveal">
               <div className="ps-num">{s.n}</div>
               <h3>{s.t}</h3>
@@ -1337,7 +1225,7 @@ function ProcessShort({ nav }) {
             </div>
           ))}
         </div>
-        <div style={{ marginTop: '28px', textAlign: 'center' }}>
+        <div style={{ marginTop:'28px',textAlign:'center' }}>
           <button className="btn-g" onClick={() => nav('services')}>See Full Process →</button>
         </div>
       </section>
@@ -1346,35 +1234,15 @@ function ProcessShort({ nav }) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// PROCESS FULL (process page)
+// PROCESS FULL
 // ═══════════════════════════════════════════════════════════
 function ProcessFull() {
   useReveal();
   const steps = [
-    {
-      img: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop&q=80',
-      n: '01', t: 'Discover',
-      d: "We don't assume — we investigate. Before a single ad or post, we conduct a comprehensive brand audit, audience analysis, competitor mapping, and goal-setting workshop.",
-      items: ['Brand & digital audit', 'Audience persona research', 'Competitor gap analysis', 'Goal setting & KPI definition', 'Budget allocation planning']
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?w=800&auto=format&fit=crop&q=80',
-      n: '02', t: 'Strategise',
-      d: 'Every brand gets a bespoke digital roadmap — not a template. We map each channel, content type, and campaign to specific business outcomes.',
-      items: ['Channel selection & mix', '90-day content roadmap', 'Campaign architecture', 'Creative strategy brief', 'Attribution framework setup']
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&auto=format&fit=crop&q=80',
-      n: '03', t: 'Execute',
-      d: 'Our specialists roll out every element with precision — no cutting corners, no skipped steps. Every campaign, content piece, and ad set is quality-checked before launch.',
-      items: ['Campaign launch & QA', 'Creative production', 'Landing page development', 'Tracking & pixel setup', 'Cross-channel coordination']
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1591696205602-2f950c417cb9?w=800&auto=format&fit=crop&q=80',
-      n: '04', t: 'Optimise',
-      d: 'We analyse continuously, refine relentlessly, and scale what works. Monthly strategy reviews ensure your campaign evolves as your business grows.',
-      items: ['Weekly performance analysis', 'A/B testing ongoing', 'Budget reallocation', 'Monthly strategy review', 'Quarterly growth planning']
-    },
+    {img:'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop&q=80',n:'01',t:'Discover',d:"We don't assume — we investigate. Comprehensive brand audit, audience analysis, competitor mapping, and goal-setting workshop.",items:['Brand & digital audit','Audience persona research','Competitor gap analysis','Goal setting & KPI definition','Budget allocation planning']},
+    {img:'https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?w=800&auto=format&fit=crop&q=80',n:'02',t:'Strategise',d:'Every brand gets a bespoke digital roadmap — not a template. We map each channel, content type, and campaign to specific business outcomes.',items:['Channel selection & mix','90-day content roadmap','Campaign architecture','Creative strategy brief','Attribution framework setup']},
+    {img:'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&auto=format&fit=crop&q=80',n:'03',t:'Execute',d:'Our specialists roll out every element with precision — no cutting corners, no skipped steps. Quality-checked before launch.',items:['Campaign launch & QA','Creative production','Landing page development','Tracking & pixel setup','Cross-channel coordination']},
+    {img:'https://images.unsplash.com/photo-1591696205602-2f950c417cb9?w=800&auto=format&fit=crop&q=80',n:'04',t:'Optimise',d:'We analyse continuously, refine relentlessly, and scale what works. Monthly strategy reviews ensure your campaign evolves.',items:['Weekly performance analysis','A/B testing ongoing','Budget reallocation','Monthly strategy review','Quarterly growth planning']},
   ];
   return (
     <div className="process-bg">
@@ -1385,16 +1253,14 @@ function ProcessFull() {
           <p className="sec-intro">Four deliberate steps that transform brands into category leaders. Every phase is documented, measurable, and built for compounding results.</p>
         </div>
         <div className="proc-steps-full">
-          {steps.map((s, i) => (
+          {steps.map((s,i) => (
             <div key={i} className="pstep-f reveal">
               <div className="pstep-f-img"><img src={s.img} alt={s.t} /></div>
               <div className="pstep-f-body">
                 <div className="pstep-f-num">STEP {s.n}</div>
                 <div className="pstep-f-title">{s.t}</div>
                 <p className="pstep-f-desc">{s.d}</p>
-                <div className="pstep-f-items">
-                  {s.items.map((item, j) => <div key={j} className="pstep-f-item">{item}</div>)}
-                </div>
+                <div className="pstep-f-items">{s.items.map((item,j) => <div key={j} className="pstep-f-item">{item}</div>)}</div>
               </div>
             </div>
           ))}
@@ -1405,73 +1271,86 @@ function ProcessFull() {
 }
 
 // ═══════════════════════════════════════════════════════════
-// WORK / PROJECTS
+// WORK TEASER — Home page only (NO images, compact, redirects to work page)
 // ═══════════════════════════════════════════════════════════
-function WorkSection({ openCamp, showViewAll, nav }) {
+function WorkTeaser({ nav }) {
   useReveal();
-  const all = [
-    { k: 'novabrand', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80', tag: 'Performance Marketing', title: 'NovaBrand — 10x ROI', meta: 'Google Ads · Meta Ads · Landing Page · Analytics', feat: true },
-    { k: 'luxethreads', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&auto=format&fit=crop&q=80', tag: 'Social Media', title: 'LuxeThreads — 340% Sales', meta: 'Instagram · Reels · Influencer · Content' },
-    { k: 'technest', img: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=900&auto=format&fit=crop&q=80', tag: 'SEO + Content', title: 'TechNest — 225x Traffic', meta: 'Technical SEO · Blog Strategy · Link Building' },
-    { k: 'growfast', img: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=900&auto=format&fit=crop&q=80', tag: 'Performance Ads', title: 'GrowFast — -60% CPL', meta: 'Google Ads · Meta Ads · CRO · Analytics' },
-    { k: 'eduspark', img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=900&auto=format&fit=crop&q=80', tag: 'Content + SEO', title: 'EduSpark — 225x Blog Growth', meta: 'Content Strategy · SEO · Blog · 6 Months' },
+  const kpis = [
+    { icon: '🎯', tag: 'Performance Marketing', num: '10x', desc: 'Average ROAS delivered across Google & Meta campaigns for our clients.' },
+    { icon: '📈', tag: 'Social Media Growth', num: '340%', desc: 'Average sales increase for D2C brands we manage social media for.' },
+    { icon: '🔍', tag: 'SEO & Content', num: '225x', desc: 'Blog traffic growth achieved for a client in 6 months from scratch.' },
+    { icon: '💸', tag: 'Paid Ads Efficiency', num: '-60%', desc: 'Average reduction in cost-per-lead after we rebuild ad campaigns.' },
   ];
-  // Home: compact — featured + 2 side cards only. Projects page: all 5
-  const projects = showViewAll ? all.slice(0, 3) : all;
 
+  return (
+    <div className="wt-bg">
+      <section className="sec on-navy">
+        {/* Header */}
+        <div className="reveal" style={{ display:'flex',alignItems:'flex-end',justifyContent:'space-between',flexWrap:'wrap',gap:'14px',marginBottom:'8px' }}>
+          <div>
+            <div className="sec-label"><span>Real Results</span></div>
+            <h2 className="sec-title">Our Work <span className="out">Speaks.</span></h2>
+            <p className="sec-sub">5 campaigns. 200+ brands. Numbers that don't lie.</p>
+          </div>
+          <button className="btn-p" onClick={() => nav('projects')}><span>View All Campaigns</span><span>→</span></button>
+        </div>
+
+        {/* KPI Grid — no images, just sharp data cards */}
+        <div className="wt-inner reveal">
+          {kpis.map((k, i) => (
+            <div key={i} className="wt-kpi">
+              <span className="wt-kpi-icon">{k.icon}</span>
+              <div className="wt-kpi-tag">{k.tag}</div>
+              <div className="wt-kpi-num">{k.num}</div>
+              <p className="wt-kpi-desc">{k.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Quote strip */}
+        <div className="wt-quote reveal">
+          <p className="wt-quote-txt">"Working with Ereynard felt like having a world-class team in-house. Every step deliberate, data-backed, and they exceeded every expectation."</p>
+          <p className="wt-quote-by">— Aryan Desai, CEO, TechNest Solutions · 225x Traffic Growth</p>
+        </div>
+
+        {/* Bottom CTA row */}
+        <div className="wt-cta-row reveal">
+          <button className="btn-g" onClick={() => nav('projects')}>Explore 5 Case Studies →</button>
+          <button className="btn-g" onClick={() => nav('clients')}>Meet Our Clients →</button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
+// WORK SECTION — Projects page ONLY (unchanged from original)
+// ═══════════════════════════════════════════════════════════
+function WorkSection({ openCamp }) {
+  useReveal();
+  const projects = [
+    {k:'novabrand',img:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80',tag:'Performance Marketing',title:'NovaBrand — 10x ROI',meta:'Google Ads · Meta Ads · Landing Page · Analytics',feat:true},
+    {k:'luxethreads',img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&auto=format&fit=crop&q=80',tag:'Social Media',title:'LuxeThreads — 340% Sales',meta:'Instagram · Reels · Influencer · Content'},
+    {k:'technest',img:'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=900&auto=format&fit=crop&q=80',tag:'SEO + Content',title:'TechNest — 225x Traffic',meta:'Technical SEO · Blog Strategy · Link Building'},
+    {k:'growfast',img:'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=900&auto=format&fit=crop&q=80',tag:'Performance Ads',title:'GrowFast — -60% CPL',meta:'Google Ads · Meta Ads · CRO · Analytics'},
+    {k:'eduspark',img:'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=900&auto=format&fit=crop&q=80',tag:'Content + SEO',title:'EduSpark — 225x Blog Growth',meta:'Content Strategy · SEO · Blog · 6 Months'},
+  ];
   return (
     <div className="work-bg">
       <section className="sec on-yellow">
-        <div className="reveal" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '32px' }}>
-          <div>
-            <div className="sec-label"><span>Selected Work</span></div>
-            <h2 className="sec-title">Our <span className="out">Campaigns</span></h2>
-          </div>
-          {showViewAll && nav && (
-            <button className="btn-out" onClick={() => nav('projects')}><span>View All 5 Projects</span><span>→</span></button>
-          )}
+        <div className="reveal" style={{ marginBottom:'32px' }}>
+          <div className="sec-label"><span>Selected Work</span></div>
+          <h2 className="sec-title">Our <span className="out">Campaigns</span></h2>
         </div>
-
-        {showViewAll ? (
-          /* ── HOME compact layout: 1 featured + 2 side-by-side ── */
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-            {/* Featured card */}
-            <div className="wi feat reveal" onClick={() => openCamp(projects[0].k)}>
-              <div className="wi-bg"><img src={projects[0].img} alt={projects[0].title} /></div>
-              <div className="wi-ov">
-                <span className="wi-tag">{projects[0].tag}</span>
-                <h3 className="wi-title">{projects[0].title}</h3>
-                <p className="wi-meta">{projects[0].meta}</p>
-              </div>
+        <div className="work-grid">
+          {projects.map(p => (
+            <div key={p.k} className={`wi reveal ${p.feat ? 'feat' : ''}`} onClick={() => openCamp(p.k)}>
+              <div className="wi-bg"><img src={p.img} alt={p.title} /></div>
+              <div className="wi-ov"><span className="wi-tag">{p.tag}</span><h3 className="wi-title">{p.title}</h3><p className="wi-meta">{p.meta}</p></div>
               <div className="wi-arr">→</div>
             </div>
-            {/* Two smaller cards */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3px' }}>
-              {projects.slice(1).map(p => (
-                <div key={p.k} className="wi reveal" onClick={() => openCamp(p.k)}>
-                  <div className="wi-bg"><img src={p.img} alt={p.title} /></div>
-                  <div className="wi-ov">
-                    <span className="wi-tag">{p.tag}</span>
-                    <h3 className="wi-title">{p.title}</h3>
-                    <p className="wi-meta">{p.meta}</p>
-                  </div>
-                  <div className="wi-arr">→</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          /* ── PROJECTS PAGE: full 5-card grid ── */
-          <div className="work-grid">
-            {projects.map(p => (
-              <div key={p.k} className={`wi reveal ${p.feat ? 'feat' : ''}`} onClick={() => openCamp(p.k)}>
-                <div className="wi-bg"><img src={p.img} alt={p.title} /></div>
-                <div className="wi-ov"><span className="wi-tag">{p.tag}</span><h3 className="wi-title">{p.title}</h3><p className="wi-meta">{p.meta}</p></div>
-                <div className="wi-arr">→</div>
-              </div>
-            ))}
-          </div>
-        )}
+          ))}
+        </div>
       </section>
     </div>
   );
@@ -1492,13 +1371,13 @@ function TeamSection({ showAll = false }) {
           <p className="sec-sub">25+ specialists. One shared obsession — your brand's growth.</p>
         </div>
         <div className="team-grid">
-          {members.map((t, i) => (
+          {members.map((t,i) => (
             <div key={i} className="tm-card reveal">
               <img className="tm-img" src={t.img} alt={t.name} />
               <div className="tm-info">
                 <div className="tm-nm">{t.name}</div>
                 <div className="tm-rl">{t.role}</div>
-                <div className="tm-lnks">{t.links.map((l, j) => <a key={j} href={l.url} target="_blank" rel="noopener noreferrer" className="tm-lnk">{l.l}</a>)}</div>
+                <div className="tm-lnks">{t.links.map((l,j) => <a key={j} href={l.url} target="_blank" rel="noopener noreferrer" className="tm-lnk">{l.l}</a>)}</div>
               </div>
             </div>
           ))}
@@ -1509,61 +1388,52 @@ function TeamSection({ showAll = false }) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// CLIENTS — testimonial carousel + awards (no campaigns)
+// CLIENTS
 // ═══════════════════════════════════════════════════════════
-function ClientsSection({ openCamp }) {
+function ClientsSection() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const clients = [{ n: 'NOVABRAND' }, { n: 'LUXETHREADS' }, { n: 'TECHNEST' }, { n: 'GROWFAST' }, { n: 'EDUSPARK' }, { n: 'WELLNESSHIVE' }, { n: 'BRANDCRAFT' }, { n: 'DIGITALX' }, { n: 'NEXARISE' }];
+  const clients = [{n:'NOVABRAND'},{n:'LUXETHREADS'},{n:'TECHNEST'},{n:'GROWFAST'},{n:'EDUSPARK'},{n:'WELLNESSHIVE'},{n:'BRANDCRAFT'},{n:'DIGITALX'},{n:'NEXARISE'}];
   const awards = [
-    { i: '🏆', t: '98% Client Retention', sub: '7 years running' },
-    { i: '⭐', t: 'Top Digital Agency', sub: 'Rajasthan 2024' },
-    { i: '📈', t: '₹50Cr+ Managed', sub: 'In ad spend across clients' },
-    { i: '🎯', t: '200+ Brands Scaled', sub: 'Across India' },
-    { i: '🦊', t: 'Fox Method Certified', sub: 'Proprietary 4-step framework' },
-    { i: '🌟', t: 'Google & Meta Partner', sub: 'Certified performance agency' },
+    {i:'🏆',t:'98% Client Retention',sub:'7 years running'},
+    {i:'⭐',t:'Top Digital Agency',sub:'Rajasthan 2024'},
+    {i:'📈',t:'₹50Cr+ Managed',sub:'In ad spend across clients'},
+    {i:'🎯',t:'200+ Brands Scaled',sub:'Across India'},
+    {i:'🦊',t:'Fox Method Certified',sub:'Proprietary 4-step framework'},
+    {i:'🌟',t:'Google & Meta Partner',sub:'Certified performance agency'},
   ];
   useReveal();
   return (
     <div className="clients-bg">
       <p className="cl-lbl reveal">Trusted by forward-thinking brands across India</p>
       <div className="cl-row reveal">
-        {clients.map((c, i) => <span key={i} className="clogo">{c.n}</span>)}
+        {clients.map((c,i) => <span key={i} className="clogo">{c.n}</span>)}
       </div>
-      {/* Testimonial carousel */}
       <div className="ct-carousel reveal">
-        <div className="ct-track" style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}>
-          {CLIENT_TESTIMONIALS.map((t, i) => (
+        <div className="ct-track" style={{ transform:`translateX(-${activeTestimonial * 100}%)` }}>
+          {CLIENT_TESTIMONIALS.map((t,i) => (
             <div key={i} className="ct-slide">
               <div className="ct-card">
                 <div>
                   <p className="ct-quote">{t.quote}</p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <img src={t.img} alt={t.name} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', filter: 'saturate(.3)' }} />
+                  <div style={{ display:'flex',alignItems:'center',gap:'10px' }}>
+                    <img src={t.img} alt={t.name} style={{ width:'36px',height:'36px',borderRadius:'50%',objectFit:'cover',filter:'saturate(.3)' }} />
                     <div><div className="ct-auth-name">{t.name}</div><div className="ct-auth-role">{t.role}</div></div>
                   </div>
                 </div>
-                <div className="ct-metric">
-                  <div className="ct-metric-n">{t.metric}</div>
-                  <div className="ct-metric-l">{t.metricLabel}</div>
-                </div>
+                <div className="ct-metric"><div className="ct-metric-n">{t.metric}</div><div className="ct-metric-l">{t.metricLabel}</div></div>
               </div>
             </div>
           ))}
         </div>
         <div className="ct-nav">
-          {CLIENT_TESTIMONIALS.map((_, i) => <button key={i} className={`ct-dot ${i === activeTestimonial ? 'active' : ''}`} onClick={() => setActiveTestimonial(i)} />)}
+          {CLIENT_TESTIMONIALS.map((_,i) => <button key={i} className={`ct-dot ${i===activeTestimonial?'active':''}`} onClick={() => setActiveTestimonial(i)} />)}
         </div>
       </div>
-      {/* Awards & credentials */}
-      <div style={{ marginTop: '48px' }}>
-        <p style={{ textAlign: 'center', fontSize: '9px', fontWeight: 700, letterSpacing: '.26em', textTransform: 'uppercase', color: 'rgba(14,16,75,.36)', marginBottom: '20px' }}>Why Brands Trust Us</p>
+      <div style={{ marginTop:'48px' }}>
+        <p style={{ textAlign:'center',fontSize:'9px',fontWeight:700,letterSpacing:'.26em',textTransform:'uppercase',color:'rgba(14,16,75,.36)',marginBottom:'20px' }}>Why Brands Trust Us</p>
         <div className="awards-grid">
-          {awards.map((a, i) => (
-            <div key={i} className="award-card reveal">
-              <span className="award-icon">{a.i}</span>
-              <div className="award-title">{a.t}</div>
-              <div className="award-sub">{a.sub}</div>
-            </div>
+          {awards.map((a,i) => (
+            <div key={i} className="award-card reveal"><span className="award-icon">{a.i}</span><div className="award-title">{a.t}</div><div className="award-sub">{a.sub}</div></div>
           ))}
         </div>
       </div>
@@ -1572,7 +1442,7 @@ function ClientsSection({ openCamp }) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// FAQ (only home and services)
+// FAQ
 // ═══════════════════════════════════════════════════════════
 function FAQ({ nav }) {
   const [open, setOpen] = useState(null);
@@ -1586,23 +1456,23 @@ function FAQ({ nav }) {
         </div>
         <div className="faq-grid">
           <div className="rev-l">
-            <p style={{ fontSize: '14px', lineHeight: '1.8', color: 'rgba(240,200,69,.44)', marginTop: '12px' }}>Can't find what you're looking for? Our team is always ready to answer questions about services, pricing, or process.</p>
-            <p style={{ fontSize: '14px', lineHeight: '1.8', color: 'rgba(240,200,69,.44)', marginTop: '11px' }}>As <strong style={{ color: 'var(--Y)' }}>India's sharpest digital agency</strong>, we believe in full transparency — no jargon, no fluff.</p>
-            <div style={{ marginTop: '22px' }}><button className="btn-p" onClick={() => nav('contact')}><span>Ask Us Directly</span><span>→</span></button></div>
-            <div style={{ marginTop: '26px' }} className="reveal">
+            <p style={{ fontSize:'14px',lineHeight:'1.8',color:'rgba(240,200,69,.44)',marginTop:'12px' }}>Can't find what you're looking for? Our team is always ready to answer questions about services, pricing, or process.</p>
+            <p style={{ fontSize:'14px',lineHeight:'1.8',color:'rgba(240,200,69,.44)',marginTop:'11px' }}>As <strong style={{ color:'var(--Y)' }}>India's sharpest digital agency</strong>, we believe in full transparency — no jargon, no fluff.</p>
+            <div style={{ marginTop:'22px' }}><button className="btn-p" onClick={() => nav('contact')}><span>Ask Us Directly</span><span>→</span></button></div>
+            <div style={{ marginTop:'26px' }} className="reveal">
               <div className="faq-c-item">📍 Udaipur, Rajasthan, India</div>
               <div className="faq-c-item">📧 <a href="mailto:hello@ereynard.com">hello@ereynard.com</a></div>
               <div className="faq-c-item">📞 <a href="tel:+919876543210">+91 98765 43210</a></div>
             </div>
           </div>
           <div className="faq-list rev-r">
-            {FAQS_DATA.map((f, i) => (
-              <div key={i} className={`faq-item ${open === i ? 'open' : ''}`}>
-                <div className="faq-q" onClick={() => setOpen(open === i ? null : i)}>
+            {FAQS_DATA.map((f,i) => (
+              <div key={i} className={`faq-item ${open===i?'open':''}`}>
+                <div className="faq-q" onClick={() => setOpen(open===i ? null : i)}>
                   <span className="faq-q-txt">{f.q}</span>
                   <div className="faq-ico">+</div>
                 </div>
-                <div className="faq-a" style={{ maxHeight: open === i ? '260px' : '0' }}>
+                <div className="faq-a" style={{ maxHeight:open===i ? '260px' : '0' }}>
                   <div className="faq-a-inner" dangerouslySetInnerHTML={{ __html: f.a }} />
                 </div>
               </div>
@@ -1618,8 +1488,7 @@ function FAQ({ nav }) {
 // CONTACT
 // ═══════════════════════════════════════════════════════════
 function Contact() {
-  useReveal();
-  useRipple();
+  useReveal(); useRipple();
   const [status, setStatus] = useState(null);
   const handle = () => {
     const nm = document.getElementById('f-name')?.value.trim();
@@ -1629,12 +1498,12 @@ function Contact() {
   };
   return (
     <div className="contact-bg">
-      <section className="sec on-navy" style={{ overflow: 'hidden' }}>
+      <section className="sec on-navy" style={{ overflow:'hidden' }}>
         <div className="eq-grid">
           <div className="rev-l">
             <div className="sec-label"><span>Get In Touch</span></div>
             <h2 className="sec-title">Let's Build <span className="out">Together.</span></h2>
-            <p style={{ fontSize: '14px', lineHeight: '1.78', color: 'rgba(240,200,69,.48)', marginTop: '14px' }}>Ready to outfox your competition? Tell us about your brand and we'll craft a strategy that gets you there — faster, sharper, smarter.</p>
+            <p style={{ fontSize:'14px',lineHeight:'1.78',color:'rgba(240,200,69,.48)',marginTop:'14px' }}>Ready to outfox your competition? Tell us about your brand and we'll craft a strategy that gets you there — faster, sharper, smarter.</p>
             <div className="eq-det reveal">
               <div className="eq-di">📍 Udaipur, Rajasthan, India</div>
               <div className="eq-di">📧 <a href="mailto:hello@ereynard.com">hello@ereynard.com</a></div>
@@ -1644,27 +1513,18 @@ function Contact() {
             <div className="eq-img-wrap shimmer reveal"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=700&auto=format&fit=crop&q=80" alt="Team" /></div>
           </div>
           <div className="eq-form rev-r">
-            <div className="frow">
-              <div className="fg"><label>Your Name</label><input type="text" id="f-name" placeholder="John Doe" /></div>
-              <div className="fg"><label>Company</label><input type="text" id="f-co" placeholder="Brand Name" /></div>
-            </div>
-            <div className="frow">
-              <div className="fg"><label>Email</label><input type="email" id="f-email" placeholder="hello@brand.com" /></div>
-              <div className="fg"><label>Phone</label><input type="tel" id="f-ph" placeholder="+91 00000 00000" /></div>
-            </div>
+            <div className="frow"><div className="fg"><label>Your Name</label><input type="text" id="f-name" placeholder="John Doe" /></div><div className="fg"><label>Company</label><input type="text" id="f-co" placeholder="Brand Name" /></div></div>
+            <div className="frow"><div className="fg"><label>Email</label><input type="email" id="f-email" placeholder="hello@brand.com" /></div><div className="fg"><label>Phone</label><input type="tel" id="f-ph" placeholder="+91 00000 00000" /></div></div>
             <div className="fg">
               <label>Service You Need</label>
               <select id="f-svc">
                 <option value="">Select a service...</option>
-                <option>SEO</option><option>Social Media Marketing</option>
-                <option>Performance Advertising</option><option>Content Strategy</option>
-                <option>Web Design & Development</option><option>Branding & Identity</option>
-                <option>Email & CRM Marketing</option><option>Full Digital Strategy</option>
+                <option>SEO</option><option>Social Media Marketing</option><option>Performance Advertising</option><option>Content Strategy</option><option>Web Design & Development</option><option>Branding & Identity</option><option>Email & CRM Marketing</option><option>Full Digital Strategy</option>
               </select>
             </div>
             <div className="fg"><label>Tell Us About Your Project</label><textarea id="f-msg" placeholder="Share your goals, challenges, and what success looks like..." /></div>
-            <button className="btn-sub" onClick={handle} style={status === 'error' ? { background: '#c0392b' } : status === 'success' ? { background: '#1a8a36' } : {}}>
-              <span>{status === 'error' ? '⚠ Please fill name & email' : status === 'success' ? "✓ We'll be in touch shortly!" : 'Send Enquiry'}</span>
+            <button className="btn-sub" onClick={handle} style={status==='error'?{background:'#c0392b'}:status==='success'?{background:'#1a8a36'}:{}}>
+              <span>{status==='error'?'⚠ Please fill name & email':status==='success'?"✓ We'll be in touch shortly!":'Send Enquiry'}</span>
               {!status && <span>→</span>}
             </button>
           </div>
@@ -1676,7 +1536,7 @@ function Contact() {
 }
 
 // ═══════════════════════════════════════════════════════════
-// BLOG LIST
+// BLOG
 // ═══════════════════════════════════════════════════════════
 function BlogList({ nav }) {
   useReveal();
@@ -1689,13 +1549,9 @@ function BlogList({ nav }) {
           <p className="sec-intro">Sharp insights, real data, and no-fluff strategies from India's sharpest digital minds.</p>
         </div>
         <div className="blog-grid">
-          {BLOG_POSTS.map((p, i) => (
-            <div key={p.id} className={`blog-card reveal ${i === 0 ? 'featured' : ''}`} onClick={() => nav('blog-post', p.id)}>
-              <div className="blog-img">
-                <img src={p.img} alt={p.title} />
-                <div className="blog-img-ov" />
-                <span className="blog-cat">{p.cat}</span>
-              </div>
+          {BLOG_POSTS.map((p,i) => (
+            <div key={p.id} className={`blog-card reveal ${i===0 ? 'featured' : ''}`} onClick={() => nav('blog-post', p.id)}>
+              <div className="blog-img"><img src={p.img} alt={p.title} /><div className="blog-img-ov" /><span className="blog-cat">{p.cat}</span></div>
               <div className="blog-body">
                 <div className="blog-meta"><span>{p.date}</span><span>·</span><span>{p.read}</span></div>
                 <h3 className="blog-title">{p.title}</h3>
@@ -1710,33 +1566,31 @@ function BlogList({ nav }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════
-// BLOG POST FULL
-// ═══════════════════════════════════════════════════════════
 function BlogPost({ postId, nav }) {
   const post = BLOG_POSTS.find(p => p.id === postId);
-  useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, [postId]);
+  useEffect(() => { window.scrollTo({ top:0, behavior:'instant' }); }, [postId]);
   if (!post) return null;
   const renderContent = (c) => c.map((block, i) => {
-    if (block.h2) return <h2 key={i}>{block.h2}</h2>;
-    if (block.h3) return <h3 key={i}>{block.h3}</h3>;
-    if (block.blockquote) return <blockquote key={i}>{block.blockquote}</blockquote>;
-    if (block.p) return <p key={i} dangerouslySetInnerHTML={{ __html: block.p.replace(/\n/g, '<br/>') }} />;
+    if (block.h2) return <h2 key={i} style={{ fontFamily:'var(--FM)',fontWeight:800,fontSize:'24px',color:'var(--Y)',margin:'28px 0 11px' }}>{block.h2}</h2>;
+    if (block.h3) return <h3 key={i} style={{ fontFamily:'var(--FM)',fontWeight:700,fontSize:'18px',color:'var(--Y)',margin:'20px 0 9px' }}>{block.h3}</h3>;
+    if (block.blockquote) return <blockquote key={i} style={{ borderLeft:'2px solid var(--Y)',background:'rgba(240,200,69,.04)',padding:'16px 20px',margin:'22px 0',fontFamily:'var(--FI)',fontStyle:'italic',fontSize:'15px',color:'rgba(240,200,69,.62)' }}>{block.blockquote}</blockquote>;
+    if (block.p) return <p key={i} style={{ fontSize:'14px',lineHeight:'1.86',color:'rgba(240,200,69,.52)',marginBottom:'16px' }} dangerouslySetInnerHTML={{ __html: block.p.replace(/\n/g,'<br/>') }} />;
     return null;
   });
   return (
-    <div className="blog-post-wrap">
-      <div className="blog-post-hero" style={{ paddingTop: '80px' }}>
-        <img src={post.img} alt={post.title} />
+    <div style={{ background:'var(--B3)' }}>
+      <div style={{ height:'50vh',overflow:'hidden',position:'relative',paddingTop:'80px' }}>
+        <img src={post.img} alt={post.title} style={{ width:'100%',height:'100%',objectFit:'cover',filter:'saturate(.32) contrast(1.1)' }} />
+        <div style={{ position:'absolute',inset:0,background:'linear-gradient(to top,var(--B3) 0%,rgba(8,9,48,.55) 60%,transparent)' }} />
       </div>
-      <div className="bp-content">
-        <span className="bp-cat">{post.cat}</span>
-        <h1 className="bp-title">{post.title}</h1>
-        <div className="bp-meta"><span>{post.date}</span><span>·</span><span>{post.read}</span></div>
-        <p className="bp-lead">{post.lead}</p>
-        <div className="bp-divider" />
-        <div className="bp-body">{renderContent(post.content)}</div>
-        <div className="bp-back">
+      <div style={{ maxWidth:'740px',margin:'0 auto',padding:'48px 56px 80px' }}>
+        <span style={{ fontSize:'9px',fontWeight:700,letterSpacing:'.26em',textTransform:'uppercase',color:'var(--Y)',background:'rgba(240,200,69,.1)',border:'1px solid rgba(240,200,69,.28)',padding:'4px 10px',display:'inline-block',marginBottom:'14px' }}>{post.cat}</span>
+        <h1 style={{ fontFamily:'var(--FM)',fontWeight:800,fontSize:'clamp(30px,4.5vw,58px)',color:'var(--Y)',lineHeight:'1.1',marginBottom:'12px' }}>{post.title}</h1>
+        <div style={{ fontSize:'10px',fontWeight:600,color:'rgba(240,200,69,.33)',letterSpacing:'.06em',display:'flex',gap:'12px',marginBottom:'28px',paddingBottom:'22px',borderBottom:'1px solid rgba(240,200,69,.07)' }}><span>{post.date}</span><span>·</span><span>{post.read}</span></div>
+        <p style={{ fontFamily:'var(--FI)',fontStyle:'italic',fontSize:'17px',lineHeight:'1.7',color:'rgba(240,200,69,.62)',marginBottom:'26px' }}>{post.lead}</p>
+        <div style={{ height:'1px',background:'rgba(240,200,69,.07)',margin:'28px 0' }} />
+        <div>{renderContent(post.content)}</div>
+        <div style={{ marginTop:'40px',paddingTop:'28px',borderTop:'1px solid rgba(240,200,69,.07)' }}>
           <button className="btn-g" onClick={() => nav('blog')}>← Back to All Articles</button>
         </div>
       </div>
@@ -1760,8 +1614,8 @@ function ServiceModal({ svcKey, onClose, nav }) {
         </div>
         <div className="sm-body">
           <p className="sm-desc">{d.desc}</p>
-          <div className="sm-feats">{d.feats.map((f, i) => <div key={i} className="sm-feat"><div className="sm-feat-icon">{f.i}</div><div className="sm-feat-txt"><strong>{f.t}</strong><span>{f.d}</span></div></div>)}</div>
-          <div className="sm-results">{d.res.map((r, i) => <div key={i}><div className="sm-r-n">{r.n}</div><div className="sm-r-l">{r.l}</div></div>)}</div>
+          <div className="sm-feats">{d.feats.map((f,i) => <div key={i} className="sm-feat"><div className="sm-feat-icon">{f.i}</div><div className="sm-feat-txt"><strong>{f.t}</strong><span>{f.d}</span></div></div>)}</div>
+          <div className="sm-results">{d.res.map((r,i) => <div key={i}><div className="sm-r-n">{r.n}</div><div className="sm-r-l">{r.l}</div></div>)}</div>
           <button className="sm-cta" onClick={() => { onClose(); nav('contact'); }}>Get a Free Proposal →</button>
         </div>
       </div>
@@ -1784,15 +1638,15 @@ function CampaignModal({ campKey, onClose, nav }) {
           <div className="camp-hero-bot"><span className="camp-tag">{d.tag}</span><div className="camp-ttl">{d.ttl}</div><div className="camp-sub">{d.sub}</div></div>
         </div>
         <div className="camp-body">
-          <div className="camp-kpis">{d.kpis.map((k, i) => <div key={i} className="kpi"><div className="kpi-n">{k.n}</div><div className="kpi-l">{k.l}</div></div>)}</div>
+          <div className="camp-kpis">{d.kpis.map((k,i) => <div key={i} className="kpi"><div className="kpi-n">{k.n}</div><div className="kpi-l">{k.l}</div></div>)}</div>
           <div className="camp-div" />
           <p className="camp-ov-txt">{d.ov}</p>
           <div className="camp-sh">Challenges We Solved</div>
-          <div className="camp-chals">{d.chals.map((c, i) => <div key={i} className="camp-chal"><div className="camp-chal-i">{c.i}</div><div className="camp-chal-t">{c.t}</div></div>)}</div>
+          <div className="camp-chals">{d.chals.map((c,i) => <div key={i} className="camp-chal"><div className="camp-chal-i">{c.i}</div><div className="camp-chal-t">{c.t}</div></div>)}</div>
           <div className="camp-sh">Services Used</div>
-          <div className="camp-svcs">{d.svcs.map((s, i) => <span key={i} className="camp-svc-t">{s}</span>)}</div>
+          <div className="camp-svcs">{d.svcs.map((s,i) => <span key={i} className="camp-svc-t">{s}</span>)}</div>
           <div className="camp-sh">How We Did It</div>
-          <div className="camp-tl">{d.tl.map((t, i) => <div key={i} className="camp-tl-item"><div className="camp-tl-ph">{t.p}</div><div className="camp-tl-ac">{t.a}</div></div>)}</div>
+          <div className="camp-tl">{d.tl.map((t,i) => <div key={i} className="camp-tl-item"><div className="camp-tl-ph">{t.p}</div><div className="camp-tl-ac">{t.a}</div></div>)}</div>
           <div className="camp-q"><div className="camp-q-t">{d.q}</div><div className="camp-q-by">{d.qby}</div></div>
           <div className="camp-cta-row">
             <button className="sm-cta" onClick={() => { onClose(); nav('contact'); }}>Start a Similar Campaign →</button>
@@ -1848,9 +1702,9 @@ LANGUAGE: Auto-detect. Hindi → Hindi. English → English. Hinglish → Hingli
     if (lang === 'hindi') sys += '\n\nCRITICAL: Respond ONLY in Hindi (Devanagari script).';
     else if (lang === 'english') sys += '\n\nCRITICAL: Respond ONLY in English.';
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 500, system: sys, messages: history.slice(-12).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text || m.content || '' })).filter(m => m.content) }) });
+      const res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:500, system:sys, messages:history.slice(-12).map(m => ({ role:m.role==='user'?'user':'assistant', content:m.text||m.content||'' })).filter(m => m.content) }) });
       const data = await res.json();
-      const reply = (data.content || []).map(b => b.type === 'text' ? b.text : '').join('') || 'Oops! Network issue. Try again! 🦊';
+      const reply = (data.content || []).map(b => b.type==='text' ? b.text : '').join('') || 'Oops! Network issue. Try again! 🦊';
       setMsgs(m => m.filter(x => x.role !== 'typing')); addMsg('bot', reply);
     } catch {
       setMsgs(m => m.filter(x => x.role !== 'typing')); addMsg('bot', 'Thoda network issue 🦊 Direct contact: **hello@ereynard.com**');
@@ -1858,12 +1712,12 @@ LANGUAGE: Auto-detect. Hindi → Hindi. English → English. Hinglish → Hingli
     setBusy(false);
   };
 
-  const rnd = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>');
+  const rnd = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br/>');
 
   return (
     <>
       <button id="bot-btn" className={open ? 'open' : ''} onClick={toggle}>
-        {!open ? <span style={{ fontSize: '24px' }}>🦊</span> : <span style={{ fontSize: '17px', color: 'var(--Y)' }}>✕</span>}
+        {!open ? <span style={{ fontSize:'24px' }}>🦊</span> : <span style={{ fontSize:'17px',color:'var(--Y)' }}>✕</span>}
         {badge && <span className="bb-badge">1</span>}
       </button>
       <div id="bot-win" className={open ? 'open' : ''}>
@@ -1874,13 +1728,13 @@ LANGUAGE: Auto-detect. Hindi → Hindi. English → English. Hinglish → Hingli
           <button className="bh-cl" onClick={toggle}>✕</button>
         </div>
         <div className="bq">
-          {[['What services do you offer?', 'Services'], ['Pricing?', 'Pricing'], ['Case studies', 'Case Studies'], ['Contact info', 'Contact'], ['SEO kya hota hai?', 'SEO क्या है?']].map(([q, l], i) => <button key={i} className="bqc" onClick={() => send(q)}>{l}</button>)}
+          {[['What services do you offer?','Services'],['Pricing?','Pricing'],['Case studies','Case Studies'],['Contact info','Contact'],['SEO kya hota hai?','SEO क्या है?']].map(([q,l],i) => <button key={i} className="bqc" onClick={() => send(q)}>{l}</button>)}
         </div>
         <div id="bot-msgs" ref={ref}>
-          {msgs.map((m, i) => m.role === 'typing' ? <div key={i} className="cmsg bot"><div className="c-av">🦊</div><div className="typing"><span /><span /><span /></div></div> : <div key={i} className={`cmsg ${m.role}`}><div className="c-av">{m.role === 'bot' ? '🦊' : '👤'}</div><div className="c-bbl" dangerouslySetInnerHTML={{ __html: rnd(m.text) }} /></div>)}
+          {msgs.map((m,i) => m.role==='typing' ? <div key={i} className="cmsg bot"><div className="c-av">🦊</div><div className="typing"><span /><span /><span /></div></div> : <div key={i} className={`cmsg ${m.role}`}><div className="c-av">{m.role==='bot'?'🦊':'👤'}</div><div className="c-bbl" dangerouslySetInnerHTML={{ __html:rnd(m.text) }} /></div>)}
         </div>
         <div className="bi">
-          <input id="bot-inp" type="text" placeholder="English ya Hindi mein poochho..." value={inp} onChange={e => setInp(e.target.value)} onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send()} />
+          <input id="bot-inp" type="text" placeholder="English ya Hindi mein poochho..." value={inp} onChange={e => setInp(e.target.value)} onKeyDown={e => e.key==='Enter' && !e.shiftKey && send()} />
           <button id="bot-send" onClick={() => send()} disabled={busy}>➤</button>
         </div>
         <div className="bot-powered">Powered by Ereynard AI 🦊</div>
@@ -1890,9 +1744,9 @@ LANGUAGE: Auto-detect. Hindi → Hindi. English → English. Hinglish → Hingli
 }
 
 // ═══════════════════════════════════════════════════════════
-// PAGES — Clean, no repetition, unique per page
+// PAGES
 // ═══════════════════════════════════════════════════════════
-function HomePage({ nav, openSvc, openCamp, openContact }) {
+function HomePage({ nav, openSvc, openContact }) {
   useTilt(); useRipple();
   return (
     <>
@@ -1904,173 +1758,131 @@ function HomePage({ nav, openSvc, openCamp, openContact }) {
       <Stats />
       <ImageBand />
       <ProcessShort nav={nav} />
-      <WorkSection openCamp={openCamp} showViewAll nav={nav} />
+      <WorkTeaser nav={nav} />
       <FAQ nav={nav} />
     </>
   );
 }
 
-// ═══════════════════════════════════════════════════════════
-// ABOUT PAGE — Unique fresh content + Mission & Vision + Full Team
-// ═══════════════════════════════════════════════════════════
 function AboutPage({ nav, openSvc, openContact }) {
   useTilt(); useRipple(); useReveal();
-
   const values = [
-    { icon: '🎯', title: 'Results Above All', desc: 'Every decision, every campaign, every rupee — optimised for measurable outcomes. Vanity metrics are not our currency.' },
-    { icon: '🦊', title: 'Cunning by Nature', desc: 'We move fast, think three steps ahead, and find the angles others miss. Being sharp is not just a tagline — it is our operating system.' },
-    { icon: '🤝', title: 'Radical Transparency', desc: 'You see everything: reports, data, strategy, spend. No black boxes, no jargon. Just clear numbers and honest insights.' },
-    { icon: '🌱', title: 'Growth That Compounds', desc: "We build systems, not one-offs. The brands that work with us long-term don't just grow — they compound. Each month builds on the last." },
-    { icon: '🏆', title: 'Obsessive Quality', desc: "We would rather do fewer things brilliantly than many things adequately. Every deliverable goes through the same standard we'd hold our own brand to." },
-    { icon: '🇮🇳', title: 'Built for India', desc: 'Deep understanding of Indian consumer psychology, regional markets, festive cycles, and the D2C landscape. Strategy with cultural intelligence.' },
+    {icon:'🎯',title:'Results Above All',desc:'Every decision, every campaign, every rupee — optimised for measurable outcomes. Vanity metrics are not our currency.'},
+    {icon:'🦊',title:'Cunning by Nature',desc:'We move fast, think three steps ahead, and find the angles others miss. Being sharp is not just a tagline — it is our operating system.'},
+    {icon:'🤝',title:'Radical Transparency',desc:'You see everything: reports, data, strategy, spend. No black boxes, no jargon. Just clear numbers and honest insights.'},
+    {icon:'🌱',title:'Growth That Compounds',desc:"We build systems, not one-offs. The brands that work with us long-term don't just grow — they compound. Each month builds on the last."},
+    {icon:'🏆',title:'Obsessive Quality',desc:"We would rather do fewer things brilliantly than many things adequately. Every deliverable goes through the same standard we'd hold our own brand to."},
+    {icon:'🇮🇳',title:'Built for India',desc:'Deep understanding of Indian consumer psychology, regional markets, festive cycles, and the D2C landscape. Strategy with cultural intelligence.'},
   ];
-
   return (
     <>
       <PageHero label="Who We Are" title="The Ereynard" strokeWord="Ereynard" sub="Not just an agency — a growth partner obsessed with making Indian brands unstoppable." />
-
-      {/* ── Fresh Who We Are Section ─────────────────────────── */}
-      <div style={{ background: 'var(--B3)' }}>
+      <div style={{ background:'var(--B3)' }}>
         <section className="sec on-navy">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }}>
+          <div style={{ display:'grid',gridTemplateColumns:'1fr 1fr',gap:'64px',alignItems:'center' }}>
             <div className="rev-l">
               <div className="sec-label"><span>Our Identity</span></div>
-              <h2 className="sec-title">Born to <span className="out">Outfox.</span></h2>              <p style={{ fontSize: '14px', lineHeight: '1.86', color: 'rgba(240,200,69,.52)', marginTop: '16px', marginBottom: '14px' }}>
-                Ereynard Digital was founded in Udaipur, Rajasthan with one belief: <strong style={{ color: 'var(--Y)' }}>Indian brands deserve world-class digital strategy without world-class price tags.</strong>
-              </p>
-              <p style={{ fontSize: '14px', lineHeight: '1.86', color: 'rgba(240,200,69,.52)', marginBottom: '14px' }}>
-                Our name is rooted in Reynard — the cunning fox of European folklore. Like Reynard, we use intelligence, agility, and strategy to outmanoeuvre bigger, slower competitors. Seven years, 200+ brands, and ₹50Cr+ in managed ad spend later — the fox still wins.
-              </p>
-              <p style={{ fontSize: '14px', lineHeight: '1.86', color: 'rgba(240,200,69,.52)' }}>
-                We are not a vendor. We are the external growth team that thinks like a founder, works like a startup, and delivers like an enterprise.
-              </p>
-              <div style={{ marginTop: '28px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <h2 className="sec-title">Born to <span className="out">Outfox.</span></h2>
+              <p style={{ fontSize:'14px',lineHeight:'1.86',color:'rgba(240,200,69,.52)',marginTop:'16px',marginBottom:'14px' }}>Ereynard Digital was founded in Udaipur, Rajasthan with one belief: <strong style={{ color:'var(--Y)' }}>Indian brands deserve world-class digital strategy without world-class price tags.</strong></p>
+              <p style={{ fontSize:'14px',lineHeight:'1.86',color:'rgba(240,200,69,.52)',marginBottom:'14px' }}>Our name is rooted in Reynard — the cunning fox of European folklore. Like Reynard, we use intelligence, agility, and strategy to outmanoeuvre bigger, slower competitors. Seven years, 200+ brands, ₹50Cr+ later — the fox still wins.</p>
+              <p style={{ fontSize:'14px',lineHeight:'1.86',color:'rgba(240,200,69,.52)' }}>We are not a vendor. We are the external growth team that thinks like a founder, works like a startup, and delivers like an enterprise.</p>
+              <div style={{ marginTop:'28px',display:'flex',gap:'12px',flexWrap:'wrap' }}>
                 <button className="btn-p" onClick={() => nav('contact')}><span>Work With Us</span><span>→</span></button>
                 <button className="btn-g" onClick={() => nav('projects')}>See Our Work ↓</button>
               </div>
             </div>
-            <div className="rev-r" style={{ position: 'relative' }}>
-              <div style={{ overflow: 'hidden', clipPath: 'polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%)', height: '380px' }}>
-                <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&auto=format&fit=crop&q=80" alt="Ereynard team collaboration" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(.5) contrast(1.1)' }} />
+            <div className="rev-r" style={{ position:'relative' }}>
+              <div style={{ overflow:'hidden',clipPath:'polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%)',height:'380px' }}>
+                <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&auto=format&fit=crop&q=80" alt="Team collaboration" style={{ width:'100%',height:'100%',objectFit:'cover',filter:'saturate(.5) contrast(1.1)' }} />
               </div>
-              <div style={{ position: 'absolute', bottom: '-18px', left: '-18px', background: 'var(--Y)', padding: '18px 24px' }}>
-                <div style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: '40px', color: 'var(--B)', lineHeight: 1 }}>2017</div>
-                <div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(14,16,75,.52)', marginTop: '3px' }}>Founded in Udaipur</div>
+              <div style={{ position:'absolute',bottom:'-18px',left:'-18px',background:'var(--Y)',padding:'18px 24px' }}>
+                <div style={{ fontFamily:'var(--FM)',fontWeight:800,fontSize:'40px',color:'var(--B)',lineHeight:1 }}>2017</div>
+                <div style={{ fontSize:'9px',fontWeight:700,letterSpacing:'.12em',textTransform:'uppercase',color:'rgba(14,16,75,.52)',marginTop:'3px' }}>Founded in Udaipur</div>
               </div>
             </div>
           </div>
         </section>
       </div>
-
-      {/* ── Mission & Vision ─────────────────────────────────── */}
-      <div style={{ background: 'var(--Y)', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(14,16,75,.04) 1px,transparent 1px)', backgroundSize: '24px 24px', pointerEvents: 'none' }} />
-        <section className="sec on-yellow" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="reveal" style={{ textAlign: 'center', marginBottom: '52px' }}>
-            <div className="sec-label" style={{ justifyContent: 'center' }}><span>What Drives Us</span></div>
+      <div style={{ background:'var(--Y)',position:'relative',overflow:'hidden' }}>
+        <div style={{ position:'absolute',inset:0,backgroundImage:'radial-gradient(rgba(14,16,75,.04) 1px,transparent 1px)',backgroundSize:'24px 24px',pointerEvents:'none' }} />
+        <section className="sec on-yellow" style={{ position:'relative',zIndex:1 }}>
+          <div className="reveal" style={{ textAlign:'center',marginBottom:'52px' }}>
+            <div className="sec-label" style={{ justifyContent:'center' }}><span>What Drives Us</span></div>
             <h2 className="sec-title">Mission & <span className="out">Vision</span></h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3px' }}>
-            {/* Mission */}
-            <div className="rev-l" style={{ background: '#0e104b', padding: '48px', clipPath: 'polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%)', position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', top: '-12px', right: '-8px', fontFamily: 'var(--FM)', fontWeight: 900, fontSize: '130px', color: 'rgba(240,200,69,.024)', userSelect: 'none', lineHeight: 1 }}>M</div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '52px', height: '52px', background: 'var(--Y)', fontSize: '24px', marginBottom: '20px' }}>🎯</div>
-              <div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '.28em', textTransform: 'uppercase', color: 'rgba(240,200,69,.38)', marginBottom: '10px' }}>Our Mission</div>
-              <h3 style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: 'clamp(22px,2.8vw,38px)', color: 'var(--Y)', lineHeight: 1.1, marginBottom: '18px' }}>Make Every Indian Brand Impossible to Ignore</h3>
-              <p style={{ fontSize: '14px', lineHeight: 1.84, color: 'rgba(240,200,69,.52)', marginBottom: '14px' }}>
-                To democratise world-class digital marketing for Indian businesses — from ambitious startups to growing enterprises — by delivering custom strategies, transparent execution, and ROI that actually moves the needle.
-              </p>
-              <p style={{ fontSize: '14px', lineHeight: 1.84, color: 'rgba(240,200,69,.52)' }}>
-                We exist to replace generic, template-driven marketing with deeply customised growth engines that reflect each brand's unique story, audience, and ambition.
-              </p>
+          <div style={{ display:'grid',gridTemplateColumns:'1fr 1fr',gap:'3px' }}>
+            <div className="rev-l" style={{ background:'#0e104b',padding:'48px',clipPath:'polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%)',position:'relative',overflow:'hidden' }}>
+              <div style={{ position:'absolute',top:'-12px',right:'-8px',fontFamily:'var(--FM)',fontWeight:900,fontSize:'130px',color:'rgba(240,200,69,.024)',userSelect:'none',lineHeight:1 }}>M</div>
+              <div style={{ display:'inline-flex',alignItems:'center',justifyContent:'center',width:'52px',height:'52px',background:'var(--Y)',fontSize:'24px',marginBottom:'20px' }}>🎯</div>
+              <div style={{ fontSize:'9px',fontWeight:700,letterSpacing:'.28em',textTransform:'uppercase',color:'rgba(240,200,69,.38)',marginBottom:'10px' }}>Our Mission</div>
+              <h3 style={{ fontFamily:'var(--FM)',fontWeight:800,fontSize:'clamp(22px,2.8vw,38px)',color:'var(--Y)',lineHeight:1.1,marginBottom:'18px' }}>Make Every Indian Brand Impossible to Ignore</h3>
+              <p style={{ fontSize:'14px',lineHeight:1.84,color:'rgba(240,200,69,.52)',marginBottom:'14px' }}>To democratise world-class digital marketing for Indian businesses — by delivering custom strategies, transparent execution, and ROI that actually moves the needle.</p>
+              <p style={{ fontSize:'14px',lineHeight:1.84,color:'rgba(240,200,69,.52)' }}>We exist to replace generic, template-driven marketing with deeply customised growth engines that reflect each brand's unique story, audience, and ambition.</p>
             </div>
-            {/* Vision */}
-            <div className="rev-r" style={{ background: '#0e104b', padding: '48px', border: '1px solid rgba(240,200,69,.1)', position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', top: '-12px', right: '-8px', fontFamily: 'var(--FM)', fontWeight: 900, fontSize: '130px', color: 'rgba(240,200,69,.024)', userSelect: 'none', lineHeight: 1 }}>V</div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '52px', height: '52px', background: 'var(--Y)', fontSize: '24px', marginBottom: '20px' }}>🌟</div>
-              <div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '.28em', textTransform: 'uppercase', color: 'rgba(240,200,69,.38)', marginBottom: '10px' }}>Our Vision</div>
-              <h3 style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: 'clamp(22px,2.8vw,38px)', color: 'var(--Y)', lineHeight: 1.1, marginBottom: '18px' }}>India's Most Trusted Growth Partner by 2030</h3>
-              <p style={{ fontSize: '14px', lineHeight: 1.84, color: 'rgba(240,200,69,.52)', marginBottom: '14px' }}>
-                To be the agency that 1,000+ Indian brands credit as the inflection point in their growth story — a name synonymous with sharp thinking, relentless execution, and results that compound.
-              </p>
-              <p style={{ fontSize: '14px', lineHeight: 1.84, color: 'rgba(240,200,69,.52)' }}>
-                We envision a world where every Indian D2C brand, startup, and business has access to the same quality of digital strategy that Fortune 500 companies receive — at a fair, accessible price.
-              </p>
+            <div className="rev-r" style={{ background:'#0e104b',padding:'48px',border:'1px solid rgba(240,200,69,.1)',position:'relative',overflow:'hidden' }}>
+              <div style={{ position:'absolute',top:'-12px',right:'-8px',fontFamily:'var(--FM)',fontWeight:900,fontSize:'130px',color:'rgba(240,200,69,.024)',userSelect:'none',lineHeight:1 }}>V</div>
+              <div style={{ display:'inline-flex',alignItems:'center',justifyContent:'center',width:'52px',height:'52px',background:'var(--Y)',fontSize:'24px',marginBottom:'20px' }}>🌟</div>
+              <div style={{ fontSize:'9px',fontWeight:700,letterSpacing:'.28em',textTransform:'uppercase',color:'rgba(240,200,69,.38)',marginBottom:'10px' }}>Our Vision</div>
+              <h3 style={{ fontFamily:'var(--FM)',fontWeight:800,fontSize:'clamp(22px,2.8vw,38px)',color:'var(--Y)',lineHeight:1.1,marginBottom:'18px' }}>India's Most Trusted Growth Partner by 2030</h3>
+              <p style={{ fontSize:'14px',lineHeight:1.84,color:'rgba(240,200,69,.52)',marginBottom:'14px' }}>To be the agency that 1,000+ Indian brands credit as the inflection point in their growth story — synonymous with sharp thinking, relentless execution, and results that compound.</p>
+              <p style={{ fontSize:'14px',lineHeight:1.84,color:'rgba(240,200,69,.52)' }}>We envision a world where every Indian D2C brand has access to the same quality of digital strategy that Fortune 500 companies receive — at a fair, accessible price.</p>
             </div>
           </div>
-          {/* The Numbers Strip */}
-          <div className="reveal" style={{ marginTop: '3px', background: '#0e104b', padding: '32px 48px', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '2px' }}>
-            {[['7+', 'Years in Business'], ['200+', 'Brands Scaled'], ['₹50Cr+', 'Ad Spend Managed'], ['98%', 'Client Retention']].map(([n, l], i) => (
-              <div key={i} style={{ textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(240,200,69,.09)' : 'none', padding: '8px 16px' }}>
-                <div style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: 'clamp(28px,3.5vw,48px)', color: 'var(--Y)', lineHeight: 1 }}>{n}</div>
-                <div style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(240,200,69,.36)', marginTop: '5px' }}>{l}</div>
+          <div className="reveal" style={{ marginTop:'3px',background:'#0e104b',padding:'32px 48px',display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'2px' }}>
+            {[['7+','Years in Business'],['200+','Brands Scaled'],['₹50Cr+','Ad Spend Managed'],['98%','Client Retention']].map(([n,l],i) => (
+              <div key={i} style={{ textAlign:'center',borderRight:i<3?'1px solid rgba(240,200,69,.09)':'none',padding:'8px 16px' }}>
+                <div style={{ fontFamily:'var(--FM)',fontWeight:800,fontSize:'clamp(28px,3.5vw,48px)',color:'var(--Y)',lineHeight:1 }}>{n}</div>
+                <div style={{ fontSize:'10px',fontWeight:600,letterSpacing:'.1em',textTransform:'uppercase',color:'rgba(240,200,69,.36)',marginTop:'5px' }}>{l}</div>
               </div>
             ))}
           </div>
         </section>
       </div>
-
-      {/* ── Our Values ───────────────────────────────────────── */}
-      <div style={{ background: 'var(--B)' }}>
+      <div style={{ background:'var(--B)' }}>
         <section className="sec on-navy">
           <div className="reveal">
             <div className="sec-label"><span>How We Operate</span></div>
             <h2 className="sec-title">Our Core <span className="out">Values</span></h2>
             <p className="sec-intro">Six principles that guide every decision, every campaign, every client relationship.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '2px', marginTop: '40px' }}>
-            {values.map((v, i) => (
-              <div key={i} className="reveal" style={{ background: 'var(--B4)', border: '1px solid rgba(240,200,69,.07)', padding: '32px 28px', transition: 'all .3s', cursor: 'default' }}
-                onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(240,200,69,.2)'}
-                onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(240,200,69,.07)'}
+          <div style={{ display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'2px',marginTop:'40px' }}>
+            {values.map((v,i) => (
+              <div key={i} className="reveal" style={{ background:'var(--B4)',border:'1px solid rgba(240,200,69,.07)',padding:'32px 28px',transition:'all .3s',cursor:'default' }}
+                onMouseEnter={e => e.currentTarget.style.borderColor='rgba(240,200,69,.2)'}
+                onMouseLeave={e => e.currentTarget.style.borderColor='rgba(240,200,69,.07)'}
               >
-                <div style={{ fontSize: '32px', marginBottom: '14px', lineHeight: 1 }}>{v.icon}</div>
-                <h4 style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: '16px', color: 'var(--Y)', marginBottom: '9px' }}>{v.title}</h4>
-                <p style={{ fontSize: '13px', lineHeight: 1.76, color: 'rgba(240,200,69,.42)' }}>{v.desc}</p>
+                <div style={{ fontSize:'32px',marginBottom:'14px',lineHeight:1 }}>{v.icon}</div>
+                <h4 style={{ fontFamily:'var(--FM)',fontWeight:800,fontSize:'16px',color:'var(--Y)',marginBottom:'9px' }}>{v.title}</h4>
+                <p style={{ fontSize:'13px',lineHeight:1.76,color:'rgba(240,200,69,.42)' }}>{v.desc}</p>
               </div>
             ))}
           </div>
         </section>
       </div>
-
-      {/* ── Office & Culture Image Strip ─────────────────────── */}
-      <div style={{ background: 'var(--B3)', overflow: 'hidden' }}>
-        <div className="reveal" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', height: '280px' }}>
-          {[
-            'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=500&auto=format&fit=crop&q=80',
-            'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=500&auto=format&fit=crop&q=80',
-            'https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=500&auto=format&fit=crop&q=80',
-            'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=500&auto=format&fit=crop&q=80',
-          ].map((url, i) => (
-            <div key={i} style={{ overflow: 'hidden', position: 'relative', borderRight: i < 3 ? '2px solid var(--B3)' : 'none', opacity: 0, transform: 'translateY(28px)', transition: `opacity .7s ${i * .12}s ease, transform .7s ${i * .12}s ease` }}
-              ref={el => { if (el) { const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.style.opacity = '1'; el.style.transform = 'none'; io.unobserve(el); } }, { threshold: .1 }); io.observe(el); } }}
+      <div style={{ background:'var(--B3)',overflow:'hidden' }}>
+        <div className="reveal" style={{ display:'grid',gridTemplateColumns:'repeat(4,1fr)',height:'280px' }}>
+          {['https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=500&auto=format&fit=crop&q=80','https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=500&auto=format&fit=crop&q=80','https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=500&auto=format&fit=crop&q=80','https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=500&auto=format&fit=crop&q=80'].map((url,i) => (
+            <div key={i} style={{ overflow:'hidden',position:'relative',borderRight:i<3?'2px solid var(--B3)':'none',opacity:0,transform:'translateY(28px)',transition:`opacity .7s ${i*.12}s ease,transform .7s ${i*.12}s ease` }}
+              ref={el => { if (el) { const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.style.opacity='1'; el.style.transform='none'; io.unobserve(el); } }, { threshold:.1 }); io.observe(el); } }}
             >
-              <img src={url} alt="Office culture" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(.2) contrast(1.2)', transition: 'filter .5s, transform .5s' }}
-                onMouseEnter={e => { e.currentTarget.style.filter = 'saturate(.8) contrast(1)'; e.currentTarget.style.transform = 'scale(1.05)'; }}
-                onMouseLeave={e => { e.currentTarget.style.filter = 'saturate(.2) contrast(1.2)'; e.currentTarget.style.transform = 'scale(1)'; }}
+              <img src={url} alt="Office" style={{ width:'100%',height:'100%',objectFit:'cover',filter:'saturate(.2) contrast(1.2)',transition:'filter .5s,transform .5s' }}
+                onMouseEnter={e => { e.currentTarget.style.filter='saturate(.8) contrast(1)'; e.currentTarget.style.transform='scale(1.05)'; }}
+                onMouseLeave={e => { e.currentTarget.style.filter='saturate(.2) contrast(1.2)'; e.currentTarget.style.transform='scale(1)'; }}
               />
-              <div style={{ position: 'absolute', inset: 0, background: 'rgba(8,9,48,.36)' }} />
+              <div style={{ position:'absolute',inset:0,background:'rgba(8,9,48,.36)' }} />
             </div>
           ))}
         </div>
-        <div className="reveal" style={{ padding: '22px 56px', borderTop: '1px solid rgba(240,200,69,.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <p style={{ fontFamily: 'var(--FI)', fontStyle: 'italic', fontSize: '15px', color: 'rgba(240,200,69,.38)' }}>Built in Udaipur. Trusted across India.</p>
-          <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(240,200,69,.28)' }}>Ereynard Digital · Since 2017</p>
+        <div className="reveal" style={{ padding:'22px 56px',borderTop:'1px solid rgba(240,200,69,.06)',display:'flex',alignItems:'center',justifyContent:'space-between' }}>
+          <p style={{ fontFamily:'var(--FI)',fontStyle:'italic',fontSize:'15px',color:'rgba(240,200,69,.38)' }}>Built in Udaipur. Trusted across India.</p>
+          <p style={{ fontSize:'11px',fontWeight:600,letterSpacing:'.1em',textTransform:'uppercase',color:'rgba(240,200,69,.28)' }}>Ereynard Digital · Since 2017</p>
         </div>
       </div>
-
-      {/* ── Full Team Section ─────────────────────────────────── */}
       <TeamSection showAll={true} />
-
-      {/* ── CTA Strip ────────────────────────────────────────── */}
-      <div className="reveal" style={{ background: 'var(--B3)', padding: '72px 56px', textAlign: 'center' }}>
-        <p style={{ fontFamily: 'var(--FI)', fontStyle: 'italic', fontSize: 'clamp(17px,2.2vw,26px)', color: 'rgba(240,200,69,.46)', marginBottom: '8px', lineHeight: 1.5 }}>
-          A fox never chases. It positions, waits, and strikes perfectly.
-        </p>
-        <p style={{ fontFamily: 'var(--FM)', fontWeight: 700, fontSize: 'clamp(22px,3vw,38px)', color: 'var(--Y)', marginBottom: '28px', lineHeight: 1.15 }}>
-          Ready to be in the right position?
-        </p>
-        <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
+      <div className="reveal" style={{ background:'var(--B3)',padding:'72px 56px',textAlign:'center' }}>
+        <p style={{ fontFamily:'var(--FI)',fontStyle:'italic',fontSize:'clamp(17px,2.2vw,26px)',color:'rgba(240,200,69,.46)',marginBottom:'8px',lineHeight:1.5 }}>A fox never chases. It positions, waits, and strikes perfectly.</p>
+        <p style={{ fontFamily:'var(--FM)',fontWeight:700,fontSize:'clamp(22px,3vw,38px)',color:'var(--Y)',marginBottom:'28px',lineHeight:1.15 }}>Ready to be in the right position?</p>
+        <div style={{ display:'flex',gap:'14px',justifyContent:'center',flexWrap:'wrap' }}>
           <button className="btn-p" onClick={openContact}><span>Start a Project</span><span>→</span></button>
           <button className="btn-g" onClick={() => nav('clients')}>Meet Our Clients →</button>
         </div>
@@ -2079,9 +1891,6 @@ function AboutPage({ nav, openSvc, openContact }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════
-// SERVICES PAGE — Services + Process merged into one page
-// ═══════════════════════════════════════════════════════════
 function ServicesPage({ openSvc, nav }) {
   useTilt(); useRipple();
   return (
@@ -2089,14 +1898,12 @@ function ServicesPage({ openSvc, nav }) {
       <PageHero label="What We Do" title="Services & Process" strokeWord="Process" sub="9 specialised services + the Fox Method — every tool and tactic we use to grow your brand." />
       <ServicesFull openSvc={openSvc} />
       <ImageBand />
-      <div style={{ background: 'var(--B3)' }}>
-        <section className="sec on-navy" style={{ paddingBottom: '24px' }}>
-          <div className="reveal" style={{ textAlign: 'center' }}>
-            <div className="sec-label" style={{ justifyContent: 'center' }}><span>How It All Works</span></div>
+      <div style={{ background:'var(--B3)' }}>
+        <section className="sec on-navy" style={{ paddingBottom:'24px' }}>
+          <div className="reveal" style={{ textAlign:'center' }}>
+            <div className="sec-label" style={{ justifyContent:'center' }}><span>How It All Works</span></div>
             <h2 className="sec-title">The Fox <span className="out">Method</span></h2>
-            <p style={{ fontFamily: 'var(--FI)', fontStyle: 'italic', fontSize: '15px', color: 'rgba(240,200,69,.42)', marginTop: '8px', maxWidth: '540px', margin: '8px auto 0' }}>
-              Every service we offer follows the same four-phase framework that turns strategy into compounding results.
-            </p>
+            <p style={{ fontFamily:'var(--FI)',fontStyle:'italic',fontSize:'15px',color:'rgba(240,200,69,.42)',marginTop:'8px',maxWidth:'540px',margin:'8px auto 0' }}>Every service we offer follows the same four-phase framework that turns strategy into compounding results.</p>
           </div>
         </section>
       </div>
@@ -2117,12 +1924,12 @@ function ProjectsPage({ openCamp }) {
   );
 }
 
-function ClientsPage({ openCamp }) {
+function ClientsPage() {
   useRipple();
   return (
     <>
       <PageHero label="Trusted By" title="Our Clients" strokeWord="Clients" sub="200+ brands across India that chose to outfox the competition." />
-      <ClientsSection openCamp={openCamp} />
+      <ClientsSection />
     </>
   );
 }
@@ -2148,7 +1955,7 @@ function ContactPage() {
 }
 
 // ═══════════════════════════════════════════════════════════
-// FOOTER (updated — Process/Team removed, About handles both)
+// FOOTER
 // ═══════════════════════════════════════════════════════════
 function Footer({ nav, openSvc }) {
   return (
@@ -2157,10 +1964,10 @@ function Footer({ nav, openSvc }) {
         <div className="ft-brand">
           <button className="ft-logo" onClick={() => nav('home')}>🦊 ereynard.</button>
           <p>Smart like a fox. Sharp in digital. We build brands that dominate the digital landscape.</p>
-          <div className="ft-soc">{[['in', 'https://linkedin.com'], ['ig', 'https://instagram.com'], ['fb', 'https://facebook.com'], ['yt', 'https://youtube.com']].map(([l, u]) => <a key={l} href={u} target="_blank" rel="noopener noreferrer" className="ft-sl">{l}</a>)}</div>
+          <div className="ft-soc">{[['in','https://linkedin.com'],['ig','https://instagram.com'],['fb','https://facebook.com'],['yt','https://youtube.com']].map(([l,u]) => <a key={l} href={u} target="_blank" rel="noopener noreferrer" className="ft-sl">{l}</a>)}</div>
         </div>
-        <div className="ft-col"><h4>Services</h4><ul>{[['SEO', 'seo'], ['Social Media', 'social'], ['Performance Ads', 'performance'], ['Content Strategy', 'content'], ['Web Design', 'web'], ['Branding', 'branding']].map(([l, k]) => <li key={k}><button onClick={() => openSvc(k)}>{l}</button></li>)}</ul></div>
-        <div className="ft-col"><h4>Company</h4><ul>{[['About Us', 'about'], ['Mission & Vision', 'about'], ['Our Work', 'projects'], ['Our Team', 'about'], ['Services & Process', 'services'], ['Clients', 'clients']].map(([l, p], i) => <li key={i}><button onClick={() => nav(p)}>{l}</button></li>)}</ul></div>
+        <div className="ft-col"><h4>Services</h4><ul>{[['SEO','seo'],['Social Media','social'],['Performance Ads','performance'],['Content Strategy','content'],['Web Design','web'],['Branding','branding']].map(([l,k]) => <li key={k}><button onClick={() => openSvc(k)}>{l}</button></li>)}</ul></div>
+        <div className="ft-col"><h4>Company</h4><ul>{[['About Us','about'],['Mission & Vision','about'],['Our Work','projects'],['Our Team','about'],['Services & Process','services'],['Clients','clients']].map(([l,p],i) => <li key={i}><button onClick={() => nav(p)}>{l}</button></li>)}</ul></div>
         <div className="ft-col"><h4>Contact</h4><ul><li><a href="mailto:hello@ereynard.com">hello@ereynard.com</a></li><li><a href="tel:+919876543210">+91 98765 43210</a></li><li><a href="#">Udaipur, Rajasthan</a></li><li><button onClick={() => nav('contact')}>Enquire Now</button></li></ul></div>
       </div>
       <div className="ft-bot"><span>© 2025 <strong>Ereynard</strong>. All rights reserved.</span><span>Smart like a fox. <strong>Sharp in digital.</strong></span></div>
@@ -2180,7 +1987,7 @@ export default function App() {
   const [campKey, setCampKey] = useState(null);
 
   useEffect(() => {
-    const esc = e => { if (e.key === 'Escape') { setSvcKey(null); setCampKey(null); document.body.style.overflow = ''; } };
+    const esc = e => { if (e.key==='Escape') { setSvcKey(null); setCampKey(null); document.body.style.overflow=''; } };
     document.addEventListener('keydown', esc);
     return () => document.removeEventListener('keydown', esc);
   }, []);
@@ -2191,12 +1998,12 @@ export default function App() {
   }, [svcKey, campKey]);
 
   const nav = useCallback((p, postId = null) => {
-    if (p === page && !postId) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (p === page && !postId) { window.scrollTo({ top:0, behavior:'smooth' }); return; }
     setTransition('pt-enter');
     setTimeout(() => {
       setPage(p);
       if (postId) setBlogPostId(postId);
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      window.scrollTo({ top:0, behavior:'instant' });
       setTransition('pt-exit');
       setTimeout(() => setTransition(null), 560);
     }, 520);
@@ -2217,7 +2024,6 @@ export default function App() {
       case 'clients':  return <ClientsPage  {...p} />;
       case 'blog':     return <BlogPage     {...p} />;
       case 'contact':  return <ContactPage  {...p} />;
-      // Legacy redirects — old links in footer still work
       case 'process':  return <ServicesPage {...p} />;
       case 'team':     return <AboutPage    {...p} />;
       default:         return <HomePage     {...p} />;
