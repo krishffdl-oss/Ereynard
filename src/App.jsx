@@ -825,7 +825,7 @@ function Header({ page, nav, openContact }) {
   return (
     <>
       <nav className={scrolled ? 'sc' : ''}>
-        <button className="nav-logo" onClick={() => nav('home')}><span>🦊</span>ereynard<span style={{ opacity: .3 }}>.</span></button>
+        <button className="nav-logo" onClick={() => nav('home')}><span>🦊</span>Ereynard<span style={{ opacity: .3 }}>.</span></button>
         <ul className="nav-links">
           {pages.map(p => <li key={p.k}><button className={page === p.k ? 'active' : ''} onClick={() => nav(p.k)}>{p.l}</button></li>)}
         </ul>
