@@ -35,8 +35,8 @@ export default function Footer({ openSvc }) {
         <div className="ft-col">
           <h4>Contact</h4>
           <ul>
-            <li><a href="mailto:hello@ereynard.com">hello@ereynard.com</a></li>
-            <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+            <li><a href="mailto:ereynardoffial@gmail.com">ereynardoffial@gmail.com</a></li>
+            <li><a href="tel:+918619189335">+91 8619189335</a></li>
             <li><span style={{ color: 'rgba(14,16,75,.46)', fontSize: '12px' }}>Udaipur, Rajasthan</span></li>
             <li><button onClick={() => goTo('/contact')}>Enquire Now</button></li>
           </ul>
