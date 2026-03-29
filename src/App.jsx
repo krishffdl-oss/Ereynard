@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 // ── Components ──
 import Cursor from './components/Cursor.jsx';
 import Loader from './components/Loader.jsx';
-import PageTransition from './components/PageTransition.jsx';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import ServiceModal from './components/ServiceModal.jsx';
@@ -30,9 +29,9 @@ function ScrollToTop() {
 // ── Inner app (inside BrowserRouter) ──
 function AppInner() {
   const [loaded, setLoaded] = useState(false);
-  const [transition, setTransition] = useState(null);
   const [svcKey, setSvcKey] = useState(null);
   const [campKey, setCampKey] = useState(null);
+  const navigate = useNavigate();
 
   // Close modals on Escape
   useEffect(() => {
@@ -54,7 +53,10 @@ function AppInner() {
 
   const openSvc = useCallback(k => setSvcKey(k), []);
   const openCamp = useCallback(k => setCampKey(k), []);
-  const openContact = useCallback(() => { window.location.href = '/contact'; }, []);
+  const openContact = useCallback(() => {
+    navigate('/contact');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [navigate]);
 
   // Shared page props
   const pageProps = { openSvc, openCamp, openContact };
@@ -66,9 +68,6 @@ function AppInner() {
 
       {/* Loader (shown once on first load) */}
       {!loaded && <Loader onDone={() => setLoaded(true)} />}
-
-      {/* Page transition overlay */}
-      <PageTransition state={transition} />
 
       {/* Scroll restoration */}
       <ScrollToTop />
