@@ -119,10 +119,20 @@ function BrandStory() {
   );
 }
 
-function ServicesMini({ openSvc }) {
+function ServicesMini() {
   const navigate = useNavigate();
   useReveal();
-  const svcs = [{ k: 'seo', i: '🔍', t: 'SEO' }, { k: 'social', i: '📱', t: 'Social Media' }, { k: 'performance', i: '🎯', t: 'Performance Ads' }, { k: 'content', i: '✍️', t: 'Content Strategy' }, { k: 'web', i: '🌐', t: 'Web Design' }, { k: 'analytics', i: '📊', t: 'Analytics' }, { k: 'branding', i: '🎨', t: 'Branding' }, { k: 'email', i: '📧', t: 'Email Marketing' }, { k: 'influencer', i: '🤝', t: 'Influencer Marketing' }];
+  const svcs = [
+    { k:'seo',         i:'🔍', t:'SEO' },
+    { k:'social',      i:'📱', t:'Social Media' },
+    { k:'performance', i:'🎯', t:'Performance Ads' },
+    { k:'content',     i:'✍️', t:'Content Strategy' },
+    { k:'web',         i:'🌐', t:'Web Design' },
+    { k:'analytics',   i:'📊', t:'Analytics' },
+    { k:'branding',    i:'🎨', t:'Branding' },
+    { k:'email',       i:'📧', t:'Email Marketing' },
+    { k:'influencer',  i:'🤝', t:'Influencer Marketing' },
+  ];
   return (
     <div className="svc-bg">
       <section className="sec on-navy">
@@ -132,7 +142,7 @@ function ServicesMini({ openSvc }) {
         </div>
         <div className="svc-mini">
           {svcs.map(s => (
-            <div key={s.k} className="svc-mini-card reveal" onClick={() => openSvc(s.k)}>
+            <div key={s.k} className="svc-mini-card reveal" onClick={() => navigate(`/services/${s.k}`)}>
               <span className="svc-mini-icon">{s.i}</span>
               <span className="svc-mini-name">{s.t}</span>
               <span className="svc-mini-arrow">→</span>
@@ -220,15 +230,15 @@ function WorkTeaser() {
   );
 }
 
-export default function HomePage({ openSvc, openContact }) {
+export default function HomePage({ openContact }) {
   useTilt(); useRipple();
   return (
     <>
       <Hero openContact={openContact} />
       <Marquee />
-      <AboutSection openSvc={openSvc} />
+      <AboutSection />
       <BrandStory />
-      <ServicesMini openSvc={openSvc} />
+      <ServicesMini />
       <Stats />
       <ImageBand />
       <ProcessShort />

@@ -6,8 +6,9 @@ import FAQ from '../components/FAQ.jsx';
 import { SVC_DATA } from '../data/index.js';
 import { useReveal, useTilt, useRipple } from '../hooks/useReveal.js';
 
-function ServicesFull({ openSvc }) {
+function ServicesFull() {
   useReveal(); useTilt();
+  const navigate = useNavigate();
   const svcs = Object.entries(SVC_DATA).map(([k, v]) => ({ k, ...v }));
   return (
     <div className="svc-bg">
@@ -19,7 +20,7 @@ function ServicesFull({ openSvc }) {
         </div>
         <div className="svc-full-grid">
           {svcs.filter(s => s.k !== 'strategy').map(s => (
-            <div key={s.k} className="scard reveal" onClick={() => openSvc(s.k)}>
+            <div key={s.k} className="scard reveal" onClick={() => navigate(`/services/${s.k}`)}>
               <div className="sn">{s.num}</div>
               <span className="si">{s.icon}</span>
               <h3 className="st">{s.title}</h3>
@@ -35,7 +36,7 @@ function ServicesFull({ openSvc }) {
         </div>
         <div className="svc-detail-list">
           {svcs.map(s => (
-            <div key={s.k} className="svc-detail-row reveal" onClick={() => openSvc(s.k)}>
+            <div key={s.k} className="svc-detail-row reveal" onClick={() => navigate(`/services/${s.k}`)}>
               <div className="sdr-left">
                 <span className="sdr-icon">{s.icon}</span>
                 <div><div className="sdr-num">{s.num}</div><div className="sdr-name">{s.title}</div></div>
@@ -84,12 +85,12 @@ function ProcessFull() {
   );
 }
 
-export default function ServicesPage({ openSvc }) {
+export default function ServicesPage() {
   useTilt(); useRipple();
   return (
     <>
       <PageHero label="What We Do" title="Services & Process" strokeWord="Process" sub="9 specialised services + the Fox Method — every tool and tactic we use to grow your brand." />
-      <ServicesFull openSvc={openSvc} />
+      <ServicesFull />
       <ImageBand />
       <div style={{ background: 'var(--B3)' }}>
         <section className="sec on-navy" style={{ paddingBottom: '24px' }}>

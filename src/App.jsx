@@ -14,6 +14,7 @@ import Chatbot from './components/Chatbot.jsx';
 import HomePage from './pages/HomePage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import ServicesPage from './pages/ServicesPage.jsx';
+import ServiceDetailPage from './pages/ServiceDetailPage.jsx';
 import ProjectsPage from './pages/ProjectsPage.jsx';
 import ClientsPage from './pages/ClientsPage.jsx';
 import BlogPage, { BlogPostPage } from './pages/BlogPage.jsx';
@@ -81,6 +82,7 @@ function AppInner() {
           <Route path="/" element={<HomePage {...pageProps} />} />
           <Route path="/about" element={<AboutPage {...pageProps} />} />
           <Route path="/services" element={<ServicesPage {...pageProps} />} />
+          <Route path="/services/:serviceId" element={<ServiceDetailPage {...pageProps} />} />
           <Route path="/projects" element={<ProjectsPage {...pageProps} />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/blog" element={<BlogPage />} />
