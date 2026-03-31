@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import PageHero from '../components/PageHero.jsx';
-import { useReveal, useRipple } from '../hooks/useReveal.js';
+import { useReveal, useRipple, useScrollSection } from '../hooks/useReveal.js';
 import { TEAM } from '../data/index.js';
 
 function TeamSection({ showAll = false }) {
   useReveal();
+  useScrollSection('team'); // ← scroll karo → URL /about#team ho jaayega
   const members = showAll ? TEAM : TEAM.slice(0, 4);
   return (
-    <div className="team-bg">
+    <div id="team" className="team-bg">
       <section className="sec on-navy">
         <div className="reveal">
           <div className="sec-label"><span>The Pack</span></div>

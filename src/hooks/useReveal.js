@@ -1,4 +1,46 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+
+// ─────────────────────────────────────────────────────────
+// useScrollSection
+// Scroll karo → URL silently change hoti hai (no page reload)
+// sectionId  : id of the section div (e.g. 'team')
+// threshold  : 0-1, kitna visible ho tab change ho (default 0.35)
+// ─────────────────────────────────────────────────────────
+export function useScrollSection(sectionId, threshold = 0.35) {
+  const prevHash = useRef('');
+
+  useEffect(() => {
+    // Page load pe agar URL mein already #team hai → scroll karo
+    if (window.location.hash === `#${sectionId}`) {
+      const target = document.getElementById(sectionId);
+      if (target) {
+        setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 400);
+      }
+    }
+
+    const el = document.getElementById(sectionId);
+    if (!el) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        // Section screen pe aaya → URL mein #team add karo
+        if (prevHash.current !== sectionId) {
+          prevHash.current = sectionId;
+          window.history.replaceState(null, '', `#${sectionId}`);
+        }
+      } else {
+        // Section gaya → URL wapas base pe
+        if (prevHash.current === sectionId) {
+          prevHash.current = '';
+          window.history.replaceState(null, '', window.location.pathname);
+        }
+      }
+    }, { threshold });
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [sectionId, threshold]);
+}
 
 export function useReveal() {
   useEffect(() => {
