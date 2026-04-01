@@ -95,38 +95,43 @@ body.hov #cur-r { width: 58px; height: 58px; opacity: .22; }
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  padding: 20px 56px; display: flex; align-items: center;
+  padding: 14px 56px; display: flex; align-items: center;
   justify-content: space-between; transition: all .4s var(--ease);
+  background: var(--Y);
+  border-bottom: 1px solid rgba(14,16,75,.1);
+  box-shadow: 0 2px 24px rgba(14,16,75,.12);
 }
 nav.sc {
-  background: rgba(14,16,75,.97); backdrop-filter: blur(20px);
-  padding: 13px 56px; border-bottom: 1px solid rgba(240,200,69,.1);
-  box-shadow: 0 4px 32px rgba(0,0,0,.4);
+  background: var(--Y);
+  backdrop-filter: blur(20px);
+  padding: 10px 56px;
+  border-bottom: 2px solid rgba(14,16,75,.15);
+  box-shadow: 0 4px 32px rgba(14,16,75,.2);
 }
 .nav-logo {
   font-family: var(--FM); font-size: 20px; font-weight: 800;
-  letter-spacing: .06em; color: var(--Y); display: flex; align-items: center;
-  gap: 7px; transition: transform .3s; cursor: pointer;
+  letter-spacing: .06em; color: var(--B); display: flex; align-items: center;
+  gap: 9px; transition: transform .3s; cursor: pointer;
   background: none; border: none;
 }
 .nav-logo:hover { transform: scale(1.04); }
 .nav-links { display: flex; gap: 24px; list-style: none; }
 .nav-links button {
-  color: rgba(240,200,69,.5); font-size: 11px; letter-spacing: .12em;
-  text-transform: uppercase; font-weight: 600; transition: color .3s;
+  color: rgba(14,16,75,.55); font-size: 11px; letter-spacing: .12em;
+  text-transform: uppercase; font-weight: 700; transition: color .3s;
   position: relative; background: none; border: none; cursor: pointer;
   font-family: var(--FM); padding: 0;
 }
 .nav-links button::after {
   content: ''; position: absolute; bottom: -3px; left: 0;
-  width: 0; height: 1.5px; background: var(--Y); transition: width .3s var(--ease);
+  width: 0; height: 1.5px; background: var(--B); transition: width .3s var(--ease);
 }
 .nav-links button:hover,
-.nav-links button.active { color: var(--Y); }
+.nav-links button.active { color: var(--B); }
 .nav-links button:hover::after,
 .nav-links button.active::after { width: 100%; }
 .nav-cta {
-  background: var(--Y); color: var(--B); font-family: var(--FM);
+  background: var(--B); color: var(--Y); font-family: var(--FM);
   font-size: 11px; font-weight: 700; letter-spacing: .1em;
   text-transform: uppercase; padding: 10px 24px;
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
@@ -134,13 +139,13 @@ nav.sc {
 }
 .nav-cta::before {
   content: ''; position: absolute; inset: 0;
-  background: var(--B2); transform: translateX(-105%); transition: transform .3s;
+  background: var(--B3); transform: translateX(-105%); transition: transform .3s;
 }
 .nav-cta:hover::before { transform: translateX(0); }
 .nav-cta:hover { color: var(--Y); }
 .nav-cta span { position: relative; z-index: 1; }
 .hburg { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 0; }
-.hburg i { display: block; width: 24px; height: 2px; background: var(--Y); transition: all .3s; }
+.hburg i { display: block; width: 24px; height: 2px; background: var(--B); transition: all .3s; }
 .hburg.open i:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
 .hburg.open i:nth-child(2) { opacity: 0; }
 .hburg.open i:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }

@@ -13,7 +13,7 @@ export default function Loader({ onDone }) {
 
   return (
     <div id="loader" className={hide ? 'hide' : ''}>
-      <div className="ld-fox">🦊</div>
+      <img src="/logo.jpg" alt="Ereynard" className="ld-fox" style={{ width:'80px', height:'80px', objectFit:'contain', borderRadius:'12px' }} />
       <div className="ld-brand">
         {'EREYNARD.'.split('').map((c, i) => (
           <span key={i} className={`ld-c ${i % 2 === 0 ? 'y' : 'o'}`} style={{ animationDelay: `${i * .065 + .1}s` }}>

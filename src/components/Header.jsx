@@ -71,22 +71,22 @@ export default function Header({ openContact }) {
         /* ── dropdown wrapper ── */
         .nav-svc-wrap { position:relative; }
 
-        /* ── services trigger button ── */
+        /* ── services trigger button — blue text on yellow bg ── */
         .nav-svc-btn {
-          color:rgba(240,200,69,.5);
+          color:rgba(14,16,75,.55);
           font-size:11px; letter-spacing:.12em; text-transform:uppercase;
-          font-weight:600; transition:color .3s; position:relative;
+          font-weight:700; transition:color .3s; position:relative;
           background:none; border:none; cursor:pointer;
           font-family:var(--FM); padding:0;
           display:inline-flex; align-items:center; gap:5px;
         }
         .nav-svc-btn::after {
           content:''; position:absolute; bottom:-3px; left:0;
-          width:0; height:1.5px; background:var(--Y);
+          width:0; height:1.5px; background:var(--B);
           transition:width .3s cubic-bezier(.4,0,.2,1);
         }
         .nav-svc-btn:hover,
-        .nav-svc-btn.active { color:var(--Y); }
+        .nav-svc-btn.active { color:var(--B); }
         .nav-svc-btn:hover::after,
         .nav-svc-btn.active::after { width:100%; }
 
@@ -97,21 +97,22 @@ export default function Header({ openContact }) {
         }
         .nav-svc-btn.open .nav-chevron { transform:rotate(180deg); opacity:1; }
 
-        /* ── mega dropdown panel ── */
+        /* ── mega dropdown — navy panel drops from yellow header ── */
         .nav-dropdown {
           position:absolute;
-          top:calc(100% + 16px);
+          top:calc(100% + 14px);
           left:50%;
           transform:translateX(-50%) translateY(-10px);
           width:580px;
-          background:rgba(10,12,66,0.98);
-          border:1px solid rgba(240,200,69,.14);
+          background:rgba(10,12,66,0.99);
+          border:1px solid rgba(240,200,69,.16);
+          border-top:3px solid var(--Y);
           backdrop-filter:blur(24px);
-          box-shadow:0 28px 72px rgba(0,0,0,.6), 0 0 0 1px rgba(240,200,69,.04);
+          box-shadow:0 28px 72px rgba(0,0,0,.55);
           clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);
           opacity:0;
           pointer-events:none;
-          transition:opacity .2s ease, transform .2s ease;
+          transition:opacity .22s ease, transform .22s ease;
           z-index:2000;
         }
         .nav-dropdown.show {
@@ -123,17 +124,17 @@ export default function Header({ openContact }) {
         /* dropdown header */
         .nd-head {
           padding:13px 18px 10px;
-          border-bottom:1px solid rgba(240,200,69,.07);
+          border-bottom:1px solid rgba(240,200,69,.08);
           display:flex; align-items:center; justify-content:space-between;
         }
         .nd-head-label {
           font-size:9px; font-weight:700; letter-spacing:.26em;
-          text-transform:uppercase; color:rgba(240,200,69,.34);
+          text-transform:uppercase; color:rgba(240,200,69,.36);
           font-family:var(--FM);
         }
         .nd-view-all {
           font-size:9px; font-weight:700; letter-spacing:.1em;
-          text-transform:uppercase; color:rgba(240,200,69,.5);
+          text-transform:uppercase; color:rgba(240,200,69,.52);
           background:none; border:none; cursor:pointer;
           font-family:var(--FM); transition:color .2s;
           display:flex; align-items:center; gap:5px;
@@ -156,11 +157,11 @@ export default function Header({ openContact }) {
         }
         .nd-item:hover {
           background:rgba(240,200,69,.06);
-          border-color:rgba(240,200,69,.12);
+          border-color:rgba(240,200,69,.14);
         }
         .nd-item.active-svc {
-          background:rgba(240,200,69,.08);
-          border-color:rgba(240,200,69,.18);
+          background:rgba(240,200,69,.09);
+          border-color:rgba(240,200,69,.2);
         }
         .nd-icon {
           font-size:20px; flex-shrink:0;
@@ -170,7 +171,7 @@ export default function Header({ openContact }) {
           display:flex; align-items:center; justify-content:center;
           transition:background .2s;
         }
-        .nd-item:hover .nd-icon { background:rgba(240,200,69,.14); }
+        .nd-item:hover .nd-icon { background:rgba(240,200,69,.15); }
         .nd-item-title {
           font-size:12px; font-weight:700; color:var(--Y);
           line-height:1.2; margin-bottom:3px; display:block;
@@ -238,7 +239,20 @@ export default function Header({ openContact }) {
       <nav className={scrolled ? 'sc' : ''}>
         {/* Logo */}
         <button className="nav-logo" onClick={() => goTo('/')}>
-          <span>🦊</span>Ereynard<span style={{ opacity:.3 }}>.</span>
+          <img
+            src="/logo.jpg"
+            alt="Ereynard"
+            style={{
+              height: '46px',
+              width: '46px',
+              objectFit: 'contain',
+              borderRadius: '8px',
+              flexShrink: 0,
+            }}
+          />
+          <span style={{ fontFamily:'var(--FM)', fontWeight:800, fontSize:'20px', letterSpacing:'.06em', color:'var(--B)' }}>
+            Ereynard<span style={{ opacity:.3 }}>.</span>
+          </span>
         </button>
 
         {/* Desktop links */}

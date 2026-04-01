@@ -8,7 +8,10 @@ export default function Footer({ openSvc }) {
     <footer>
       <div className="ft-grid">
         <div className="ft-brand">
-          <button className="ft-logo" onClick={() => goTo('/')}>🦊 ereynard.</button>
+          <button className="ft-logo" onClick={() => goTo('/')} style={{ display:'flex', alignItems:'center', gap:'9px' }}>
+            <img src="/logo.jpg" alt="Ereynard" style={{ height:'36px', width:'36px', objectFit:'contain', borderRadius:'5px' }} />
+            <span>ereynard.</span>
+          </button>
           <p>Smart like a fox. Sharp in digital. We build brands that dominate the digital landscape.</p>
           <div className="ft-soc">
             {[['in', 'https://linkedin.com'], ['ig', 'https://instagram.com'], ['fb', 'https://facebook.com'], ['yt', 'https://youtube.com']].map(([l, u]) => (
