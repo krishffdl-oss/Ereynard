@@ -745,7 +745,14 @@ footer { background: var(--Y); padding: 56px 56px 28px; }
   .stats-bg { padding: 58px 20px; } .clients-bg { padding: 52px 20px; }
   .page-hero { padding: 110px 20px 36px; }
   .ab-grid, .bs-two, .eq-grid, .faq-grid, .bs-promise-grid { grid-template-columns: 1fr; gap: 32px; }
-  .ab-vis { height: 280px; }
+  /* About image section — stack images vertically, no overlap */
+  .ab-vis { height: auto; position: relative; display: flex; flex-direction: column; gap: 12px; padding-bottom: 0; }
+  .ab-img-a { position: relative; top: auto; left: auto; right: auto; height: 200px; width: 100%; }
+  .ab-img-b { position: relative; bottom: auto; left: auto; right: auto; height: 170px; width: 100%; }
+  .ab-stat-a { position: absolute; top: 8px; left: 8px; padding: 10px 14px; }
+  .ab-stat-n { font-size: 32px; }
+  .ab-stat-b { position: absolute; bottom: 8px; right: 8px; padding: 10px 14px; }
+  .ab-badge { display: none; }
   .svc-full-grid, .svc-mini { grid-template-columns: 1fr 1fr; }
   .svc-detail-row { grid-template-columns: 1fr auto; gap: 16px; }
   .sdr-desc { display: none; }
@@ -778,14 +785,15 @@ footer { background: var(--Y); padding: 56px 56px 28px; }
   .stats-bg { padding: 44px 16px; } .clients-bg { padding: 44px 16px; }
   .bs-scoops { grid-template-columns: 1fr !important; }
   #bot-win { right: 7px; left: 7px; width: auto; bottom: 78px; }
-  #bot-btn { right: 12px; bottom: 14px; width: 50px; height: 50px; }
-  nav { padding: 15px 14px; }
+  #wa-btn { right: 12px; bottom: 14px; width: 50px; height: 50px; }
+  nav { padding: 12px 14px; }
   .frow { grid-template-columns: 1fr; }
   .camp-kpis, .camp-tl { grid-template-columns: 1fr 1fr; }
   .hero-stats-row { flex-wrap: wrap; }
   .slider-arrows { display: none; }
   .wt-inner { grid-template-columns: 1fr; }
   .hero-content-wrap { padding: 0 16px; }
-  .ab-vis { height: 240px; }
-  .ab-stat-b { right: 12px; }
+  .ab-img-a { height: 170px; }
+  .ab-img-b { height: 140px; }
+  .ab-stat-b { right: 8px; }
 }
