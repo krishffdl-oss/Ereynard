@@ -31,9 +31,9 @@ function ContactForm() {
             </p>
             <div className="eq-det reveal">
               <div className="eq-di">📍 Udaipur, Rajasthan, India</div>
-              <div className="eq-di">📧 <a href="mailto:hello@ereynard.com">hello@ereynard.com</a></div>
-              <div className="eq-di">📞 <a href="tel:+919876543210">+91 98765 43210</a></div>
-              <div className="eq-di">💬 <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer">WhatsApp Us</a></div>
+              <div className="eq-di">📧 <a href="mailto:ereynardofficial@gmail.com">ereynardofficial@gmail.com</a></div>
+              <div className="eq-di">📞 <a href="tel:+918619189335">+91 86191 89335</a></div>
+              <div className="eq-di">💬 <a href="https://wa.me/918619189335" target="_blank" rel="noopener noreferrer">WhatsApp Us</a></div>
             </div>
             <div className="eq-img-wrap shimmer reveal">
               <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=700&auto=format&fit=crop&q=80" alt="Team" />
