@@ -1,0 +1,39 @@
+# robots.txt — Ereynard Digital
+# https://ereynard.com
+
+# ── Allow all search engines ──
+User-agent: *
+Allow: /
+
+# ── Pages to index ──
+Allow: /
+Allow: /about
+Allow: /services
+Allow: /services/seo
+Allow: /services/social
+Allow: /services/performance
+Allow: /services/content
+Allow: /services/web
+Allow: /services/analytics
+Allow: /services/branding
+Allow: /services/email
+Allow: /services/influencer
+Allow: /services/strategy
+Allow: /projects
+Allow: /clients
+Allow: /blog
+Allow: /blog/
+Allow: /contact
+
+# ── Block dev/build files ──
+Disallow: /src/
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /dist/
+Disallow: /.env
+Disallow: /vite.config.js
+Disallow: /package.json
+Disallow: /package-lock.json
+
+# ── Sitemap ──
+Sitemap: https://ereynard.com/sitemap.xml
