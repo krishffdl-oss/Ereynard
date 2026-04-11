@@ -158,26 +158,6 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
         </section>
       </div>
 
-      {/* ── PROCESS ── */}
-      <div style={{ background:'var(--B3)' }}>
-        <section className="sec on-navy">
-          <div className="reveal">
-            <div className="sec-label"><span>How We Do It</span></div>
-            <h2 className="sec-title">Our <span className="out">Process</span></h2>
-            <p className="sec-intro">The Fox Method applied specifically to {d.title}.</p>
-          </div>
-          <div className="sdp-proc-grid">
-            {PROCESS_STEPS.map((s,i) => (
-              <div key={i} className="sdp-proc-step reveal">
-                <div className="sdp-proc-num">{s.n}</div>
-                <div className="sdp-proc-title">{s.t}</div>
-                <p className="sdp-proc-desc">{s.d}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
-
       {/* ── RELATED CAMPAIGN ── */}
       {campaign && (
         <div style={{ background:'var(--B2)' }}>

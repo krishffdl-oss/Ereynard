@@ -4,7 +4,7 @@ import ImageBand from '../components/ImageBand.jsx';
 import Stats from '../components/Stats.jsx';
 import FAQ from '../components/FAQ.jsx';
 import { SVC_DATA } from '../data/index.js';
-import { useReveal, useTilt, useRipple } from '../hooks/useReveal.js';
+import { useReveal, useTilt, useRipple, useScrollSection } from '../hooks/useReveal.js';
 
 function ServicesFull() {
   useReveal(); useTilt();
@@ -53,6 +53,7 @@ function ServicesFull() {
 
 function ProcessFull() {
   useReveal();
+  useScrollSection('process'); // scroll karo → URL /services#process ho jaayega
   const steps = [
     { img: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop&q=80', n: '01', t: 'Discover', d: "We don't assume — we investigate. Comprehensive brand audit, audience analysis, competitor mapping, and goal-setting workshop.", items: ['Brand & digital audit', 'Audience persona research', 'Competitor gap analysis', 'Goal setting & KPI definition', 'Budget allocation planning'] },
     { img: 'https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?w=800&auto=format&fit=crop&q=80', n: '02', t: 'Strategise', d: 'Every brand gets a bespoke digital roadmap — not a template. We map each channel, content type, and campaign to specific business outcomes.', items: ['Channel selection & mix', '90-day content roadmap', 'Campaign architecture', 'Creative strategy brief', 'Attribution framework setup'] },
@@ -60,7 +61,7 @@ function ProcessFull() {
     { img: 'https://images.unsplash.com/photo-1591696205602-2f950c417cb9?w=800&auto=format&fit=crop&q=80', n: '04', t: 'Optimise', d: 'We analyse continuously, refine relentlessly, and scale what works. Monthly strategy reviews ensure your campaign evolves.', items: ['Weekly performance analysis', 'A/B testing ongoing', 'Budget reallocation', 'Monthly strategy review', 'Quarterly growth planning'] },
   ];
   return (
-    <div className="process-bg">
+    <div id="process" className="process-bg">
       <section className="sec on-navy">
         <div className="reveal">
           <div className="sec-label"><span>Our Methodology</span></div>
