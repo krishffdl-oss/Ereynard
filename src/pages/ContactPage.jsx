@@ -3,9 +3,9 @@ import emailjs from '@emailjs/browser';
 import PageHero from '../components/PageHero.jsx';
 import { useReveal, useRipple } from '../hooks/useReveal.js';
 
-const EMAILJS_SERVICE_ID  = 'service_9dtsn6n';   // ← Yahan daalo
-const EMAILJS_TEMPLATE_ID = 'template_8rvl82t';  // ← Yahan daalo
-const EMAILJS_PUBLIC_KEY  = 'j9U3OhFNmoq6K3UeE'; // ✅ Done
+const EMAILJS_SERVICE_ID  = 'service_9dtsn6n';  
+const EMAILJS_TEMPLATE_ID = 'template_8rvl82t';  
+const EMAILJS_PUBLIC_KEY  = 'o6gfi1Mjf6Y8oKd7W'; 
 
 function ContactForm() {
   const [status, setStatus] = useState(null);
