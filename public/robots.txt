@@ -1,4 +1,4 @@
-# robots.txt — Ereynard Digital
+## robots.txt — Ereynard Digital
 # https://ereynard.com
 
 # ── Allow all search engines ──
@@ -7,7 +7,7 @@ Allow: /
 
 # ── Pages to index ──
 Allow: /
-Allow: /about
+Allow: /about-us
 Allow: /services
 Allow: /services/seo
 Allow: /services/social
@@ -23,7 +23,7 @@ Allow: /projects
 Allow: /clients
 Allow: /blog
 Allow: /blog/
-Allow: /contact
+Allow: /contact-us
 
 # ── Block dev/build files ──
 Disallow: /src/

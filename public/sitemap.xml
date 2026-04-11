@@ -4,49 +4,49 @@
   <!-- ── Main Pages ── -->
   <url>
     <loc>https://ereynard.com/</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://ereynard.com/about</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://ereynard.com/about-us</loc>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/services</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/projects</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/clients</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/blog</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://ereynard.com/contact</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://ereynard.com/contact-us</loc>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -54,70 +54,70 @@
   <!-- ── Service Pages ── -->
   <url>
     <loc>https://ereynard.com/services/seo</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/services/social</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/services/performance</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/services/content</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/services/web</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/services/analytics</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/services/branding</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/services/email</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/services/influencer</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://ereynard.com/services/strategy</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-04-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

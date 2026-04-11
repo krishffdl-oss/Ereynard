@@ -1,22 +1,79 @@
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import PageHero from '../components/PageHero.jsx';
 import { useReveal, useRipple } from '../hooks/useReveal.js';
+
+const EMAILJS_SERVICE_ID  = 'service_9dtsn6n';   // ← Yahan daalo
+const EMAILJS_TEMPLATE_ID = 'template_8rvl82t';  // ← Yahan daalo
+const EMAILJS_PUBLIC_KEY  = 'j9U3OhFNmoq6K3UeE'; // ✅ Done
 
 function ContactForm() {
   const [status, setStatus] = useState(null);
   useReveal(); useRipple();
 
-  const handle = () => {
-    const nm = document.getElementById('f-name')?.value.trim();
-    const em = document.getElementById('f-email')?.value.trim();
+  const handle = async () => {
+    const nm     = document.getElementById('f-name')?.value.trim();
+    const em     = document.getElementById('f-email')?.value.trim();
+    const co     = document.getElementById('f-co')?.value.trim();
+    const ph     = document.getElementById('f-ph')?.value.trim();
+    const svc    = document.getElementById('f-svc')?.value;
+    const budget = document.getElementById('f-budget')?.value;
+    const msg    = document.getElementById('f-msg')?.value.trim();
+
     if (!nm || !em) {
-      setStatus('error');
+      setStatus('validation');
       setTimeout(() => setStatus(null), 2500);
       return;
     }
-    setStatus('success');
-    setTimeout(() => setStatus(null), 3200);
+
+    setStatus('sending');
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: nm,
+          from_email: em,
+          company:   co     || 'Not provided',
+          phone:     ph     || 'Not provided',
+          service:   svc    || 'Not selected',
+          budget:    budget || 'Not selected',
+          message:   msg    || 'No message provided',
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+      setStatus('success');
+      // Form clear
+      ['f-name','f-co','f-email','f-ph','f-msg'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      ['f-svc','f-budget'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.selectedIndex = 0;
+      });
+      setTimeout(() => setStatus(null), 4000);
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      setStatus('error');
+      setTimeout(() => setStatus(null), 3000);
+    }
   };
+
+  const btnStyle =
+    status === 'validation' ? { background: '#c0392b' } :
+    status === 'error'      ? { background: '#c0392b' } :
+    status === 'success'    ? { background: '#1a8a36' } :
+    status === 'sending'    ? { opacity: 0.7, pointerEvents: 'none' } :
+    {};
+
+  const btnLabel =
+    status === 'validation' ? '⚠ Please fill name & email' :
+    status === 'sending'    ? 'Sending...' :
+    status === 'success'    ? "✓ We'll be in touch shortly!" :
+    status === 'error'      ? '✗ Failed. Please try again.' :
+    'Send Enquiry';
 
   return (
     <div className="contact-bg">
@@ -105,16 +162,13 @@ function ContactForm() {
               <label>Tell Us About Your Project</label>
               <textarea id="f-msg" placeholder="Share your goals, challenges, and what success looks like for your brand..." />
             </div>
+
             <button
               className="btn-sub"
               onClick={handle}
-              style={status === 'error' ? { background: '#c0392b' } : status === 'success' ? { background: '#1a8a36' } : {}}
+              style={btnStyle}
             >
-              <span>
-                {status === 'error' ? '⚠ Please fill name & email'
-                  : status === 'success' ? "✓ We'll be in touch shortly!"
-                    : 'Send Enquiry'}
-              </span>
+              <span>{btnLabel}</span>
               {!status && <span>→</span>}
             </button>
 
@@ -131,9 +185,9 @@ function ContactForm() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '2px' }}>
           {[
             { i: '⚡', t: '48hr Turnaround', d: 'Custom proposal in 48 hours' },
-            { i: '💸', t: 'No Hidden Fees', d: 'Transparent pricing always' },
-            { i: '📊', t: 'Data-First', d: 'Every decision backed by data' },
-            { i: '🦊', t: 'Fox Method', d: 'Our proven 4-step framework' },
+            { i: '💸', t: 'No Hidden Fees',  d: 'Transparent pricing always' },
+            { i: '📊', t: 'Data-First',      d: 'Every decision backed by data' },
+            { i: '🦊', t: 'Fox Method',      d: 'Our proven 4-step framework' },
           ].map((item, i) => (
             <div key={i} style={{ textAlign: 'center', padding: '20px 16px', borderRight: i < 3 ? '1px solid rgba(14,16,75,.1)' : 'none' }}>
               <div style={{ fontSize: '28px', marginBottom: '8px' }}>{item.i}</div>
