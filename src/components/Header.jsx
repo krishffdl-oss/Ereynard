@@ -59,7 +59,7 @@ export default function Header({ openContact }) {
 
   const pages = [
     { k:'/',         l:'Home'    },
-    { k:'/about',    l:'About'   },
+    { k:'/about-us',    l:'About'   },
     { k:'/projects', l:'Work'    },
     { k:'/clients',  l:'Clients' },
     { k:'/blog',     l:'Blog'    },

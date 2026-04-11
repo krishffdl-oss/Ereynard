@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Hero from '../components/Hero.jsx';
 import Marquee from '../components/Marquee.jsx';
 import Stats from '../components/Stats.jsx';
@@ -234,6 +235,23 @@ export default function HomePage({ openContact }) {
   useTilt(); useRipple();
   return (
     <>
+      <Helmet>
+        <title>Best Digital Marketing Agency & Company | Expert Internet Marketing Services - Ereynard</title>
+        <meta
+          name="description"
+          content="Looking for the best digital marketing agency or firm? We help your business grow with result-driven strategies, ✓SEO ✓Social Media Marketing ✓SMO and more."
+        />
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Best Digital Marketing Agency & Company | Expert Internet Marketing Services - Ereynard" />
+        <meta property="og:description" content="Looking for the best digital marketing agency or firm? We help your business grow with result-driven strategies, ✓SEO ✓Social Media Marketing ✓SMO and more." />
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Best Digital Marketing Agency & Company | Expert Internet Marketing Services - Ereynard" />
+        <meta name="twitter:description" content="Looking for the best digital marketing agency or firm? We help your business grow with result-driven strategies, ✓SEO ✓Social Media Marketing ✓SMO and more." />
+        {/* Canonical */}
+        <link rel="canonical" href="https://ereynard.com/" />
+      </Helmet>
       <Hero openContact={openContact} />
       <Marquee />
       <AboutSection />

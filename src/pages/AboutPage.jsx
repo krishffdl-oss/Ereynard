@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import PageHero from '../components/PageHero.jsx';
 import { useReveal, useRipple, useScrollSection } from '../hooks/useReveal.js';
 import { TEAM } from '../data/index.js';
-
+import { Helmet } from 'react-helmet-async';
 function TeamSection({ showAll = false }) {
   useReveal();
   useScrollSection('team'); // ← scroll karo → URL /about#team ho jaayega
@@ -52,7 +52,23 @@ export default function AboutPage({ openContact }) {
   return (
     <>
       <PageHero label="Who We Are" title="The Ereynard Story" strokeWord="Ereynard" sub="Not just an agency — a growth partner obsessed with making Indian brands unstoppable." />
-
+      <Helmet>
+        <title>Best SEO Services Agency in Udaipur | Expert SEO Agency & Optimization Company</title>
+        <meta
+          name="description"
+          content="Looking for the best digital marketing agency or firm? We help your business grow with result-driven strategies, ✓SEO ✓Social Media Marketing ✓SMO and more."
+        />
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Best SEO Services Agency in Udaipur | Expert SEO Agency & Optimization Company" />
+        <meta property="og:description" content="Looking for the best digital marketing agency or firm? We help your business grow with result-driven strategies, ✓SEO ✓Social Media Marketing ✓SMO and more." />
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Best Digital Marketing Agency & Company | Expert Internet Marketing Services - Ereynard" />
+        <meta name="twitter:description" content="Looking for the best digital marketing agency or firm? We help your business grow with result-driven strategies, ✓SEO ✓Social Media Marketing ✓SMO and more." />
+        {/* Canonical */}
+        <link rel="canonical" href="https://ereynard.com/" />
+      </Helmet>
       {/* Identity */}
       <div style={{ background: 'var(--B3)' }}>
         <section className="sec on-navy">

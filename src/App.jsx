@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';            // ← ADD THIS
 
 // ── Components ──
 import Cursor from './components/Cursor.jsx';
@@ -55,7 +56,7 @@ function AppInner() {
   const openSvc = useCallback(k => setSvcKey(k), []);
   const openCamp = useCallback(k => setCampKey(k), []);
   const openContact = useCallback(() => {
-    navigate('/contact');
+    navigate('/contact-us');
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [navigate]);
 
@@ -80,14 +81,14 @@ function AppInner() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage {...pageProps} />} />
-          <Route path="/about" element={<AboutPage {...pageProps} />} />
+          <Route path="/about-us" element={<AboutPage {...pageProps} />} />
           <Route path="/services" element={<ServicesPage {...pageProps} />} />
           <Route path="/services/:serviceId" element={<ServiceDetailPage {...pageProps} />} />
           <Route path="/projects" element={<ProjectsPage {...pageProps} />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:postId" element={<BlogPostPage />} />
-          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/contact-us" element={<ContactPage />} />
           {/* Fallback */}
           <Route path="*" element={<HomePage {...pageProps} />} />
         </Routes>
@@ -108,8 +109,10 @@ function AppInner() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppInner />
-    </BrowserRouter>
+    <HelmetProvider>                                            {/* ← WRAP HERE */}
+      <BrowserRouter>
+        <AppInner />
+      </BrowserRouter>
+    </HelmetProvider>                                       
   );
 }
