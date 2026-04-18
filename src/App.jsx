@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';            // ← ADD THIS
+import { HelmetProvider } from 'react-helmet-async';
 
 // ── Components ──
 import Cursor from './components/Cursor.jsx';
@@ -20,6 +20,7 @@ import ProjectsPage from './pages/ProjectsPage.jsx';
 import ClientsPage from './pages/ClientsPage.jsx';
 import BlogPage, { BlogPostPage } from './pages/BlogPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
+import ROICalculatorPage from './pages/ROICalculatorPage.jsx';
 
 // ── Scroll restoration on route change ──
 function ScrollToTop() {
@@ -35,7 +36,6 @@ function AppInner() {
   const [campKey, setCampKey] = useState(null);
   const navigate = useNavigate();
 
-  // Close modals on Escape
   useEffect(() => {
     const esc = e => {
       if (e.key === 'Escape') {
@@ -48,7 +48,6 @@ function AppInner() {
     return () => document.removeEventListener('keydown', esc);
   }, []);
 
-  // Lock scroll when modal open
   useEffect(() => {
     document.body.style.overflow = (svcKey || campKey) ? 'hidden' : '';
   }, [svcKey, campKey]);
@@ -60,24 +59,14 @@ function AppInner() {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [navigate]);
 
-  // Shared page props
   const pageProps = { openSvc, openCamp, openContact };
 
   return (
     <>
-      {/* Global cursor */}
       <Cursor />
-
-      {/* Loader (shown once on first load) */}
       {!loaded && <Loader onDone={() => setLoaded(true)} />}
-
-      {/* Scroll restoration */}
       <ScrollToTop />
-
-      {/* Navigation */}
       <Header openContact={openContact} />
-
-      {/* Page routes */}
       <main>
         <Routes>
           <Route path="/" element={<HomePage {...pageProps} />} />
@@ -89,18 +78,12 @@ function AppInner() {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:postId" element={<BlogPostPage />} />
           <Route path="/contact-us" element={<ContactPage />} />
-          {/* Fallback */}
+          <Route path="/roi-calculator" element={<ROICalculatorPage />} />
           <Route path="*" element={<HomePage {...pageProps} />} />
         </Routes>
       </main>
-
-      {/* Footer */}
       <Footer openSvc={openSvc} />
-
-      {/* Floating chatbot */}
       <Chatbot />
-
-      {/* Modals */}
       {svcKey && <ServiceModal svcKey={svcKey} onClose={() => setSvcKey(null)} />}
       {campKey && <CampaignModal campKey={campKey} onClose={() => setCampKey(null)} />}
     </>
@@ -109,10 +92,10 @@ function AppInner() {
 
 export default function App() {
   return (
-    <HelmetProvider>                                            {/* ← WRAP HERE */}
+    <HelmetProvider>
       <BrowserRouter>
         <AppInner />
       </BrowserRouter>
-    </HelmetProvider>                                       
+    </HelmetProvider>
   );
 }

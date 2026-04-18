@@ -28,14 +28,12 @@ export default function Header({ openContact }) {
     return () => window.removeEventListener('scroll', h);
   }, []);
 
-  // close dropdown on outside click
   useEffect(() => {
     const h = (e) => { if (dropRef.current && !dropRef.current.contains(e.target)) setDropOpen(false); };
     document.addEventListener('mousedown', h);
     return () => document.removeEventListener('mousedown', h);
   }, []);
 
-  // close everything on route change
   useEffect(() => {
     setDropOpen(false);
     setMob(false);
@@ -58,20 +56,19 @@ export default function Header({ openContact }) {
   const isServiceActive = location.pathname.startsWith('/services');
 
   const pages = [
-    { k:'/',         l:'Home'    },
-    { k:'/about-us',    l:'About'   },
-    { k:'/projects', l:'Work'    },
-    { k:'/clients',  l:'Clients' },
-    { k:'/blog',     l:'Blog'    },
+    { k:'/',               l:'Home'           },
+    { k:'/about-us',       l:'About'          },
+    { k:'/projects',       l:'Work'           },
+    { k:'/clients',        l:'Clients'        },
+    { k:'/blog',           l:'Blog'           },
+    { k:'/roi-calculator', l:'ROI Calculator', icon: '🧮' },
   ];
 
   return (
     <>
       <style>{`
-        /* ── dropdown wrapper ── */
         .nav-svc-wrap { position:relative; }
 
-        /* ── services trigger button — blue text on yellow bg ── */
         .nav-svc-btn {
           color:rgba(14,16,75,.55);
           font-size:11px; letter-spacing:.12em; text-transform:uppercase;
@@ -97,7 +94,6 @@ export default function Header({ openContact }) {
         }
         .nav-svc-btn.open .nav-chevron { transform:rotate(180deg); opacity:1; }
 
-        /* ── mega dropdown — navy panel drops from yellow header ── */
         .nav-dropdown {
           position:absolute;
           top:calc(100% + 14px);
@@ -110,18 +106,15 @@ export default function Header({ openContact }) {
           backdrop-filter:blur(24px);
           box-shadow:0 28px 72px rgba(0,0,0,.55);
           clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);
-          opacity:0;
-          pointer-events:none;
+          opacity:0; pointer-events:none;
           transition:opacity .22s ease, transform .22s ease;
           z-index:2000;
         }
         .nav-dropdown.show {
-          opacity:1;
-          pointer-events:all;
+          opacity:1; pointer-events:all;
           transform:translateX(-50%) translateY(0);
         }
 
-        /* dropdown header */
         .nd-head {
           padding:13px 18px 10px;
           border-bottom:1px solid rgba(240,200,69,.08);
@@ -141,12 +134,9 @@ export default function Header({ openContact }) {
         }
         .nd-view-all:hover { color:var(--Y); }
 
-        /* service item grid */
         .nd-grid {
-          display:grid;
-          grid-template-columns:1fr 1fr;
-          gap:2px;
-          padding:8px;
+          display:grid; grid-template-columns:1fr 1fr;
+          gap:2px; padding:8px;
         }
         .nd-item {
           display:flex; align-items:flex-start; gap:11px;
@@ -155,43 +145,23 @@ export default function Header({ openContact }) {
           text-align:left; width:100%; font-family:var(--FM);
           text-decoration:none;
         }
-        .nd-item:hover {
-          background:rgba(240,200,69,.06);
-          border-color:rgba(240,200,69,.14);
-        }
-        .nd-item.active-svc {
-          background:rgba(240,200,69,.09);
-          border-color:rgba(240,200,69,.2);
-        }
+        .nd-item:hover { background:rgba(240,200,69,.06); border-color:rgba(240,200,69,.14); }
+        .nd-item.active-svc { background:rgba(240,200,69,.09); border-color:rgba(240,200,69,.2); }
         .nd-icon {
-          font-size:20px; flex-shrink:0;
-          width:36px; height:36px;
-          background:rgba(240,200,69,.07);
-          border:1px solid rgba(240,200,69,.12);
-          display:flex; align-items:center; justify-content:center;
-          transition:background .2s;
+          font-size:20px; flex-shrink:0; width:36px; height:36px;
+          background:rgba(240,200,69,.07); border:1px solid rgba(240,200,69,.12);
+          display:flex; align-items:center; justify-content:center; transition:background .2s;
         }
         .nd-item:hover .nd-icon { background:rgba(240,200,69,.15); }
-        .nd-item-title {
-          font-size:12px; font-weight:700; color:var(--Y);
-          line-height:1.2; margin-bottom:3px; display:block;
-        }
-        .nd-item-desc {
-          font-size:10px; color:rgba(240,200,69,.38); line-height:1.45;
-          display:block;
-        }
+        .nd-item-title { font-size:12px; font-weight:700; color:var(--Y); line-height:1.2; margin-bottom:3px; display:block; }
+        .nd-item-desc { font-size:10px; color:rgba(240,200,69,.38); line-height:1.45; display:block; }
 
-        /* dropdown footer */
         .nd-foot {
           padding:10px 18px 13px;
           border-top:1px solid rgba(240,200,69,.07);
-          display:flex; align-items:center; justify-content:space-between;
-          gap:10px;
+          display:flex; align-items:center; justify-content:space-between; gap:10px;
         }
-        .nd-foot-txt {
-          font-size:10px; color:rgba(240,200,69,.3);
-          font-family:var(--FM);
-        }
+        .nd-foot-txt { font-size:10px; color:rgba(240,200,69,.3); font-family:var(--FM); }
         .nd-foot-cta {
           background:var(--Y); color:var(--B);
           font-family:var(--FM); font-size:9px; font-weight:700;
@@ -202,7 +172,18 @@ export default function Header({ openContact }) {
         }
         .nd-foot-cta:hover { background:var(--B3); color:var(--Y); }
 
-        /* ── mobile services accordion ── */
+        .nav-roi-btn {
+          background: rgba(240,200,69,.12) !important;
+          border: 1px solid rgba(240,200,69,.3) !important;
+          color: var(--B) !important;
+          padding: 4px 10px !important;
+          font-size: 10px !important;
+        }
+        .nav-roi-btn:hover, .nav-roi-btn.active {
+          background: var(--Y) !important;
+          color: var(--B) !important;
+        }
+
         .mob-svc-toggle {
           font-family:var(--FM); font-weight:800;
           font-size:clamp(32px,6vw,52px);
@@ -218,74 +199,53 @@ export default function Header({ openContact }) {
         .mob-svc-list {
           display:flex; flex-direction:column; gap:4px;
           max-height:0; overflow:hidden;
-          transition:max-height .4s cubic-bezier(.4,0,.2,1);
-          width:100%;
+          transition:max-height .4s cubic-bezier(.4,0,.2,1); width:100%;
         }
         .mob-svc-list.open { max-height:600px; }
 
         .mob-svc-item {
           display:flex; align-items:center; gap:10px;
           padding:10px 20px; cursor:pointer;
-          background:rgba(240,200,69,.05);
-          border:1px solid rgba(240,200,69,.08);
-          font-family:var(--FM); font-size:14px;
-          font-weight:600; color:var(--Y);
-          text-decoration:none; transition:all .2s;
-          width:90%;
+          background:rgba(240,200,69,.05); border:1px solid rgba(240,200,69,.08);
+          font-family:var(--FM); font-size:14px; font-weight:600;
+          color:var(--Y); text-decoration:none; transition:all .2s; width:90%;
         }
         .mob-svc-item:hover { background:rgba(240,200,69,.12); }
       `}</style>
 
       <nav className={scrolled ? 'sc' : ''}>
-        {/* Logo */}
         <button className="nav-logo" onClick={() => goTo('/')}>
-          <img
-            src="/logo.jpg"
-            alt="Ereynard"
-            style={{
-              height: '46px',
-              width: '46px',
-              objectFit: 'contain',
-              borderRadius: '8px',
-              flexShrink: 0,
-            }}
-          />
+          <img src="/logo.jpg" alt="Ereynard" style={{ height:'46px', width:'46px', objectFit:'contain', borderRadius:'8px', flexShrink:0 }} />
           <span style={{ fontFamily:'var(--FM)', fontWeight:800, fontSize:'20px', letterSpacing:'.06em', color:'var(--B)' }}>
             Ereynard<span style={{ opacity:.3 }}>.</span>
           </span>
         </button>
 
-        {/* Desktop links */}
         <ul className="nav-links">
           {pages.map(p => (
             <li key={p.k}>
-              <button className={isActive(p.k) ? 'active' : ''} onClick={() => goTo(p.k)}>
-                {p.l}
+              <button
+                className={`${isActive(p.k) ? 'active' : ''} ${p.k === '/roi-calculator' ? 'nav-roi-btn' : ''}`}
+                onClick={() => goTo(p.k)}
+              >
+                {p.icon ? `${p.icon} ${p.l}` : p.l}
               </button>
             </li>
           ))}
 
-          {/* Services with dropdown */}
           <li className="nav-svc-wrap" ref={dropRef}>
             <button
               className={`nav-svc-btn ${isServiceActive ? 'active' : ''} ${dropOpen ? 'open' : ''}`}
               onClick={() => setDropOpen(v => !v)}
             >
-              Services
-              <span className="nav-chevron">▼</span>
+              Services <span className="nav-chevron">▼</span>
             </button>
 
-            {/* Mega dropdown */}
             <div className={`nav-dropdown ${dropOpen ? 'show' : ''}`}>
-              {/* Head */}
               <div className="nd-head">
                 <span className="nd-head-label">Our Services</span>
-                <button className="nd-view-all" onClick={() => goTo('/services')}>
-                  View All →
-                </button>
+                <button className="nd-view-all" onClick={() => goTo('/services')}>View All →</button>
               </div>
-
-              {/* Service grid */}
               <div className="nd-grid">
                 {SERVICES.map(s => (
                   <Link
@@ -302,8 +262,6 @@ export default function Header({ openContact }) {
                   </Link>
                 ))}
               </div>
-
-              {/* Footer */}
               <div className="nd-foot">
                 <span className="nd-foot-txt">🦊 9 services · 200+ brands scaled</span>
                 <button className="nd-foot-cta" onClick={() => { openContact(); setDropOpen(false); }}>
@@ -314,45 +272,33 @@ export default function Header({ openContact }) {
           </li>
         </ul>
 
-        <button className="nav-cta" onClick={openContact}>
-          <span>Enquire Now →</span>
-        </button>
+        <button className="nav-cta" onClick={openContact}><span>Enquire Now →</span></button>
         <button className={`hburg ${mob ? 'open' : ''}`} onClick={() => setMob(v => !v)}>
           <i /><i /><i />
         </button>
       </nav>
 
-      {/* ── Mobile full-screen menu ── */}
       <div className={`mob-menu ${mob ? 'open' : ''}`}>
         {pages.map(p => (
-          <button key={p.k} onClick={() => goTo(p.k)}>{p.l}</button>
+          <button key={p.k} onClick={() => goTo(p.k)}>
+            {p.icon ? `${p.icon} ${p.l}` : p.l}
+          </button>
         ))}
 
-        {/* Services accordion */}
         <button className="mob-svc-toggle" onClick={() => setMobSvcOpen(v => !v)}>
-          Services
-          <span className={`mob-svc-chevron ${mobSvcOpen ? 'open' : ''}`}>▼</span>
+          Services <span className={`mob-svc-chevron ${mobSvcOpen ? 'open' : ''}`}>▼</span>
         </button>
         <div className={`mob-svc-list ${mobSvcOpen ? 'open' : ''}`}>
           {SERVICES.map(s => (
-            <Link
-              key={s.k}
-              to={`/services/${s.k}`}
-              className="mob-svc-item"
-              onClick={() => { setMob(false); setMobSvcOpen(false); }}
-            >
-              <span>{s.i}</span>
-              <span>{s.t}</span>
+            <Link key={s.k} to={`/services/${s.k}`} className="mob-svc-item"
+              onClick={() => { setMob(false); setMobSvcOpen(false); }}>
+              <span>{s.i}</span><span>{s.t}</span>
             </Link>
           ))}
-          <Link
-            to="/services"
-            className="mob-svc-item"
+          <Link to="/services" className="mob-svc-item"
             style={{ background:'rgba(240,200,69,.1)', fontWeight:800 }}
-            onClick={() => { setMob(false); setMobSvcOpen(false); }}
-          >
-            <span>📋</span>
-            <span>All Services →</span>
+            onClick={() => { setMob(false); setMobSvcOpen(false); }}>
+            <span>📋</span><span>All Services →</span>
           </Link>
         </div>
 
