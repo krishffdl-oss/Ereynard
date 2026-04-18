@@ -54,7 +54,7 @@ export default function Hero({ openContact }) {
   const s = HERO_SLIDES[slide];
 
   return (
-    <div className="hero-wrap">
+    <div className="hero-wrap" style={{ paddingTop: '72px' }}> {/* ← SIRF YE LINE ADD KI */}
       {HERO_SLIDES.map((sl, i) => (
         <div key={i} className={`hero-slide ${i === slide ? 'active' : ''}`}>
           <img className="hs-bg" src={sl.bg} alt="" />
