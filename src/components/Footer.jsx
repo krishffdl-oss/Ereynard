@@ -58,7 +58,7 @@ export default function Footer({ openSvc }) {
         <div className="ft-brand">
           <button className="ft-logo" onClick={() => goTo('/')} style={{ display:'flex', alignItems:'center', gap:'9px' }}>
             <img src="/logo.jpg" alt="Ereynard" style={{ height:'38px', width:'38px', objectFit:'contain', borderRadius:'6px' }} />
-            <span>ereynard.</span>
+            <span>Ereynard</span>
           </button>
           <p>Smart like a fox. Sharp in digital. We build brands that dominate the digital landscape.</p>
 
@@ -104,7 +104,7 @@ export default function Footer({ openSvc }) {
           <h4>Company</h4>
           <ul>
             {[
-              ['About Us',          '/about'],
+              ['About Us',          '/about-us'],
               ['Our Work',          '/projects'],
               ['Services & Process','/services'],
               ['Clients',           '/clients'],
@@ -120,7 +120,7 @@ export default function Footer({ openSvc }) {
           <h4>Contact</h4>
           <ul>
             <li>
-              <a href="mailto:hello@ereynard.com" style={{ display:'flex', alignItems:'center', gap:'7px', color:'rgba(14,16,75,.46)', fontSize:'12px', textDecoration:'none', transition:'color .2s' }}
+              <a href="mailto:ereynardofficial@gmail.com" style={{ display:'flex', alignItems:'center', gap:'7px', color:'rgba(14,16,75,.46)', fontSize:'12px', textDecoration:'none', transition:'color .2s' }}
                 onMouseEnter={e => e.currentTarget.style.color = 'var(--B)'}
                 onMouseLeave={e => e.currentTarget.style.color = 'rgba(14,16,75,.46)'}
               >
@@ -129,7 +129,7 @@ export default function Footer({ openSvc }) {
               </a>
             </li>
             <li>
-              <a href="tel:+919876543210" style={{ display:'flex', alignItems:'center', gap:'7px', color:'rgba(14,16,75,.46)', fontSize:'12px', textDecoration:'none', transition:'color .2s' }}
+              <a href="tel:+918619189335" style={{ display:'flex', alignItems:'center', gap:'7px', color:'rgba(14,16,75,.46)', fontSize:'12px', textDecoration:'none', transition:'color .2s' }}
                 onMouseEnter={e => e.currentTarget.style.color = 'var(--B)'}
                 onMouseLeave={e => e.currentTarget.style.color = 'rgba(14,16,75,.46)'}
               >
@@ -140,11 +140,11 @@ export default function Footer({ openSvc }) {
             <li>
               <span style={{ display:'flex', alignItems:'center', gap:'7px', color:'rgba(14,16,75,.46)', fontSize:'12px' }}>
                 <span style={{ flexShrink:0, opacity:.6 }}>{Icons.location}</span>
-                Udaipur, Rajasthan
+                Udaipur, Rajasthan, India
               </span>
             </li>
             <li style={{ marginTop:'6px' }}>
-              <button onClick={() => goTo('/contact')}>Enquire Now →</button>
+              <button onClick={() => goTo('/contact-us')}>Enquire Now →</button>
             </li>
           </ul>
         </div>
