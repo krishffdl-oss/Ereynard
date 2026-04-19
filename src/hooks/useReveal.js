@@ -2,15 +2,11 @@ import { useEffect, useRef } from 'react';
 
 // ─────────────────────────────────────────────────────────
 // useScrollSection
-// Scroll karo → URL silently change hoti hai (no page reload)
-// sectionId  : id of the section div (e.g. 'team')
-// threshold  : 0-1, kitna visible ho tab change ho (default 0.35)
 // ─────────────────────────────────────────────────────────
 export function useScrollSection(sectionId, threshold = 0.35) {
   const prevHash = useRef('');
 
   useEffect(() => {
-    // Page load pe agar URL mein already #team hai → scroll karo
     if (window.location.hash === `#${sectionId}`) {
       const target = document.getElementById(sectionId);
       if (target) {
@@ -23,13 +19,11 @@ export function useScrollSection(sectionId, threshold = 0.35) {
 
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
-        // Section screen pe aaya → URL mein #team add karo
         if (prevHash.current !== sectionId) {
           prevHash.current = sectionId;
           window.history.replaceState(null, '', `#${sectionId}`);
         }
       } else {
-        // Section gaya → URL wapas base pe
         if (prevHash.current === sectionId) {
           prevHash.current = '';
           window.history.replaceState(null, '', window.location.pathname);
@@ -46,21 +40,29 @@ export function useReveal() {
   useEffect(() => {
     const ro = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (!e.isIntersecting) return;
+        if (!e?.target || !e.isIntersecting) return;  // ← null guard
+        if (!e.target.isConnected) return;             // ← detached guard
+
         e.target.classList.add('v');
+
         ['scard', 'pstep-s', 'pstep-f', 's-item', 'wi', 'tm-card', 'bs-scoop', 'blog-card', 'svc-mini-card', 'award-card', 'svc-detail-row', 'wt-kpi'].forEach(cls => {
           e.target.querySelectorAll('.' + cls).forEach((c, i) => {
             c.style.opacity = '0';
             c.style.transform = 'translateY(26px)';
             c.style.transition = `opacity .6s ${i * .09}s ease,transform .6s ${i * .09}s ease`;
-            setTimeout(() => { c.style.opacity = '1'; c.style.transform = 'none'; }, 40);
+            setTimeout(() => {
+              if (!c.isConnected) return;              // ← guard inside timeout
+              c.style.opacity = '1';
+              c.style.transform = 'none';
+            }, 40);
           });
         });
       });
     }, { threshold: .06 });
+
     document.querySelectorAll('.reveal,.rev-l,.rev-r,.rev-scale').forEach(el => ro.observe(el));
     return () => ro.disconnect();
-  });
+  }, []);                                              // ← empty array: run once
 }
 
 export function useTilt() {
@@ -68,6 +70,7 @@ export function useTilt() {
     const cards = document.querySelectorAll('.scard,.bs-scoop');
     const hs = [];
     cards.forEach(c => {
+      if (!c) return;                                  // ← null guard
       const mm = e => {
         const r = c.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width - .5;
@@ -79,8 +82,11 @@ export function useTilt() {
       c.addEventListener('mouseleave', ml);
       hs.push({ c, mm, ml });
     });
-    return () => hs.forEach(({ c, mm, ml }) => { c.removeEventListener('mousemove', mm); c.removeEventListener('mouseleave', ml); });
-  });
+    return () => hs.forEach(({ c, mm, ml }) => {
+      c.removeEventListener('mousemove', mm);
+      c.removeEventListener('mouseleave', ml);
+    });
+  }, []);                                              // ← empty array: run once
 }
 
 export function useRipple() {
@@ -88,6 +94,7 @@ export function useRipple() {
     const btns = document.querySelectorAll('.btn-p,.btn-sub,.nav-cta');
     const hs = [];
     btns.forEach(btn => {
+      if (!btn) return;                                // ← null guard
       const fn = e => {
         const r = btn.getBoundingClientRect();
         const rp = document.createElement('span');
@@ -101,5 +108,5 @@ export function useRipple() {
       hs.push({ btn, fn });
     });
     return () => hs.forEach(({ btn, fn }) => btn.removeEventListener('click', fn));
-  });
+  }, []);                                              // ← empty array: run once
 }

@@ -13,14 +13,22 @@ const SERVICES = [
   { k:'influencer',  i:'🤝', t:'Influencer Marketing',       d:'500+ creators, 12x campaign ROAS'        },
 ];
 
+const TOOLS = [
+  { k:'/roi-calculator',  i:'🧮', t:'ROI Calculator',      d:'Calculate your marketing return on investment' },
+  { k:'/marketing-roast', i:'🔥', t:'Marketing Roast',     d:'Get brutally honest score for your marketing'  },
+];
+
 export default function Header({ openContact }) {
-  const [scrolled,    setScrolled]    = useState(false);
-  const [mob,         setMob]         = useState(false);
-  const [dropOpen,    setDropOpen]    = useState(false);
-  const [mobSvcOpen,  setMobSvcOpen]  = useState(false);
-  const dropRef = useRef(null);
-  const navigate  = useNavigate();
-  const location  = useLocation();
+  const [scrolled,      setScrolled]      = useState(false);
+  const [mob,           setMob]           = useState(false);
+  const [dropOpen,      setDropOpen]      = useState(false);
+  const [toolDropOpen,  setToolDropOpen]  = useState(false);
+  const [mobSvcOpen,    setMobSvcOpen]    = useState(false);
+  const [mobToolOpen,   setMobToolOpen]   = useState(false);
+  const dropRef     = useRef(null);
+  const toolDropRef = useRef(null);
+  const navigate    = useNavigate();
+  const location    = useLocation();
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 50);
@@ -28,16 +36,23 @@ export default function Header({ openContact }) {
     return () => window.removeEventListener('scroll', h);
   }, []);
 
+  // close dropdowns on outside click
   useEffect(() => {
-    const h = (e) => { if (dropRef.current && !dropRef.current.contains(e.target)) setDropOpen(false); };
+    const h = (e) => {
+      if (dropRef.current && !dropRef.current.contains(e.target)) setDropOpen(false);
+      if (toolDropRef.current && !toolDropRef.current.contains(e.target)) setToolDropOpen(false);
+    };
     document.addEventListener('mousedown', h);
     return () => document.removeEventListener('mousedown', h);
   }, []);
 
+  // close everything on route change
   useEffect(() => {
     setDropOpen(false);
+    setToolDropOpen(false);
     setMob(false);
     setMobSvcOpen(false);
+    setMobToolOpen(false);
   }, [location.pathname]);
 
   const goTo = (path) => {
@@ -45,7 +60,9 @@ export default function Header({ openContact }) {
     window.scrollTo({ top:0, behavior:'instant' });
     setMob(false);
     setDropOpen(false);
+    setToolDropOpen(false);
     setMobSvcOpen(false);
+    setMobToolOpen(false);
   };
 
   const isActive = (path) => {
@@ -54,22 +71,24 @@ export default function Header({ openContact }) {
   };
 
   const isServiceActive = location.pathname.startsWith('/services');
+  const isToolActive    = TOOLS.some(t => location.pathname.startsWith(t.k));
 
   const pages = [
-    { k:'/',               l:'Home'           },
-    { k:'/about-us',       l:'About'          },
-    { k:'/projects',       l:'Work'           },
-    { k:'/clients',        l:'Clients'        },
-    { k:'/blog',           l:'Blog'           },
-    { k:'/roi-calculator', l:'ROI Calculator', icon: '🧮' },
+    { k:'/',         l:'Home'    },
+    { k:'/about-us', l:'About'   },
+    { k:'/projects', l:'Work'    },
+    { k:'/clients',  l:'Clients' },
+    { k:'/blog',     l:'Blog'    },
   ];
 
   return (
     <>
       <style>{`
         .nav-svc-wrap { position:relative; }
+        .nav-tool-wrap { position:relative; }
 
-        .nav-svc-btn {
+        /* ── nav dropdown trigger buttons ── */
+        .nav-svc-btn, .nav-tool-btn-dd {
           color:rgba(14,16,75,.55);
           font-size:11px; letter-spacing:.12em; text-transform:uppercase;
           font-weight:700; transition:color .3s; position:relative;
@@ -77,29 +96,45 @@ export default function Header({ openContact }) {
           font-family:var(--FM); padding:0;
           display:inline-flex; align-items:center; gap:5px;
         }
-        .nav-svc-btn::after {
+        .nav-svc-btn::after, .nav-tool-btn-dd::after {
           content:''; position:absolute; bottom:-3px; left:0;
           width:0; height:1.5px; background:var(--B);
           transition:width .3s cubic-bezier(.4,0,.2,1);
         }
-        .nav-svc-btn:hover,
-        .nav-svc-btn.active { color:var(--B); }
-        .nav-svc-btn:hover::after,
-        .nav-svc-btn.active::after { width:100%; }
+        .nav-svc-btn:hover, .nav-svc-btn.active,
+        .nav-tool-btn-dd:hover, .nav-tool-btn-dd.active { color:var(--B); }
+        .nav-svc-btn:hover::after, .nav-svc-btn.active::after,
+        .nav-tool-btn-dd:hover::after, .nav-tool-btn-dd.active::after { width:100%; }
+
+        /* Free Tools button — subtle highlight */
+        .nav-tool-btn-dd {
+          color: var(--B) !important;
+          background: rgba(240,200,69,.18) !important;
+          border: 1px solid rgba(240,200,69,.35) !important;
+          padding: 5px 12px !important;
+          font-size: 10px !important;
+          border-radius: 0 !important;
+        }
+        .nav-tool-btn-dd:hover, .nav-tool-btn-dd.active {
+          background: var(--Y) !important;
+          color: var(--B) !important;
+        }
+        .nav-tool-btn-dd::after { display:none; }
 
         .nav-chevron {
           font-size:7px; display:inline-block;
           transition:transform .25s cubic-bezier(.4,0,.2,1);
           opacity:.55;
         }
-        .nav-svc-btn.open .nav-chevron { transform:rotate(180deg); opacity:1; }
+        .nav-svc-btn.open .nav-chevron,
+        .nav-tool-btn-dd.open .nav-chevron { transform:rotate(180deg); opacity:1; }
 
-        .nav-dropdown {
+        /* ── mega dropdowns ── */
+        .nav-dropdown, .nav-tool-dropdown {
           position:absolute;
           top:calc(100% + 14px);
           left:50%;
           transform:translateX(-50%) translateY(-10px);
-          width:580px;
           background:rgba(10,12,66,0.99);
           border:1px solid rgba(240,200,69,.16);
           border-top:3px solid var(--Y);
@@ -110,7 +145,10 @@ export default function Header({ openContact }) {
           transition:opacity .22s ease, transform .22s ease;
           z-index:2000;
         }
-        .nav-dropdown.show {
+        .nav-dropdown { width:580px; }
+        .nav-tool-dropdown { width:420px; }
+
+        .nav-dropdown.show, .nav-tool-dropdown.show {
           opacity:1; pointer-events:all;
           transform:translateX(-50%) translateY(0);
         }
@@ -136,6 +174,10 @@ export default function Header({ openContact }) {
 
         .nd-grid {
           display:grid; grid-template-columns:1fr 1fr;
+          gap:2px; padding:8px;
+        }
+        .nd-tool-grid {
+          display:flex; flex-direction:column;
           gap:2px; padding:8px;
         }
         .nd-item {
@@ -172,19 +214,31 @@ export default function Header({ openContact }) {
         }
         .nd-foot-cta:hover { background:var(--B3); color:var(--Y); }
 
-        .nav-roi-btn {
-          background: rgba(240,200,69,.12) !important;
-          border: 1px solid rgba(240,200,69,.3) !important;
-          color: var(--B) !important;
-          padding: 4px 10px !important;
-          font-size: 10px !important;
+        /* tool item - full width */
+        .nd-tool-item {
+          display:flex; align-items:center; gap:14px;
+          padding:14px 16px; cursor:pointer; transition:all .2s;
+          background:none; border:1px solid transparent;
+          text-align:left; width:100%; font-family:var(--FM);
+          text-decoration:none;
         }
-        .nav-roi-btn:hover, .nav-roi-btn.active {
-          background: var(--Y) !important;
-          color: var(--B) !important;
+        .nd-tool-item:hover { background:rgba(240,200,69,.06); border-color:rgba(240,200,69,.14); }
+        .nd-tool-item.active-tool { background:rgba(240,200,69,.09); border-color:rgba(240,200,69,.2); }
+        .nd-tool-icon {
+          font-size:22px; flex-shrink:0; width:44px; height:44px;
+          background:rgba(240,200,69,.07); border:1px solid rgba(240,200,69,.12);
+          display:flex; align-items:center; justify-content:center; transition:background .2s;
+        }
+        .nd-tool-item:hover .nd-tool-icon { background:rgba(240,200,69,.15); }
+        .nd-tool-badge {
+          margin-left:auto; font-size:8px; font-weight:700;
+          letter-spacing:.12em; text-transform:uppercase;
+          color:var(--B); background:var(--Y);
+          padding:3px 8px; flex-shrink:0;
         }
 
-        .mob-svc-toggle {
+        /* ── mobile accordions ── */
+        .mob-svc-toggle, .mob-tool-toggle {
           font-family:var(--FM); font-weight:800;
           font-size:clamp(32px,6vw,52px);
           color:var(--Y); letter-spacing:.04em;
@@ -192,28 +246,31 @@ export default function Header({ openContact }) {
           text-transform:uppercase; transition:all .3s;
           display:flex; align-items:center; gap:14px;
         }
-        .mob-svc-toggle:hover { color:transparent; -webkit-text-stroke:1.5px var(--Y); }
-        .mob-svc-chevron { font-size:18px; opacity:.55; transition:transform .3s; }
-        .mob-svc-chevron.open { transform:rotate(180deg); }
+        .mob-svc-toggle:hover, .mob-tool-toggle:hover { color:transparent; -webkit-text-stroke:1.5px var(--Y); }
+        .mob-svc-chevron, .mob-tool-chevron { font-size:18px; opacity:.55; transition:transform .3s; }
+        .mob-svc-chevron.open, .mob-tool-chevron.open { transform:rotate(180deg); }
 
-        .mob-svc-list {
+        .mob-svc-list, .mob-tool-list {
           display:flex; flex-direction:column; gap:4px;
           max-height:0; overflow:hidden;
           transition:max-height .4s cubic-bezier(.4,0,.2,1); width:100%;
         }
         .mob-svc-list.open { max-height:600px; }
+        .mob-tool-list.open { max-height:200px; }
 
-        .mob-svc-item {
+        .mob-svc-item, .mob-tool-item {
           display:flex; align-items:center; gap:10px;
           padding:10px 20px; cursor:pointer;
           background:rgba(240,200,69,.05); border:1px solid rgba(240,200,69,.08);
           font-family:var(--FM); font-size:14px; font-weight:600;
           color:var(--Y); text-decoration:none; transition:all .2s; width:90%;
         }
-        .mob-svc-item:hover { background:rgba(240,200,69,.12); }
+        .mob-svc-item:hover, .mob-tool-item:hover { background:rgba(240,200,69,.12); }
+        .mob-tool-item { background:rgba(240,200,69,.08); border-color:rgba(240,200,69,.15); }
       `}</style>
 
       <nav className={scrolled ? 'sc' : ''}>
+        {/* Logo */}
         <button className="nav-logo" onClick={() => goTo('/')}>
           <img src="/logo.jpg" alt="Ereynard" style={{ height:'46px', width:'46px', objectFit:'contain', borderRadius:'8px', flexShrink:0 }} />
           <span style={{ fontFamily:'var(--FM)', fontWeight:800, fontSize:'20px', letterSpacing:'.06em', color:'var(--B)' }}>
@@ -221,22 +278,64 @@ export default function Header({ openContact }) {
           </span>
         </button>
 
+        {/* Desktop nav links */}
         <ul className="nav-links">
           {pages.map(p => (
             <li key={p.k}>
-              <button
-                className={`${isActive(p.k) ? 'active' : ''} ${p.k === '/roi-calculator' ? 'nav-roi-btn' : ''}`}
-                onClick={() => goTo(p.k)}
-              >
-                {p.icon ? `${p.icon} ${p.l}` : p.l}
+              <button className={isActive(p.k) ? 'active' : ''} onClick={() => goTo(p.k)}>
+                {p.l}
               </button>
             </li>
           ))}
 
+          {/* ── Free Tools dropdown ── */}
+          <li className="nav-tool-wrap" ref={toolDropRef}>
+            <button
+              className={`nav-tool-btn-dd ${isToolActive ? 'active' : ''} ${toolDropOpen ? 'open' : ''}`}
+              onClick={() => { setToolDropOpen(v => !v); setDropOpen(false); }}
+            >
+              🛠 Free Tools
+              <span className="nav-chevron">▼</span>
+            </button>
+
+            <div className={`nav-tool-dropdown ${toolDropOpen ? 'show' : ''}`}>
+              <div className="nd-head">
+                <span className="nd-head-label">Free Marketing Tools</span>
+                <span style={{ fontSize:'9px', color:'rgba(240,200,69,.3)', fontFamily:'var(--FM)' }}>100% Free · No Signup</span>
+              </div>
+
+              <div className="nd-tool-grid">
+                {TOOLS.map(t => (
+                  <Link
+                    key={t.k}
+                    to={t.k}
+                    className={`nd-tool-item ${location.pathname === t.k ? 'active-tool' : ''}`}
+                    onClick={() => setToolDropOpen(false)}
+                  >
+                    <div className="nd-tool-icon">{t.i}</div>
+                    <div>
+                      <span className="nd-item-title">{t.t}</span>
+                      <span className="nd-item-desc">{t.d}</span>
+                    </div>
+                    <span className="nd-tool-badge">FREE</span>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="nd-foot">
+                <span className="nd-foot-txt">🦊 More tools coming soon</span>
+                <button className="nd-foot-cta" onClick={() => { openContact(); setToolDropOpen(false); }}>
+                  Free Proposal →
+                </button>
+              </div>
+            </div>
+          </li>
+
+          {/* ── Services dropdown ── */}
           <li className="nav-svc-wrap" ref={dropRef}>
             <button
               className={`nav-svc-btn ${isServiceActive ? 'active' : ''} ${dropOpen ? 'open' : ''}`}
-              onClick={() => setDropOpen(v => !v)}
+              onClick={() => { setDropOpen(v => !v); setToolDropOpen(false); }}
             >
               Services <span className="nav-chevron">▼</span>
             </button>
@@ -278,13 +377,33 @@ export default function Header({ openContact }) {
         </button>
       </nav>
 
+      {/* ── Mobile full-screen menu ── */}
       <div className={`mob-menu ${mob ? 'open' : ''}`}>
         {pages.map(p => (
-          <button key={p.k} onClick={() => goTo(p.k)}>
-            {p.icon ? `${p.icon} ${p.l}` : p.l}
-          </button>
+          <button key={p.k} onClick={() => goTo(p.k)}>{p.l}</button>
         ))}
 
+        {/* Mobile Free Tools accordion */}
+        <button className="mob-tool-toggle" onClick={() => setMobToolOpen(v => !v)}>
+          🛠 Free Tools
+          <span className={`mob-tool-chevron ${mobToolOpen ? 'open' : ''}`}>▼</span>
+        </button>
+        <div className={`mob-tool-list ${mobToolOpen ? 'open' : ''}`}>
+          {TOOLS.map(t => (
+            <Link
+              key={t.k}
+              to={t.k}
+              className="mob-tool-item"
+              onClick={() => { setMob(false); setMobToolOpen(false); }}
+            >
+              <span>{t.i}</span>
+              <span>{t.t}</span>
+              <span style={{ marginLeft:'auto', fontSize:'9px', background:'var(--Y)', color:'var(--B)', padding:'2px 7px', fontWeight:800 }}>FREE</span>
+            </Link>
+          ))}
+        </div>
+
+        {/* Mobile Services accordion */}
         <button className="mob-svc-toggle" onClick={() => setMobSvcOpen(v => !v)}>
           Services <span className={`mob-svc-chevron ${mobSvcOpen ? 'open' : ''}`}>▼</span>
         </button>

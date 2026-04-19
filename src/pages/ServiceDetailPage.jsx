@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { SVC_DATA } from '../data/index.js';
 import { useReveal } from '../hooks/useReveal.js';
 
@@ -25,6 +26,14 @@ const SVC_CAMPAIGNS = {
   strategy:    { key:'novabrand',   label:'NovaBrand — Full Strategy' },
 };
 
+// ── Per-page SEO meta (add more services here as needed) ──
+const SVC_META = {
+  seo: {
+    title: 'SEO in Udaipur | Google SEO Expert & SEO Agency | Ereynard',
+    description: 'Get expert SEO services in Udaipur from a Google SEO expert and SEO agency offering SEO marketing and search engine marketing solutions.',
+  },
+};
+
 export default function ServiceDetailPage({ openCamp, openContact }) {
   const { serviceId } = useParams();
   const navigate = useNavigate();
@@ -33,11 +42,12 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
   useEffect(() => { window.scrollTo({ top:0, behavior:'instant' }); }, [serviceId]);
 
   const d = SVC_DATA[serviceId];
+  const meta = SVC_META[serviceId] || null; // only inject if defined
 
   if (!d) return (
     <div style={{ minHeight:'80vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:'var(--B3)', gap:'20px' }}>
       <p style={{ fontSize:'64px' }}>🦊</p>
-      <h2 style={{ fontFamily:'var(--FM)', fontWeight:800, fontSize:'28px', color:'var(--Y)' }}>Service Not Found</h2>
+      <h2 style={{ fontFamily:'var(--MM)', fontWeight:800, fontSize:'28px', color:'var(--Y)' }}>Service Not Found</h2>
       <p style={{ color:'rgba(240,200,69,.5)', fontSize:'14px' }}>"{serviceId}" exist nahi karta.</p>
       <button className="btn-p" onClick={() => navigate('/services')}><span>Back to All Services</span><span>→</span></button>
     </div>
@@ -50,6 +60,19 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
 
   return (
     <>
+      {/* ── Helmet: only inject for pages that have meta defined ── */}
+      {meta && (
+        <Helmet>
+          <title>{meta.title}</title>
+          <meta name="description" content={meta.description} />
+          <meta property="og:title" content={meta.title} />
+          <meta property="og:description" content={meta.description} />
+          <meta name="twitter:title" content={meta.title} />
+          <meta name="twitter:description" content={meta.description} />
+          <link rel="canonical" href="https://ereynard.com/services/seo" />
+        </Helmet>
+      )}
+
       <style>{`
         .sdp-feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:32px; }
         .sdp-feat-card { background:var(--B4); border:1px solid rgba(240,200,69,.07); padding:26px 22px; transition:all .35s; cursor:default; }

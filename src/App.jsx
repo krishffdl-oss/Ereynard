@@ -21,6 +21,7 @@ import ClientsPage from './pages/ClientsPage.jsx';
 import BlogPage, { BlogPostPage } from './pages/BlogPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import ROICalculatorPage from './pages/ROICalculatorPage.jsx';
+import MarketingRoastPage from './pages/MarketingRoastPage.jsx'; // ← ADD KIYA
 
 // ── Scroll restoration on route change ──
 function ScrollToTop() {
@@ -79,6 +80,7 @@ function AppInner() {
           <Route path="/blog/:postId" element={<BlogPostPage />} />
           <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/roi-calculator" element={<ROICalculatorPage />} />
+          <Route path="/marketing-roast" element={<MarketingRoastPage />} /> {/* ← ADD KIYA */}
           <Route path="*" element={<HomePage {...pageProps} />} />
         </Routes>
       </main>
