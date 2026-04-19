@@ -4,6 +4,7 @@ import ImageBand from '../components/ImageBand.jsx';
 import Stats from '../components/Stats.jsx';
 import FAQ from '../components/FAQ.jsx';
 import { SVC_DATA } from '../data/index.js';
+import { SVC_CARD_ICONS } from '../components/svcIcons.jsx';
 import { useReveal, useTilt, useRipple, useScrollSection } from '../hooks/useReveal.js';
 
 function ServicesFull() {
@@ -12,6 +13,29 @@ function ServicesFull() {
   const svcs = Object.entries(SVC_DATA).map(([k, v]) => ({ k, ...v }));
   return (
     <div className="svc-bg">
+      <style>{`
+        .si-wrap {
+          width: 52px; height: 52px;
+          background: rgba(240,200,69,.09);
+          border: 1px solid rgba(240,200,69,.18);
+          display: flex; align-items: center; justify-content: center;
+          color: var(--Y);
+          margin-bottom: 18px;
+          transition: background .4s, border-color .4s, color .4s;
+        }
+        .scard:hover .si-wrap {
+          background: var(--B);
+          border-color: rgba(14,16,75,.3);
+          color: var(--Y);
+        }
+        .sdr-icon-wrap {
+          width: 38px; height: 38px; flex-shrink: 0;
+          background: rgba(240,200,69,.07);
+          border: 1px solid rgba(240,200,69,.12);
+          display: flex; align-items: center; justify-content: center;
+          color: var(--Y);
+        }
+      `}</style>
       <section className="sec on-navy">
         <div className="reveal">
           <div className="sec-label"><span>Complete Service Offering</span></div>
@@ -22,7 +46,10 @@ function ServicesFull() {
           {svcs.filter(s => s.k !== 'strategy').map(s => (
             <div key={s.k} className="scard reveal" onClick={() => navigate(`/services/${s.k}`)}>
               <div className="sn">{s.num}</div>
-              <span className="si">{s.icon}</span>
+              {/* SVG icon instead of emoji */}
+              <div className="si-wrap">
+                {SVC_CARD_ICONS[s.k]}
+              </div>
               <h3 className="st">{s.title}</h3>
               <p className="sd">{s.desc}</p>
               <span className="sa">Full Details →</span>
@@ -38,7 +65,10 @@ function ServicesFull() {
           {svcs.map(s => (
             <div key={s.k} className="svc-detail-row reveal" onClick={() => navigate(`/services/${s.k}`)}>
               <div className="sdr-left">
-                <span className="sdr-icon">{s.icon}</span>
+                {/* SVG icon in list row */}
+                <div className="sdr-icon-wrap">
+                  {SVC_CARD_ICONS[s.k]}
+                </div>
                 <div><div className="sdr-num">{s.num}</div><div className="sdr-name">{s.title}</div></div>
               </div>
               <div className="sdr-desc">{s.desc}</div>
@@ -53,7 +83,7 @@ function ServicesFull() {
 
 function ProcessFull() {
   useReveal();
-  useScrollSection('process'); // scroll karo → URL /services#process ho jaayega
+  useScrollSection('process');
   const steps = [
     { img: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop&q=80', n: '01', t: 'Discover', d: "We don't assume — we investigate. Comprehensive brand audit, audience analysis, competitor mapping, and goal-setting workshop.", items: ['Brand & digital audit', 'Audience persona research', 'Competitor gap analysis', 'Goal setting & KPI definition', 'Budget allocation planning'] },
     { img: 'https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?w=800&auto=format&fit=crop&q=80', n: '02', t: 'Strategise', d: 'Every brand gets a bespoke digital roadmap — not a template. We map each channel, content type, and campaign to specific business outcomes.', items: ['Channel selection & mix', '90-day content roadmap', 'Campaign architecture', 'Creative strategy brief', 'Attribution framework setup'] },
