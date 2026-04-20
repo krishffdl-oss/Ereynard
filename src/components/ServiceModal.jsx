@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { SVC_DATA } from '../data/index.js';
-import { SVC_CARD_ICONS, FEAT_ICONS } from './svcIcons.jsx';
+import { SVC_CARD_ICONS, FEAT_ICONS } from './SvcIcons.jsx';
 
 export default function ServiceModal({ svcKey, onClose }) {
   const navigate = useNavigate();
