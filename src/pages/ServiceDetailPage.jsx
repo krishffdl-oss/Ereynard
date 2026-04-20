@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { SVC_DATA } from '../data/index.js';
-import { SVC_CARD_ICONS, FEAT_ICONS } from '../components/abc.jsx';
+import { SVC_CARD_ICONS, FEAT_ICONS } from '../components/SvcIcons.jsx';
 import { useReveal } from '../hooks/useReveal.js';
 
 const SVC_KEYS = ['seo','social','performance','content','web','analytics','branding','email','influencer','strategy'];
