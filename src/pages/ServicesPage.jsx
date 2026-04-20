@@ -4,7 +4,7 @@ import ImageBand from '../components/ImageBand.jsx';
 import Stats from '../components/Stats.jsx';
 import FAQ from '../components/FAQ.jsx';
 import { SVC_DATA } from '../data/index.js';
-import { SVC_CARD_ICONS } from '../components/SvcIcons.jsx';
+import { SVC_CARD_ICONS } from '../components/abc.jsx';
 import { useReveal, useTilt, useRipple, useScrollSection } from '../hooks/useReveal.js';
 
 function ServicesFull() {
