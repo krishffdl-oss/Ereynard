@@ -11,25 +11,25 @@ function ServicesFull() {
   useReveal(); useTilt();
   const navigate = useNavigate();
   const svcs = Object.entries(SVC_DATA).map(([k, v]) => ({ k, ...v }));
+
   return (
     <div className="svc-bg">
       <style>{`
         .si-wrap {
-          width: 52px; height: 52px;
-          background: rgba(240,200,69,.09);
-          border: 1px solid rgba(240,200,69,.18);
+          width: 50px; height: 50px;
+          background: rgba(240,200,69,.08);
+          border: 1px solid rgba(240,200,69,.16);
           display: flex; align-items: center; justify-content: center;
-          color: var(--Y);
-          margin-bottom: 18px;
+          color: var(--Y); margin-bottom: 18px;
           transition: background .4s, border-color .4s, color .4s;
         }
         .scard:hover .si-wrap {
-          background: var(--B);
-          border-color: rgba(14,16,75,.3);
-          color: var(--Y);
+          background: rgba(14,16,75,.15);
+          border-color: rgba(14,16,75,.25);
+          color: var(--B);
         }
         .sdr-icon-wrap {
-          width: 38px; height: 38px; flex-shrink: 0;
+          width: 36px; height: 36px; flex-shrink: 0;
           background: rgba(240,200,69,.07);
           border: 1px solid rgba(240,200,69,.12);
           display: flex; align-items: center; justify-content: center;
@@ -42,11 +42,12 @@ function ServicesFull() {
           <h2 className="sec-title">Everything We <span className="out">Deliver</span></h2>
           <p className="sec-intro">9 specialised services, each a complete growth engine. Click any service to see the full breakdown.</p>
         </div>
+
+        {/* Service cards grid */}
         <div className="svc-full-grid">
           {svcs.filter(s => s.k !== 'strategy').map(s => (
             <div key={s.k} className="scard reveal" onClick={() => navigate(`/services/${s.k}`)}>
               <div className="sn">{s.num}</div>
-              {/* SVG icon instead of emoji */}
               <div className="si-wrap">
                 {SVC_CARD_ICONS[s.k]}
               </div>
@@ -56,6 +57,8 @@ function ServicesFull() {
             </div>
           ))}
         </div>
+
+        {/* Detail list */}
         <div style={{ marginTop: '56px' }}>
           <div className="sec-label" style={{ marginBottom: '6px' }}><span>Service Details</span></div>
           <h3 style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: '28px', color: 'var(--Y)', marginBottom: '4px' }}>What's Included in Each Service</h3>
@@ -65,11 +68,13 @@ function ServicesFull() {
           {svcs.map(s => (
             <div key={s.k} className="svc-detail-row reveal" onClick={() => navigate(`/services/${s.k}`)}>
               <div className="sdr-left">
-                {/* SVG icon in list row */}
                 <div className="sdr-icon-wrap">
                   {SVC_CARD_ICONS[s.k]}
                 </div>
-                <div><div className="sdr-num">{s.num}</div><div className="sdr-name">{s.title}</div></div>
+                <div>
+                  <div className="sdr-num">{s.num}</div>
+                  <div className="sdr-name">{s.title}</div>
+                </div>
               </div>
               <div className="sdr-desc">{s.desc}</div>
               <div className="sdr-tags">{s.tags.map((tag, i) => <span key={i} className="sdr-tag">{tag}</span>)}</div>
