@@ -21,27 +21,24 @@ import ClientsPage from './pages/ClientsPage.jsx';
 import BlogPage, { BlogPostPage } from './pages/BlogPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import ROICalculatorPage from './pages/ROICalculatorPage.jsx';
-import MarketingRoastPage from './pages/MarketingRoastPage.jsx'; // ← ADD KIYA
+import MarketingRoastPage from './pages/MarketingRoastPage.jsx';
 
-// ── Scroll restoration on route change ──
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, [pathname]);
   return null;
 }
 
-// ── Inner app (inside BrowserRouter) ──
 function AppInner() {
-  const [loaded, setLoaded] = useState(false);
-  const [svcKey, setSvcKey] = useState(null);
+  const [loaded,  setLoaded]  = useState(false);
+  const [svcKey,  setSvcKey]  = useState(null);
   const [campKey, setCampKey] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const esc = e => {
       if (e.key === 'Escape') {
-        setSvcKey(null);
-        setCampKey(null);
+        setSvcKey(null); setCampKey(null);
         document.body.style.overflow = '';
       }
     };
@@ -53,8 +50,8 @@ function AppInner() {
     document.body.style.overflow = (svcKey || campKey) ? 'hidden' : '';
   }, [svcKey, campKey]);
 
-  const openSvc = useCallback(k => setSvcKey(k), []);
-  const openCamp = useCallback(k => setCampKey(k), []);
+  const openSvc     = useCallback(k => setSvcKey(k), []);
+  const openCamp    = useCallback(k => setCampKey(k), []);
   const openContact = useCallback(() => {
     navigate('/contact-us');
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -70,24 +67,25 @@ function AppInner() {
       <Header openContact={openContact} />
       <main>
         <Routes>
-          <Route path="/" element={<HomePage {...pageProps} />} />
-          <Route path="/about-us" element={<AboutPage {...pageProps} />} />
-          <Route path="/services" element={<ServicesPage {...pageProps} />} />
+          <Route path="/"                    element={<HomePage {...pageProps} />} />
+          <Route path="/about-us"            element={<AboutPage {...pageProps} />} />
+          <Route path="/services"            element={<ServicesPage {...pageProps} />} />
+          {/* Single dynamic route — handles all service slugs */}
           <Route path="/services/:serviceId" element={<ServiceDetailPage {...pageProps} />} />
-          <Route path="/projects" element={<ProjectsPage {...pageProps} />} />
-          <Route path="/clients" element={<ClientsPage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog/:postId" element={<BlogPostPage />} />
-          <Route path="/contact-us" element={<ContactPage />} />
-          <Route path="/roi-calculator" element={<ROICalculatorPage />} />
-          <Route path="/marketing-roast" element={<MarketingRoastPage />} /> {/* ← ADD KIYA */}
-          <Route path="*" element={<HomePage {...pageProps} />} />
+          <Route path="/projects"            element={<ProjectsPage {...pageProps} />} />
+          <Route path="/clients"             element={<ClientsPage />} />
+          <Route path="/blog"                element={<BlogPage />} />
+          <Route path="/blog/:postId"        element={<BlogPostPage />} />
+          <Route path="/contact-us"          element={<ContactPage />} />
+          <Route path="/roi-calculator"      element={<ROICalculatorPage />} />
+          <Route path="/marketing-roast"     element={<MarketingRoastPage />} />
+          <Route path="*"                    element={<HomePage {...pageProps} />} />
         </Routes>
       </main>
       <Footer openSvc={openSvc} />
       <Chatbot />
-      {svcKey && <ServiceModal svcKey={svcKey} onClose={() => setSvcKey(null)} />}
-      {campKey && <CampaignModal campKey={campKey} onClose={() => setCampKey(null)} />}
+      {svcKey  && <ServiceModal  svcKey={svcKey}   onClose={() => setSvcKey(null)}  />}
+      {campKey && <CampaignModal campKey={campKey}  onClose={() => setCampKey(null)} />}
     </>
   );
 }

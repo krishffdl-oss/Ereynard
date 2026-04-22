@@ -7,6 +7,20 @@ import { SVC_DATA } from '../data/index.js';
 import { SVC_CARD_ICONS } from '../components/SvcIcons.jsx';
 import { useReveal, useTilt, useRipple, useScrollSection } from '../hooks/useReveal.js';
 
+// ── Full URL map ──
+const SVC_URL = {
+  seo:         '/services/seo',
+  social:      '/services/social-media-marketing',
+  performance: '/services/performance-advertising',
+  content:     '/services/content-strategy',
+  web:         '/services/web-design-development',
+  analytics:   '/services/analytics-reporting',
+  branding:    '/services/branding-identity',
+  email:       '/services/email-marketing',
+  influencer:  '/services/influencer-marketing',
+  strategy:    '/services/digital-strategy',
+};
+
 function ServicesFull() {
   useReveal(); useTilt();
   const navigate = useNavigate();
@@ -16,24 +30,17 @@ function ServicesFull() {
     <div className="svc-bg">
       <style>{`
         .si-wrap {
-          width: 50px; height: 50px;
-          background: rgba(240,200,69,.08);
-          border: 1px solid rgba(240,200,69,.16);
-          display: flex; align-items: center; justify-content: center;
-          color: var(--Y); margin-bottom: 18px;
-          transition: background .4s, border-color .4s, color .4s;
+          width:50px; height:50px;
+          background:rgba(240,200,69,.08); border:1px solid rgba(240,200,69,.16);
+          display:flex; align-items:center; justify-content:center;
+          color:var(--Y); margin-bottom:18px;
+          transition:background .4s,border-color .4s,color .4s;
         }
-        .scard:hover .si-wrap {
-          background: rgba(14,16,75,.15);
-          border-color: rgba(14,16,75,.25);
-          color: var(--B);
-        }
+        .scard:hover .si-wrap { background:rgba(14,16,75,.15); border-color:rgba(14,16,75,.25); color:var(--B); }
         .sdr-icon-wrap {
-          width: 36px; height: 36px; flex-shrink: 0;
-          background: rgba(240,200,69,.07);
-          border: 1px solid rgba(240,200,69,.12);
-          display: flex; align-items: center; justify-content: center;
-          color: var(--Y);
+          width:36px; height:36px; flex-shrink:0;
+          background:rgba(240,200,69,.07); border:1px solid rgba(240,200,69,.12);
+          display:flex; align-items:center; justify-content:center; color:var(--Y);
         }
       `}</style>
       <section className="sec on-navy">
@@ -42,42 +49,34 @@ function ServicesFull() {
           <h2 className="sec-title">Everything We <span className="out">Deliver</span></h2>
           <p className="sec-intro">9 specialised services, each a complete growth engine. Click any service to see the full breakdown.</p>
         </div>
-
-        {/* Service cards grid */}
         <div className="svc-full-grid">
           {svcs.filter(s => s.k !== 'strategy').map(s => (
-            <div key={s.k} className="scard reveal" onClick={() => navigate(`/services/${s.k}`)}>
+            <div key={s.k} className="scard reveal" onClick={() => navigate(SVC_URL[s.k])}>
               <div className="sn">{s.num}</div>
-              <div className="si-wrap">
-                {SVC_CARD_ICONS[s.k]}
-              </div>
+              <div className="si-wrap">{SVC_CARD_ICONS[s.k]}</div>
               <h3 className="st">{s.title}</h3>
               <p className="sd">{s.desc}</p>
               <span className="sa">Full Details →</span>
             </div>
           ))}
         </div>
-
-        {/* Detail list */}
-        <div style={{ marginTop: '56px' }}>
-          <div className="sec-label" style={{ marginBottom: '6px' }}><span>Service Details</span></div>
-          <h3 style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: '28px', color: 'var(--Y)', marginBottom: '4px' }}>What's Included in Each Service</h3>
-          <p style={{ fontSize: '13px', color: 'rgba(240,200,69,.44)', marginBottom: '0' }}>Click any row to see full scope, deliverables, and results.</p>
+        <div style={{ marginTop:'56px' }}>
+          <div className="sec-label" style={{ marginBottom:'6px' }}><span>Service Details</span></div>
+          <h3 style={{ fontFamily:'var(--FM)', fontWeight:800, fontSize:'28px', color:'var(--Y)', marginBottom:'4px' }}>What's Included in Each Service</h3>
+          <p style={{ fontSize:'13px', color:'rgba(240,200,69,.44)', marginBottom:'0' }}>Click any row to see full scope, deliverables, and results.</p>
         </div>
         <div className="svc-detail-list">
           {svcs.map(s => (
-            <div key={s.k} className="svc-detail-row reveal" onClick={() => navigate(`/services/${s.k}`)}>
+            <div key={s.k} className="svc-detail-row reveal" onClick={() => navigate(SVC_URL[s.k])}>
               <div className="sdr-left">
-                <div className="sdr-icon-wrap">
-                  {SVC_CARD_ICONS[s.k]}
-                </div>
+                <div className="sdr-icon-wrap">{SVC_CARD_ICONS[s.k]}</div>
                 <div>
                   <div className="sdr-num">{s.num}</div>
                   <div className="sdr-name">{s.title}</div>
                 </div>
               </div>
               <div className="sdr-desc">{s.desc}</div>
-              <div className="sdr-tags">{s.tags.map((tag, i) => <span key={i} className="sdr-tag">{tag}</span>)}</div>
+              <div className="sdr-tags">{s.tags.map((tag,i) => <span key={i} className="sdr-tag">{tag}</span>)}</div>
             </div>
           ))}
         </div>
@@ -90,10 +89,10 @@ function ProcessFull() {
   useReveal();
   useScrollSection('process');
   const steps = [
-    { img: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop&q=80', n: '01', t: 'Discover', d: "We don't assume — we investigate. Comprehensive brand audit, audience analysis, competitor mapping, and goal-setting workshop.", items: ['Brand & digital audit', 'Audience persona research', 'Competitor gap analysis', 'Goal setting & KPI definition', 'Budget allocation planning'] },
-    { img: 'https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?w=800&auto=format&fit=crop&q=80', n: '02', t: 'Strategise', d: 'Every brand gets a bespoke digital roadmap — not a template. We map each channel, content type, and campaign to specific business outcomes.', items: ['Channel selection & mix', '90-day content roadmap', 'Campaign architecture', 'Creative strategy brief', 'Attribution framework setup'] },
-    { img: 'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&auto=format&fit=crop&q=80', n: '03', t: 'Execute', d: 'Our specialists roll out every element with precision — no cutting corners, no skipped steps. Quality-checked before launch.', items: ['Campaign launch & QA', 'Creative production', 'Landing page development', 'Tracking & pixel setup', 'Cross-channel coordination'] },
-    { img: 'https://images.unsplash.com/photo-1591696205602-2f950c417cb9?w=800&auto=format&fit=crop&q=80', n: '04', t: 'Optimise', d: 'We analyse continuously, refine relentlessly, and scale what works. Monthly strategy reviews ensure your campaign evolves.', items: ['Weekly performance analysis', 'A/B testing ongoing', 'Budget reallocation', 'Monthly strategy review', 'Quarterly growth planning'] },
+    { img:'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop&q=80', n:'01', t:'Discover',   d:"We don't assume — we investigate. Comprehensive brand audit, audience analysis, competitor mapping, and goal-setting workshop.", items:['Brand & digital audit','Audience persona research','Competitor gap analysis','Goal setting & KPI definition','Budget allocation planning'] },
+    { img:'https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?w=800&auto=format&fit=crop&q=80', n:'02', t:'Strategise', d:'Every brand gets a bespoke digital roadmap — not a template. We map each channel, content type, and campaign to specific business outcomes.', items:['Channel selection & mix','90-day content roadmap','Campaign architecture','Creative strategy brief','Attribution framework setup'] },
+    { img:'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&auto=format&fit=crop&q=80', n:'03', t:'Execute',    d:'Our specialists roll out every element with precision — no cutting corners, no skipped steps. Quality-checked before launch.', items:['Campaign launch & QA','Creative production','Landing page development','Tracking & pixel setup','Cross-channel coordination'] },
+    { img:'https://images.unsplash.com/photo-1591696205602-2f950c417cb9?w=800&auto=format&fit=crop&q=80', n:'04', t:'Optimise',   d:'We analyse continuously, refine relentlessly, and scale what works. Monthly strategy reviews ensure your campaign evolves.', items:['Weekly performance analysis','A/B testing ongoing','Budget reallocation','Monthly strategy review','Quarterly growth planning'] },
   ];
   return (
     <div id="process" className="process-bg">
@@ -104,14 +103,14 @@ function ProcessFull() {
           <p className="sec-intro">Four deliberate steps that transform brands into category leaders. Every phase is documented, measurable, and built for compounding results.</p>
         </div>
         <div className="proc-steps-full">
-          {steps.map((s, i) => (
+          {steps.map((s,i) => (
             <div key={i} className="pstep-f reveal">
               <div className="pstep-f-img"><img src={s.img} alt={s.t} /></div>
               <div className="pstep-f-body">
                 <div className="pstep-f-num">STEP {s.n}</div>
                 <div className="pstep-f-title">{s.t}</div>
                 <p className="pstep-f-desc">{s.d}</p>
-                <div className="pstep-f-items">{s.items.map((item, j) => <div key={j} className="pstep-f-item">{item}</div>)}</div>
+                <div className="pstep-f-items">{s.items.map((item,j) => <div key={j} className="pstep-f-item">{item}</div>)}</div>
               </div>
             </div>
           ))}
@@ -128,12 +127,12 @@ export default function ServicesPage() {
       <PageHero label="What We Do" title="Services & Process" strokeWord="Process" sub="9 specialised services + the Fox Method — every tool and tactic we use to grow your brand." />
       <ServicesFull />
       <ImageBand />
-      <div style={{ background: 'var(--B3)' }}>
-        <section className="sec on-navy" style={{ paddingBottom: '24px' }}>
-          <div className="reveal" style={{ textAlign: 'center' }}>
-            <div className="sec-label" style={{ justifyContent: 'center' }}><span>How It All Works</span></div>
+      <div style={{ background:'var(--B3)' }}>
+        <section className="sec on-navy" style={{ paddingBottom:'24px' }}>
+          <div className="reveal" style={{ textAlign:'center' }}>
+            <div className="sec-label" style={{ justifyContent:'center' }}><span>How It All Works</span></div>
             <h2 className="sec-title">The Fox <span className="out">Method</span></h2>
-            <p style={{ fontFamily: 'var(--FI)', fontStyle: 'italic', fontSize: '15px', color: 'rgba(240,200,69,.42)', marginTop: '8px', maxWidth: '540px', margin: '8px auto 0' }}>Every service follows the same four-phase framework that turns strategy into compounding results.</p>
+            <p style={{ fontFamily:'var(--FI)', fontStyle:'italic', fontSize:'15px', color:'rgba(240,200,69,.42)', marginTop:'8px', maxWidth:'540px', margin:'8px auto 0' }}>Every service follows the same four-phase framework that turns strategy into compounding results.</p>
           </div>
         </section>
       </div>

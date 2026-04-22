@@ -5,7 +5,57 @@ import { SVC_DATA } from '../data/index.js';
 import { SVC_CARD_ICONS, FEAT_ICONS } from '../components/SvcIcons.jsx';
 import { useReveal } from '../hooks/useReveal.js';
 
-const SVC_KEYS = ['seo','social','performance','content','web','analytics','branding','email','influencer','strategy'];
+// ── URL slug → data key mapping ──
+const SLUG_TO_KEY = {
+  'seo':                       'seo',
+  'social-media-marketing':    'social',
+  'performance-advertising':   'performance',
+  'content-strategy':          'content',
+  'web-design-development':    'web',
+  'analytics-reporting':       'analytics',
+  'branding-identity':         'branding',
+  'email-marketing':           'email',
+  'influencer-marketing':      'influencer',
+  'digital-strategy':          'strategy',
+  // Backward compat — old short slugs still work
+  'social':      'social',
+  'performance': 'performance',
+  'content':     'content',
+  'web':         'web',
+  'analytics':   'analytics',
+  'branding':    'branding',
+  'email':       'email',
+  'influencer':  'influencer',
+  'strategy':    'strategy',
+};
+
+// ── Ordered keys for prev/next navigation ──
+const SVC_ORDER = [
+  'seo',
+  'social-media-marketing',
+  'performance-advertising',
+  'content-strategy',
+  'web-design-development',
+  'analytics-reporting',
+  'branding-identity',
+  'email-marketing',
+  'influencer-marketing',
+  'digital-strategy',
+];
+
+// ── Canonical URLs ──
+const SVC_URL = {
+  seo:         '/services/seo',
+  social:      '/services/social-media-marketing',
+  performance: '/services/performance-advertising',
+  content:     '/services/content-strategy',
+  web:         '/services/web-design-development',
+  analytics:   '/services/analytics-reporting',
+  branding:    '/services/branding-identity',
+  email:       '/services/email-marketing',
+  influencer:  '/services/influencer-marketing',
+  strategy:    '/services/digital-strategy',
+};
 
 const SVC_CAMPAIGNS = {
   seo:         { key:'technest',    label:'TechNest — 225x Traffic Growth' },
@@ -22,21 +72,23 @@ const SVC_CAMPAIGNS = {
 
 const SVC_META = {
   seo: {
-    title: 'SEO in Udaipur | Google SEO Expert & SEO Agency | Ereynard',
+    title:       'SEO in Udaipur | Google SEO Expert & SEO Agency | Ereynard',
     description: 'Get expert SEO services in Udaipur from a Google SEO expert and SEO agency offering SEO marketing and search engine marketing solutions.',
   },
 };
 
 export default function ServiceDetailPage({ openCamp, openContact }) {
   const { serviceId } = useParams();
-  const navigate = useNavigate();
+  const navigate      = useNavigate();
   useReveal();
 
   useEffect(() => { window.scrollTo({ top:0, behavior:'instant' }); }, [serviceId]);
 
-  const d          = SVC_DATA[serviceId];
-  const meta       = SVC_META[serviceId] || null;
-  const featIcons  = FEAT_ICONS[serviceId] || [];
+  // Resolve data key from URL slug
+  const dataKey   = SLUG_TO_KEY[serviceId] || serviceId;
+  const d         = SVC_DATA[dataKey];
+  const meta      = SVC_META[dataKey] || null;
+  const featIcons = FEAT_ICONS[dataKey] || [];
 
   if (!d) return (
     <div style={{ minHeight:'80vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:'var(--B3)', gap:'20px' }}>
@@ -47,22 +99,24 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
     </div>
   );
 
-  const currentIdx = SVC_KEYS.indexOf(serviceId);
-  const prevKey    = currentIdx > 0                   ? SVC_KEYS[currentIdx - 1] : null;
-  const nextKey    = currentIdx < SVC_KEYS.length - 1 ? SVC_KEYS[currentIdx + 1] : null;
-  const campaign   = SVC_CAMPAIGNS[serviceId];
+  const currentIdx = SVC_ORDER.indexOf(serviceId);
+  const prevSlug   = currentIdx > 0                    ? SVC_ORDER[currentIdx - 1] : null;
+  const nextSlug   = currentIdx < SVC_ORDER.length - 1 ? SVC_ORDER[currentIdx + 1] : null;
+  const prevKey    = prevSlug ? SLUG_TO_KEY[prevSlug] : null;
+  const nextKey    = nextSlug ? SLUG_TO_KEY[nextSlug] : null;
+  const campaign   = SVC_CAMPAIGNS[dataKey];
 
   return (
     <>
       {meta && (
         <Helmet>
           <title>{meta.title}</title>
-          <meta name="description" content={meta.description} />
-          <meta property="og:title" content={meta.title} />
+          <meta name="description"        content={meta.description} />
+          <meta property="og:title"       content={meta.title} />
           <meta property="og:description" content={meta.description} />
-          <meta name="twitter:title" content={meta.title} />
+          <meta name="twitter:title"      content={meta.title} />
           <meta name="twitter:description" content={meta.description} />
-          <link rel="canonical" href="https://ereynard.com/services/seo" />
+          <link rel="canonical" href={`https://ereynard.com${SVC_URL[dataKey]}`} />
         </Helmet>
       )}
 
@@ -75,7 +129,7 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
           background:rgba(240,200,69,.08); border:1px solid rgba(240,200,69,.14);
           display:flex; align-items:center; justify-content:center;
           color:var(--Y); margin-bottom:14px;
-          transition:background .3s, border-color .3s, color .3s;
+          transition:background .3s,border-color .3s,color .3s;
         }
         .sdp-feat-card:hover .sdp-feat-icon-wrap { background:var(--Y); border-color:var(--Y); color:var(--B); }
         .sdp-feat-title { font-family:var(--FM); font-weight:700; font-size:14px; color:var(--Y); margin-bottom:5px; }
@@ -86,13 +140,13 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
         .sdp-all-card.current { border-color:var(--Y); background:rgba(240,200,69,.06); pointer-events:none; }
         .sdp-all-icon { width:32px; height:32px; flex-shrink:0; background:rgba(240,200,69,.07); border:1px solid rgba(240,200,69,.12); display:flex; align-items:center; justify-content:center; color:var(--Y); }
         .sdp-all-card.current .sdp-all-icon { background:rgba(240,200,69,.18); border-color:rgba(240,200,69,.4); }
-        .sdp-cta-box    { background:var(--Y); padding:56px; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:center; }
-        .sdp-nav-row    { display:flex; justify-content:space-between; align-items:center; padding:24px 56px; background:var(--B2); border-top:1px solid rgba(240,200,69,.07); gap:12px; flex-wrap:wrap; }
-        .sdp-nav-btn    { display:flex; align-items:center; gap:12px; background:none; border:1px solid rgba(240,200,69,.14); padding:14px 20px; cursor:pointer; transition:all .3s; }
+        .sdp-cta-box { background:var(--Y); padding:56px; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:center; }
+        .sdp-nav-row { display:flex; justify-content:space-between; align-items:center; padding:24px 56px; background:var(--B2); border-top:1px solid rgba(240,200,69,.07); gap:12px; flex-wrap:wrap; }
+        .sdp-nav-btn { display:flex; align-items:center; gap:12px; background:none; border:1px solid rgba(240,200,69,.14); padding:14px 20px; cursor:pointer; transition:all .3s; }
         .sdp-nav-btn:hover { background:rgba(240,200,69,.06); border-color:rgba(240,200,69,.3); }
-        .sdp-nav-label  { font-size:9px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:rgba(240,200,69,.36); display:block; margin-bottom:3px; }
-        .sdp-nav-title  { font-family:var(--FM); font-weight:700; font-size:13px; color:var(--Y); display:block; }
-        .sdp-nav-icon   { width:26px; height:26px; flex-shrink:0; background:rgba(240,200,69,.07); border:1px solid rgba(240,200,69,.14); display:flex; align-items:center; justify-content:center; color:var(--Y); }
+        .sdp-nav-label { font-size:9px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:rgba(240,200,69,.36); display:block; margin-bottom:3px; }
+        .sdp-nav-title { font-family:var(--FM); font-weight:700; font-size:13px; color:var(--Y); display:block; }
+        .sdp-nav-icon  { width:26px; height:26px; flex-shrink:0; background:rgba(240,200,69,.07); border:1px solid rgba(240,200,69,.14); display:flex; align-items:center; justify-content:center; color:var(--Y); }
         @media(max-width:1100px){
           .sdp-feat-grid { grid-template-columns:1fr 1fr; }
           .sdp-cta-box   { grid-template-columns:1fr; gap:20px; padding:36px 20px; }
@@ -106,47 +160,32 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
 
       {/* ── PAGE HERO ── */}
       <div className="page-hero" style={{ minHeight:'48vh' }}>
-        <div className="ph-orb ph-orb1" />
-        <div className="ph-orb ph-orb2" />
-
-        {/* Breadcrumb */}
+        <div className="ph-orb ph-orb1" /><div className="ph-orb ph-orb2" />
         <div style={{ position:'absolute', top:'96px', left:'56px', display:'flex', alignItems:'center', gap:'8px', fontSize:'11px', color:'rgba(240,200,69,.35)', fontFamily:'var(--FM)', zIndex:2, flexWrap:'wrap' }}>
-          <Link to="/" style={{ color:'rgba(240,200,69,.35)', textDecoration:'none', transition:'color .2s' }}
+          <Link to="/" style={{ color:'rgba(240,200,69,.35)', textDecoration:'none' }}
             onMouseEnter={e=>e.currentTarget.style.color='var(--Y)'}
             onMouseLeave={e=>e.currentTarget.style.color='rgba(240,200,69,.35)'}
           >Home</Link>
           <span style={{ opacity:.4 }}>/</span>
-          <Link to="/services" style={{ color:'rgba(240,200,69,.35)', textDecoration:'none', transition:'color .2s' }}
+          <Link to="/services" style={{ color:'rgba(240,200,69,.35)', textDecoration:'none' }}
             onMouseEnter={e=>e.currentTarget.style.color='var(--Y)'}
             onMouseLeave={e=>e.currentTarget.style.color='rgba(240,200,69,.35)'}
           >Services</Link>
           <span style={{ opacity:.4 }}>/</span>
           <span style={{ color:'var(--Y)' }}>{d.title}</span>
         </div>
-
         <div className="page-hero-content" style={{ position:'relative', zIndex:2 }}>
           <div className="page-hero-label">Service {d.num}</div>
-          {/* Big SVG icon + title */}
           <div style={{ display:'flex', alignItems:'center', gap:'20px', flexWrap:'wrap' }}>
-            <div style={{
-              width:'70px', height:'70px', flexShrink:0,
-              background:'rgba(240,200,69,.1)', border:'1px solid rgba(240,200,69,.22)',
-              display:'flex', alignItems:'center', justifyContent:'center', color:'var(--Y)',
-            }}>
-              <span style={{ transform:'scale(1.7)', display:'flex' }}>
-                {SVC_CARD_ICONS[serviceId]}
-              </span>
+            <div style={{ width:'70px', height:'70px', flexShrink:0, background:'rgba(240,200,69,.1)', border:'1px solid rgba(240,200,69,.22)', display:'flex', alignItems:'center', justifyContent:'center', color:'var(--Y)' }}>
+              <span style={{ transform:'scale(1.7)', display:'flex' }}>{SVC_CARD_ICONS[dataKey]}</span>
             </div>
-            <div className="page-hero-title">
-              <span className="solid">{d.title}</span>
-            </div>
+            <div className="page-hero-title"><span className="solid">{d.title}</span></div>
           </div>
           <p className="page-hero-sub">{d.desc}</p>
           <div style={{ display:'flex', gap:'8px', flexWrap:'wrap', marginTop:'16px' }}>
             {d.tags.map((tag,i) => (
-              <span key={i} style={{ fontSize:'9px', fontWeight:700, letterSpacing:'.12em', textTransform:'uppercase', color:'rgba(240,200,69,.6)', background:'rgba(240,200,69,.08)', border:'1px solid rgba(240,200,69,.18)', padding:'4px 10px' }}>
-                {tag}
-              </span>
+              <span key={i} style={{ fontSize:'9px', fontWeight:700, letterSpacing:'.12em', textTransform:'uppercase', color:'rgba(240,200,69,.6)', background:'rgba(240,200,69,.08)', border:'1px solid rgba(240,200,69,.18)', padding:'4px 10px' }}>{tag}</span>
             ))}
           </div>
         </div>
@@ -156,7 +195,7 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
       <div style={{ background:'var(--Y)' }}>
         <div style={{ display:'grid', gridTemplateColumns:`repeat(${d.res.length},1fr)` }}>
           {d.res.map((r,i) => (
-            <div key={i} style={{ padding:'28px 24px', textAlign:'center', borderRight:i < d.res.length-1 ? '1px solid rgba(14,16,75,.12)' : 'none' }}>
+            <div key={i} style={{ padding:'28px 24px', textAlign:'center', borderRight:i<d.res.length-1?'1px solid rgba(14,16,75,.12)':'none' }}>
               <div style={{ fontFamily:'var(--FM)', fontWeight:800, fontSize:'clamp(32px,4vw,56px)', color:'var(--B)', lineHeight:1 }}>{r.n}</div>
               <div style={{ fontSize:'10px', fontWeight:700, letterSpacing:'.12em', textTransform:'uppercase', color:'rgba(14,16,75,.5)', marginTop:'6px' }}>{r.l}</div>
             </div>
@@ -176,11 +215,7 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
             {d.feats.map((f,i) => (
               <div key={i} className="sdp-feat-card reveal">
                 <div className="sdp-feat-icon-wrap">
-                  {featIcons[i] || (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="20 6 9 17 4 12"/>
-                    </svg>
-                  )}
+                  {featIcons[i] || <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>}
                 </div>
                 <div className="sdp-feat-title">{f.t}</div>
                 <p className="sdp-feat-desc">{f.d}</p>
@@ -208,9 +243,7 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
                 <div style={{ fontSize:'9px', fontWeight:700, letterSpacing:'.2em', textTransform:'uppercase', color:'rgba(240,200,69,.36)', marginBottom:'8px' }}>Case Study</div>
                 <div style={{ fontFamily:'var(--FM)', fontWeight:800, fontSize:'clamp(18px,2.5vw,28px)', color:'var(--Y)', marginBottom:'12px' }}>{campaign.label}</div>
                 <div style={{ display:'flex', gap:'8px', flexWrap:'wrap' }}>
-                  {d.res.map((r,i) => (
-                    <span key={i} style={{ background:'var(--Y)', color:'var(--B)', fontSize:'10px', fontWeight:800, padding:'4px 10px', fontFamily:'var(--FM)' }}>{r.n} {r.l}</span>
-                  ))}
+                  {d.res.map((r,i) => <span key={i} style={{ background:'var(--Y)', color:'var(--B)', fontSize:'10px', fontWeight:800, padding:'4px 10px', fontFamily:'var(--FM)' }}>{r.n} {r.l}</span>)}
                 </div>
               </div>
               <div style={{ width:'52px', height:'52px', background:'var(--Y)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'22px', color:'var(--B)', flexShrink:0 }}>→</div>
@@ -227,21 +260,24 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
             <h2 className="sec-title">All <span className="out">Services</span></h2>
           </div>
           <div className="sdp-all-grid">
-            {Object.entries(SVC_DATA).map(([k,v]) => (
-              <Link key={k} to={`/services/${k}`} className={`sdp-all-card ${k===serviceId ? 'current' : ''}`}>
-                <div className="sdp-all-icon">
-                  {SVC_CARD_ICONS[k]}
-                </div>
-                <div style={{ flex:1, minWidth:0 }}>
-                  <div style={{ fontSize:'9px', fontWeight:700, letterSpacing:'.14em', textTransform:'uppercase', color:'rgba(240,200,69,.3)', marginBottom:'3px' }}>{v.num}</div>
-                  <div style={{ fontFamily:'var(--FM)', fontWeight:700, fontSize:'13px', color: k===serviceId ? 'var(--Y)' : 'rgba(240,200,69,.7)', lineHeight:1.3 }}>{v.title}</div>
-                </div>
-                {k===serviceId
-                  ? <span style={{ fontSize:'9px', fontWeight:700, color:'var(--Y)', background:'rgba(240,200,69,.1)', padding:'3px 8px', whiteSpace:'nowrap', flexShrink:0 }}>Current</span>
-                  : <span style={{ color:'rgba(240,200,69,.3)', flexShrink:0 }}>→</span>
-                }
-              </Link>
-            ))}
+            {Object.entries(SVC_URL).map(([k, url]) => {
+              const v = SVC_DATA[k];
+              if (!v) return null;
+              const isCurrent = k === dataKey;
+              return (
+                <Link key={k} to={url} className={`sdp-all-card ${isCurrent ? 'current' : ''}`}>
+                  <div className="sdp-all-icon">{SVC_CARD_ICONS[k]}</div>
+                  <div style={{ flex:1, minWidth:0 }}>
+                    <div style={{ fontSize:'9px', fontWeight:700, letterSpacing:'.14em', textTransform:'uppercase', color:'rgba(240,200,69,.3)', marginBottom:'3px' }}>{v.num}</div>
+                    <div style={{ fontFamily:'var(--FM)', fontWeight:700, fontSize:'13px', color: isCurrent ? 'var(--Y)' : 'rgba(240,200,69,.7)', lineHeight:1.3 }}>{v.title}</div>
+                  </div>
+                  {isCurrent
+                    ? <span style={{ fontSize:'9px', fontWeight:700, color:'var(--Y)', background:'rgba(240,200,69,.1)', padding:'3px 8px', whiteSpace:'nowrap', flexShrink:0 }}>Current</span>
+                    : <span style={{ color:'rgba(240,200,69,.3)', flexShrink:0 }}>→</span>
+                  }
+                </Link>
+              );
+            })}
           </div>
         </section>
       </div>
@@ -270,8 +306,8 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
 
       {/* ── PREV / NEXT ── */}
       <div className="sdp-nav-row">
-        {prevKey ? (
-          <button className="sdp-nav-btn" onClick={() => navigate(`/services/${prevKey}`)}>
+        {prevSlug ? (
+          <button className="sdp-nav-btn" onClick={() => navigate(SVC_URL[prevKey])}>
             <span style={{ fontSize:'18px', color:'rgba(240,200,69,.5)' }}>←</span>
             <div style={{ textAlign:'left' }}>
               <span className="sdp-nav-label">Previous</span>
@@ -283,8 +319,8 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
           </button>
         ) : <div />}
         <button className="btn-g" onClick={() => navigate('/services')}>All Services →</button>
-        {nextKey ? (
-          <button className="sdp-nav-btn" onClick={() => navigate(`/services/${nextKey}`)}>
+        {nextSlug ? (
+          <button className="sdp-nav-btn" onClick={() => navigate(SVC_URL[nextKey])}>
             <div style={{ textAlign:'right' }}>
               <span className="sdp-nav-label">Next</span>
               <div style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'3px', justifyContent:'flex-end' }}>
