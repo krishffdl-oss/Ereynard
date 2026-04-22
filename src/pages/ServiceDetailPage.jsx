@@ -5,7 +5,7 @@ import { SVC_DATA } from '../data/index.js';
 import { SVC_CARD_ICONS, FEAT_ICONS } from '../components/SvcIcons.jsx';
 import { useReveal } from '../hooks/useReveal.js';
 
-// ── URL slug → data key mapping ──
+// ── URL slug → data key ──
 const SLUG_TO_KEY = {
   'seo':                       'seo',
   'social-media-marketing':    'social',
@@ -17,33 +17,18 @@ const SLUG_TO_KEY = {
   'email-marketing':           'email',
   'influencer-marketing':      'influencer',
   'digital-strategy':          'strategy',
-  // Backward compat — old short slugs still work
-  'social':      'social',
-  'performance': 'performance',
-  'content':     'content',
-  'web':         'web',
-  'analytics':   'analytics',
-  'branding':    'branding',
-  'email':       'email',
-  'influencer':  'influencer',
-  'strategy':    'strategy',
+  // backward compat
+  'social':'social','performance':'performance','content':'content',
+  'web':'web','analytics':'analytics','branding':'branding',
+  'email':'email','influencer':'influencer','strategy':'strategy',
 };
 
-// ── Ordered keys for prev/next navigation ──
 const SVC_ORDER = [
-  'seo',
-  'social-media-marketing',
-  'performance-advertising',
-  'content-strategy',
-  'web-design-development',
-  'analytics-reporting',
-  'branding-identity',
-  'email-marketing',
-  'influencer-marketing',
-  'digital-strategy',
+  'seo','social-media-marketing','performance-advertising','content-strategy',
+  'web-design-development','analytics-reporting','branding-identity',
+  'email-marketing','influencer-marketing','digital-strategy',
 ];
 
-// ── Canonical URLs ──
 const SVC_URL = {
   seo:         '/services/seo',
   social:      '/services/social-media-marketing',
@@ -70,12 +55,220 @@ const SVC_CAMPAIGNS = {
   strategy:    { key:'novabrand',   label:'NovaBrand — Full Strategy' },
 };
 
+// ── Meta tags per service ──
 const SVC_META = {
   seo: {
     title:       'SEO in Udaipur | Google SEO Expert & SEO Agency | Ereynard',
     description: 'Get expert SEO services in Udaipur from a Google SEO expert and SEO agency offering SEO marketing and search engine marketing solutions.',
+    canonical:   'https://ereynard.com/services/seo',
+  },
+  social: {
+    title:       'Social Media Optimization Services | SMO Agency | Ereynard',
+    description: 'Get expert social media optimization services from an SMO agency helping businesses improve visibility, engagement, and online brand presence.',
+    canonical:   'https://ereynard.com/services/social-media-marketing',
+  },
+  performance: {
+    title:       'Best PPC Agency | Google PPC Expert & PPC Marketing | Ereynard',
+    description: 'Hire a Google PPC expert from a best PPC agency for PPC ads, PPC marketing, and specialist campaign management to grow your business online.',
+    canonical:   'https://ereynard.com/services/performance-advertising',
+  },
+  web: {
+    title:       'Best Web Development Company | Web Design Agency | Ereynard',
+    description: 'Choose a best web development company for web design services, custom websites, and Shopify web development solutions for your business.',
+    canonical:   'https://ereynard.com/services/web-design-development',
   },
 };
+
+// ── Inline ROI Calculator (for SEO page) ──
+function ROICalculatorInline() {
+  const [investment, setInvestment] = React.useState('');
+  const [revenue,    setRevenue]    = React.useState('');
+  const [result,     setResult]     = React.useState(null);
+  const [error,      setError]      = React.useState('');
+
+  const calculate = () => {
+    setError(''); setResult(null);
+    const inv = parseFloat(investment);
+    const rev = parseFloat(revenue);
+    if (!investment || !revenue) { setError('Please fill both fields.'); return; }
+    if (inv <= 0 || rev < 0)     { setError('Values must be greater than zero.'); return; }
+    setResult(((rev - inv) / inv * 100).toFixed(2));
+  };
+
+  const pct      = parseFloat(result);
+  const isPos    = pct >= 0;
+  const resColor = isPos ? '#2ecc71' : '#e74c3c';
+
+  const inp = {
+    width:'100%', boxSizing:'border-box',
+    background:'rgba(240,200,69,.06)', border:'1px solid rgba(240,200,69,.15)',
+    color:'var(--Y)', fontSize:'16px', fontFamily:'var(--FM)', fontWeight:600,
+    padding:'12px 14px', outline:'none',
+  };
+
+  return (
+    <div style={{ marginTop:'48px', background:'rgba(240,200,69,.04)', border:'1px solid rgba(240,200,69,.12)', borderTop:'3px solid var(--Y)', padding:'32px' }}>
+      <div style={{ fontSize:'10px', fontWeight:700, letterSpacing:'.2em', textTransform:'uppercase', color:'rgba(240,200,69,.45)', marginBottom:'8px' }}>
+        Free Tool
+      </div>
+      <h3 style={{ fontFamily:'var(--FM)', fontWeight:800, fontSize:'clamp(22px,3vw,34px)', color:'var(--Y)', marginBottom:'6px' }}>
+        🧮 ROI Calculator
+      </h3>
+      <p style={{ fontSize:'13px', color:'rgba(240,200,69,.45)', marginBottom:'24px', lineHeight:1.7 }}>
+        Find out exactly how much your SEO investment is returning.
+      </p>
+
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'14px', marginBottom:'16px' }}>
+        <div>
+          <label style={{ display:'block', fontSize:'10px', fontWeight:700, letterSpacing:'.16em', textTransform:'uppercase', color:'rgba(240,200,69,.45)', marginBottom:'8px' }}>Investment (₹)</label>
+          <input type="number" min="0" placeholder="50000" value={investment} onChange={e => setInvestment(e.target.value)} style={inp} />
+        </div>
+        <div>
+          <label style={{ display:'block', fontSize:'10px', fontWeight:700, letterSpacing:'.16em', textTransform:'uppercase', color:'rgba(240,200,69,.45)', marginBottom:'8px' }}>Revenue (₹)</label>
+          <input type="number" min="0" placeholder="200000" value={revenue} onChange={e => setRevenue(e.target.value)} style={inp} />
+        </div>
+      </div>
+
+      {error && <div style={{ color:'#e74c3c', fontSize:'12px', fontWeight:600, marginBottom:'12px' }}>⚠ {error}</div>}
+
+      <button className="btn-p" onClick={calculate} style={{ marginBottom: result ? '20px' : '0' }}>
+        <span>Calculate My ROI</span><span>→</span>
+      </button>
+
+      {result !== null && (
+        <div style={{ marginTop:'20px', padding:'20px', background: isPos ? 'rgba(46,204,113,.08)' : 'rgba(231,76,60,.08)', border:`1px solid ${isPos ? 'rgba(46,204,113,.3)' : 'rgba(231,76,60,.3)'}`, borderLeft:`4px solid ${resColor}`, animation:'fadeUp .4s ease' }}>
+          <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}`}</style>
+          <div style={{ fontFamily:'var(--FM)', fontWeight:900, fontSize:'clamp(40px,7vw,64px)', color:resColor, lineHeight:1, marginBottom:'6px' }}>
+            {isPos ? '+' : ''}{result}%
+          </div>
+          <p style={{ fontSize:'13px', color: isPos ? 'rgba(46,204,113,.7)' : 'rgba(231,76,60,.7)', marginBottom:'14px' }}>
+            {isPos ? `For every ₹100 invested, you earned ₹${(100 + pct).toFixed(0)} back.` : 'Losing money — let\'s fix your SEO strategy.'}
+          </p>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'8px' }}>
+            {[
+              { l:'Invested', v:`₹${parseFloat(investment).toLocaleString('en-IN')}` },
+              { l:'Revenue',  v:`₹${parseFloat(revenue).toLocaleString('en-IN')}` },
+              { l:'Profit',   v:`₹${(parseFloat(revenue)-parseFloat(investment)).toLocaleString('en-IN')}` },
+            ].map((s,i) => (
+              <div key={i} style={{ background:'rgba(240,200,69,.04)', border:'1px solid rgba(240,200,69,.08)', padding:'10px', textAlign:'center' }}>
+                <div style={{ fontSize:'9px', color:'rgba(240,200,69,.35)', letterSpacing:'.14em', textTransform:'uppercase', marginBottom:'3px' }}>{s.l}</div>
+                <div style={{ fontFamily:'var(--FM)', fontWeight:800, fontSize:'13px', color:'var(--Y)' }}>{s.v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Inline Marketing Roast (for Social page) ──
+function MarketingRoastInline() {
+  const navigate = useNavigate();
+  const [score, setScore]   = React.useState(null);
+  const [form,  setForm]    = React.useState({ followers:'', posts:'', ads:'', website:'', strategy:'' });
+  const [error, setError]   = React.useState('');
+
+  const set = (k,v) => setForm(p => ({ ...p, [k]:v }));
+
+  const calc = () => {
+    if (!form.followers || !form.posts || !form.ads || !form.website || !form.strategy) {
+      setError('Fill all fields!'); setTimeout(() => setError(''), 2000); return;
+    }
+    let s = 0;
+    const f = parseInt(form.followers) || 0;
+    const p = parseInt(form.posts) || 0;
+    if (f > 10000) s += 30; else if (f > 5000) s += 25; else if (f > 1000) s += 15; else if (f > 500) s += 8; else s += 3;
+    if (p >= 7) s += 25; else if (p >= 5) s += 20; else if (p >= 3) s += 14; else if (p >= 1) s += 7;
+    if (form.ads === 'yes') s += 20; else if (form.ads === 'sometimes') s += 10;
+    if (form.website === 'yes') s += 15; else if (form.website === 'basic') s += 7;
+    if (form.strategy === 'yes') s += 10; else if (form.strategy === 'kinda') s += 5;
+    setScore(Math.min(s, 100));
+  };
+
+  const roastMsg = score === null ? '' :
+    score < 30 ? '😭 Bhai tumhara marketing plan ICU mein hai!' :
+    score < 50 ? '😬 Zinda hai par barely — competitor aage nikal raha hai.' :
+    score < 70 ? '😅 Average hai yaar — thoda aur effort chahiye.' :
+    score < 85 ? '😎 Nice! Par pro level abhi door hai.' :
+    '🔥 Beast mode! Scale karne ka time aa gaya.';
+
+  const scoreColor = score === null ? '#f0c845' : score < 30 ? '#e74c3c' : score < 50 ? '#e67e22' : score < 70 ? '#f0c845' : score < 85 ? '#3498db' : '#2ecc71';
+
+  const sel = {
+    width:'100%', boxSizing:'border-box',
+    background:'rgba(240,200,69,.06)', border:'1px solid rgba(240,200,69,.15)',
+    color:'var(--Y)', fontSize:'13px', fontFamily:'var(--FM)', fontWeight:600,
+    padding:'11px 12px', outline:'none', cursor:'pointer',
+  };
+
+  return (
+    <div style={{ marginTop:'48px', background:'rgba(240,200,69,.04)', border:'1px solid rgba(240,200,69,.12)', borderTop:'3px solid var(--Y)', padding:'32px' }}>
+      <div style={{ fontSize:'10px', fontWeight:700, letterSpacing:'.2em', textTransform:'uppercase', color:'rgba(240,200,69,.45)', marginBottom:'8px' }}>
+        Free Tool
+      </div>
+      <h3 style={{ fontFamily:'var(--FM)', fontWeight:800, fontSize:'clamp(22px,3vw,34px)', color:'var(--Y)', marginBottom:'6px' }}>
+        🔥 Marketing Roast Score
+      </h3>
+      <p style={{ fontSize:'13px', color:'rgba(240,200,69,.45)', marginBottom:'24px', lineHeight:1.7 }}>
+        5 sawaal. 30 seconds. Pata chalo tumhari social media marketing kitni strong hai.
+      </p>
+
+      {score === null ? (
+        <>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px', marginBottom:'16px' }}>
+            <div>
+              <label style={{ display:'block', fontSize:'10px', fontWeight:700, letterSpacing:'.14em', textTransform:'uppercase', color:'rgba(240,200,69,.4)', marginBottom:'7px' }}>Instagram Followers</label>
+              <input type="number" min="0" placeholder="e.g. 2500" value={form.followers} onChange={e => set('followers', e.target.value)}
+                style={{ ...sel, padding:'11px 12px' }} />
+            </div>
+            <div>
+              <label style={{ display:'block', fontSize:'10px', fontWeight:700, letterSpacing:'.14em', textTransform:'uppercase', color:'rgba(240,200,69,.4)', marginBottom:'7px' }}>Posts Per Week</label>
+              <input type="number" min="0" placeholder="e.g. 3" value={form.posts} onChange={e => set('posts', e.target.value)}
+                style={{ ...sel, padding:'11px 12px' }} />
+            </div>
+          </div>
+          {[
+            { k:'ads',      l:'Ads run karte ho?',        opts:[{v:'',l:'Select...'},{v:'yes',l:'✅ Regularly'},{v:'sometimes',l:'🤏 Kabhi kabhi'},{v:'no',l:'❌ Nahi'}] },
+            { k:'website',  l:'Website hai?',             opts:[{v:'',l:'Select...'},{v:'yes',l:'✅ Professional'},{v:'basic',l:'🤏 Basic'},{v:'no',l:'❌ Nahi'}] },
+            { k:'strategy', l:'Marketing strategy hai?',  opts:[{v:'',l:'Select...'},{v:'yes',l:'✅ Proper plan'},{v:'kinda',l:'🤏 Thodi bahut'},{v:'no',l:'❌ Nahi'}] },
+          ].map(f => (
+            <div key={f.k} style={{ marginBottom:'12px' }}>
+              <label style={{ display:'block', fontSize:'10px', fontWeight:700, letterSpacing:'.14em', textTransform:'uppercase', color:'rgba(240,200,69,.4)', marginBottom:'7px' }}>{f.l}</label>
+              <select value={form[f.k]} onChange={e => set(f.k, e.target.value)} style={sel}>
+                {f.opts.map(o => <option key={o.v} value={o.v} style={{ background:'#0e104b' }}>{o.l}</option>)}
+              </select>
+            </div>
+          ))}
+          {error && <div style={{ color:'#e74c3c', fontSize:'12px', fontWeight:600, marginBottom:'12px' }}>⚠ {error}</div>}
+          <button className="btn-p" onClick={calc} style={{ marginTop:'8px' }}>
+            <span>Roast My Marketing 🔥</span><span>→</span>
+          </button>
+        </>
+      ) : (
+        <div style={{ animation:'fadeUp .5s ease' }}>
+          <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}`}</style>
+          <div style={{ textAlign:'center', padding:'24px', background:'rgba(240,200,69,.04)', border:`1px solid rgba(240,200,69,.12)`, borderTop:`3px solid ${scoreColor}`, marginBottom:'16px' }}>
+            <div style={{ fontFamily:'var(--FM)', fontWeight:900, fontSize:'clamp(56px,10vw,88px)', color:scoreColor, lineHeight:1 }}>{score}</div>
+            <div style={{ fontFamily:'var(--FM)', fontWeight:700, fontSize:'11px', color:'rgba(240,200,69,.4)', marginBottom:'10px' }}>/100</div>
+            <p style={{ fontSize:'14px', color:'rgba(240,200,69,.6)', fontStyle:'italic' }}>{roastMsg}</p>
+          </div>
+          <div style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
+            <button className="btn-p" onClick={() => navigate('/contact-us')}>
+              <span>Fix My Marketing 🚀</span><span>→</span>
+            </button>
+            <button onClick={() => setScore(null)} style={{ background:'none', border:'1px solid rgba(240,200,69,.2)', color:'rgba(240,200,69,.5)', padding:'12px 18px', fontFamily:'var(--FM)', fontWeight:700, fontSize:'11px', cursor:'pointer', letterSpacing:'.08em' }}>
+              Try Again
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Need React for useState in inline components
+import React from 'react';
 
 export default function ServiceDetailPage({ openCamp, openContact }) {
   const { serviceId } = useParams();
@@ -84,7 +277,6 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
 
   useEffect(() => { window.scrollTo({ top:0, behavior:'instant' }); }, [serviceId]);
 
-  // Resolve data key from URL slug
   const dataKey   = SLUG_TO_KEY[serviceId] || serviceId;
   const d         = SVC_DATA[dataKey];
   const meta      = SVC_META[dataKey] || null;
@@ -111,12 +303,12 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
       {meta && (
         <Helmet>
           <title>{meta.title}</title>
-          <meta name="description"        content={meta.description} />
-          <meta property="og:title"       content={meta.title} />
-          <meta property="og:description" content={meta.description} />
-          <meta name="twitter:title"      content={meta.title} />
+          <meta name="description"         content={meta.description} />
+          <meta property="og:title"        content={meta.title} />
+          <meta property="og:description"  content={meta.description} />
+          <meta name="twitter:title"       content={meta.title} />
           <meta name="twitter:description" content={meta.description} />
-          <link rel="canonical" href={`https://ereynard.com${SVC_URL[dataKey]}`} />
+          <link rel="canonical"            href={meta.canonical} />
         </Helmet>
       )}
 
@@ -124,13 +316,7 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
         .sdp-feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:32px; }
         .sdp-feat-card { background:var(--B4); border:1px solid rgba(240,200,69,.07); padding:26px 22px; transition:all .35s; cursor:default; }
         .sdp-feat-card:hover { background:rgba(240,200,69,.06); border-color:rgba(240,200,69,.22); transform:translateY(-4px); }
-        .sdp-feat-icon-wrap {
-          width:42px; height:42px;
-          background:rgba(240,200,69,.08); border:1px solid rgba(240,200,69,.14);
-          display:flex; align-items:center; justify-content:center;
-          color:var(--Y); margin-bottom:14px;
-          transition:background .3s,border-color .3s,color .3s;
-        }
+        .sdp-feat-icon-wrap { width:42px; height:42px; background:rgba(240,200,69,.08); border:1px solid rgba(240,200,69,.14); display:flex; align-items:center; justify-content:center; color:var(--Y); margin-bottom:14px; transition:background .3s,border-color .3s,color .3s; }
         .sdp-feat-card:hover .sdp-feat-icon-wrap { background:var(--Y); border-color:var(--Y); color:var(--B); }
         .sdp-feat-title { font-family:var(--FM); font-weight:700; font-size:14px; color:var(--Y); margin-bottom:5px; }
         .sdp-feat-desc  { font-size:12px; line-height:1.72; color:rgba(240,200,69,.42); }
@@ -147,30 +333,17 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
         .sdp-nav-label { font-size:9px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:rgba(240,200,69,.36); display:block; margin-bottom:3px; }
         .sdp-nav-title { font-family:var(--FM); font-weight:700; font-size:13px; color:var(--Y); display:block; }
         .sdp-nav-icon  { width:26px; height:26px; flex-shrink:0; background:rgba(240,200,69,.07); border:1px solid rgba(240,200,69,.14); display:flex; align-items:center; justify-content:center; color:var(--Y); }
-        @media(max-width:1100px){
-          .sdp-feat-grid { grid-template-columns:1fr 1fr; }
-          .sdp-cta-box   { grid-template-columns:1fr; gap:20px; padding:36px 20px; }
-          .sdp-nav-row   { padding:18px 20px; }
-        }
-        @media(max-width:640px){
-          .sdp-feat-grid { grid-template-columns:1fr; }
-          .sdp-all-grid  { grid-template-columns:1fr; }
-        }
+        @media(max-width:1100px){ .sdp-feat-grid{grid-template-columns:1fr 1fr;} .sdp-cta-box{grid-template-columns:1fr;gap:20px;padding:36px 20px;} .sdp-nav-row{padding:18px 20px;} }
+        @media(max-width:640px){ .sdp-feat-grid{grid-template-columns:1fr;} .sdp-all-grid{grid-template-columns:1fr;} }
       `}</style>
 
       {/* ── PAGE HERO ── */}
       <div className="page-hero" style={{ minHeight:'48vh' }}>
         <div className="ph-orb ph-orb1" /><div className="ph-orb ph-orb2" />
         <div style={{ position:'absolute', top:'96px', left:'56px', display:'flex', alignItems:'center', gap:'8px', fontSize:'11px', color:'rgba(240,200,69,.35)', fontFamily:'var(--FM)', zIndex:2, flexWrap:'wrap' }}>
-          <Link to="/" style={{ color:'rgba(240,200,69,.35)', textDecoration:'none' }}
-            onMouseEnter={e=>e.currentTarget.style.color='var(--Y)'}
-            onMouseLeave={e=>e.currentTarget.style.color='rgba(240,200,69,.35)'}
-          >Home</Link>
+          <Link to="/" style={{ color:'rgba(240,200,69,.35)', textDecoration:'none' }} onMouseEnter={e=>e.currentTarget.style.color='var(--Y)'} onMouseLeave={e=>e.currentTarget.style.color='rgba(240,200,69,.35)'}>Home</Link>
           <span style={{ opacity:.4 }}>/</span>
-          <Link to="/services" style={{ color:'rgba(240,200,69,.35)', textDecoration:'none' }}
-            onMouseEnter={e=>e.currentTarget.style.color='var(--Y)'}
-            onMouseLeave={e=>e.currentTarget.style.color='rgba(240,200,69,.35)'}
-          >Services</Link>
+          <Link to="/services" style={{ color:'rgba(240,200,69,.35)', textDecoration:'none' }} onMouseEnter={e=>e.currentTarget.style.color='var(--Y)'} onMouseLeave={e=>e.currentTarget.style.color='rgba(240,200,69,.35)'}>Services</Link>
           <span style={{ opacity:.4 }}>/</span>
           <span style={{ color:'var(--Y)' }}>{d.title}</span>
         </div>
@@ -222,6 +395,12 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
               </div>
             ))}
           </div>
+
+          {/* ── ROI Calculator on SEO page ── */}
+          {dataKey === 'seo' && <ROICalculatorInline />}
+
+          {/* ── Marketing Roast on Social page ── */}
+          {dataKey === 'social' && <MarketingRoastInline />}
         </section>
       </div>
 
@@ -260,16 +439,15 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
             <h2 className="sec-title">All <span className="out">Services</span></h2>
           </div>
           <div className="sdp-all-grid">
-            {Object.entries(SVC_URL).map(([k, url]) => {
-              const v = SVC_DATA[k];
-              if (!v) return null;
+            {Object.entries(SVC_URL).map(([k,url]) => {
+              const v = SVC_DATA[k]; if (!v) return null;
               const isCurrent = k === dataKey;
               return (
                 <Link key={k} to={url} className={`sdp-all-card ${isCurrent ? 'current' : ''}`}>
                   <div className="sdp-all-icon">{SVC_CARD_ICONS[k]}</div>
                   <div style={{ flex:1, minWidth:0 }}>
                     <div style={{ fontSize:'9px', fontWeight:700, letterSpacing:'.14em', textTransform:'uppercase', color:'rgba(240,200,69,.3)', marginBottom:'3px' }}>{v.num}</div>
-                    <div style={{ fontFamily:'var(--FM)', fontWeight:700, fontSize:'13px', color: isCurrent ? 'var(--Y)' : 'rgba(240,200,69,.7)', lineHeight:1.3 }}>{v.title}</div>
+                    <div style={{ fontFamily:'var(--FM)', fontWeight:700, fontSize:'13px', color:isCurrent?'var(--Y)':'rgba(240,200,69,.7)', lineHeight:1.3 }}>{v.title}</div>
                   </div>
                   {isCurrent
                     ? <span style={{ fontSize:'9px', fontWeight:700, color:'var(--Y)', background:'rgba(240,200,69,.1)', padding:'3px 8px', whiteSpace:'nowrap', flexShrink:0 }}>Current</span>
@@ -295,8 +473,7 @@ export default function ServiceDetailPage({ openCamp, openContact }) {
         </div>
         <div style={{ display:'flex', flexDirection:'column', gap:'12px', alignItems:'flex-start' }}>
           <button className="btn-p" onClick={openContact} style={{ background:'var(--B)' }}>
-            <span style={{ color:'var(--Y)' }}>Get Free Proposal</span>
-            <span style={{ color:'var(--Y)' }}>→</span>
+            <span style={{ color:'var(--Y)' }}>Get Free Proposal</span><span style={{ color:'var(--Y)' }}>→</span>
           </button>
           <button className="btn-out" onClick={() => navigate('/services')}>
             <span>View All Services</span><span>→</span>
