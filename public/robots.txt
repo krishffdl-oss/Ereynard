@@ -1,4 +1,4 @@
-## robots.txt — Ereynard Digital
+# robots.txt — Ereynard Digital
 # https://ereynard.com
 
 # ── Allow all search engines ──
@@ -9,21 +9,27 @@ Allow: /
 Allow: /
 Allow: /about-us
 Allow: /services
-Allow: /services/seo
-Allow: /services/social
-Allow: /services/performance
-Allow: /services/content
-Allow: /services/web
-Allow: /services/analytics
-Allow: /services/branding
-Allow: /services/email
-Allow: /services/influencer
-Allow: /services/strategy
 Allow: /projects
 Allow: /clients
 Allow: /blog
 Allow: /blog/
 Allow: /contact-us
+
+# ── Free Tools ──
+Allow: /roi-calculator
+Allow: /marketing-roast
+
+# ── Service Pages ──
+Allow: /services/seo
+Allow: /services/social-media-marketing
+Allow: /services/performance-advertising
+Allow: /services/content-strategy
+Allow: /services/web-design-development
+Allow: /services/analytics-reporting
+Allow: /services/branding-identity
+Allow: /services/email-marketing
+Allow: /services/influencer-marketing
+Allow: /services/digital-strategy
 
 # ── Block dev/build files ──
 Disallow: /src/
