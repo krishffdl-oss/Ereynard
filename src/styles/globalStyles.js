@@ -1,5 +1,4 @@
 const globalStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Playfair+Display:ital@1&display=swap');
   :root{
     --Y:#f0c845;--Y2:#ffd966;--Y3:#d4a800;
     --B:#080930;--B2:#0e104b;--B3:#080a38;--B4:#12145a;
