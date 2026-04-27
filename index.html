@@ -13,14 +13,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f0c845" />
 
-    <!-- ── Favicon ── -->
     <link rel="icon" type="image/jpeg" href="/logo.jpg" />
 
-    <!-- ── Preconnect — faster font loading ── -->
+    <!-- Preconnect for faster font loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- ── Non-blocking fonts (fixes render blocking 1530ms issue) ── -->
+    <!-- NON-BLOCKING fonts — was causing 1500ms render block -->
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Playfair+Display:ital@1&display=swap"
@@ -31,21 +30,23 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Playfair+Display:ital@1&display=swap" />
     </noscript>
 
-    <!-- ── Preload hero image (LCP fix) ── -->
+    <!-- Preload ONLY slide 1 hero image (LCP fix) — smaller size -->
     <link
       rel="preload"
       as="image"
-      href="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&auto=format&fit=crop&q=70"
+      href="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1280&auto=format&fit=crop&q=65"
       fetchpriority="high"
     />
 
-    <!-- ── Preload logo ── -->
+    <!-- Preload logo -->
     <link rel="preload" as="image" href="/logo.jpg" />
 
-    <!-- ── Critical inline CSS — prevents flash of unstyled content ── -->
+    <!-- Critical inline CSS — prevents flash of unstyled dark background -->
     <style>
-      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-      body { background: #080930; color: #f0c845; overflow-x: hidden; }
+      *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+      html{scroll-behavior:smooth;}
+      body{background:#080930;color:#f0c845;overflow-x:hidden;}
+      #root{min-height:100vh;}
     </style>
 
     <title>Ereynard Digital — Smart like a fox. Sharp in digital.</title>

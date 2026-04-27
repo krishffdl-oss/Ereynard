@@ -1,8 +1,5 @@
 import { useEffect, useRef } from 'react';
 
-// ─────────────────────────────────────────────────────────
-// useScrollSection
-// ─────────────────────────────────────────────────────────
 export function useScrollSection(sectionId, threshold = 0.35) {
   const prevHash = useRef('');
 
@@ -36,33 +33,37 @@ export function useScrollSection(sectionId, threshold = 0.35) {
   }, [sectionId, threshold]);
 }
 
+// Child class names that get staggered reveal animation
+const CHILD_CLASSES = [
+  'scard','pstep-s','pstep-f','s-item','wi','tm-card',
+  'bs-scoop','blog-card','svc-mini-card','award-card',
+  'svc-detail-row','wt-kpi',
+];
+
 export function useReveal() {
   useEffect(() => {
     const ro = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (!e?.target || !e.isIntersecting) return;  // ← null guard
-        if (!e.target.isConnected) return;             // ← detached guard
+        if (!e?.target?.isConnected || !e.isIntersecting) return;
 
         e.target.classList.add('v');
 
-        ['scard', 'pstep-s', 'pstep-f', 's-item', 'wi', 'tm-card', 'bs-scoop', 'blog-card', 'svc-mini-card', 'award-card', 'svc-detail-row', 'wt-kpi'].forEach(cls => {
+        // Pure CSS animation — no setTimeout, no JS style mutation, no memory leaks
+        CHILD_CLASSES.forEach(cls => {
           e.target.querySelectorAll('.' + cls).forEach((c, i) => {
-            c.style.opacity = '0';
-            c.style.transform = 'translateY(26px)';
-            c.style.transition = `opacity .6s ${i * .09}s ease,transform .6s ${i * .09}s ease`;
-            setTimeout(() => {
-              if (!c.isConnected) return;              // ← guard inside timeout
-              c.style.opacity = '1';
-              c.style.transform = 'none';
-            }, 40);
+            if (!c.isConnected) return;
+            c.style.setProperty('--reveal-delay', `${i * 90}ms`);
+            c.classList.add('reveal-child');
           });
         });
       });
     }, { threshold: .06 });
 
-    document.querySelectorAll('.reveal,.rev-l,.rev-r,.rev-scale').forEach(el => ro.observe(el));
+    document.querySelectorAll('.reveal,.rev-l,.rev-r,.rev-scale')
+      .forEach(el => ro.observe(el));
+
     return () => ro.disconnect();
-  }, []);                                              // ← empty array: run once
+  }, []);
 }
 
 export function useTilt() {
@@ -70,7 +71,7 @@ export function useTilt() {
     const cards = document.querySelectorAll('.scard,.bs-scoop');
     const hs = [];
     cards.forEach(c => {
-      if (!c) return;                                  // ← null guard
+      if (!c) return;
       const mm = e => {
         const r = c.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width - .5;
@@ -86,7 +87,7 @@ export function useTilt() {
       c.removeEventListener('mousemove', mm);
       c.removeEventListener('mouseleave', ml);
     });
-  }, []);                                              // ← empty array: run once
+  }, []);
 }
 
 export function useRipple() {
@@ -94,7 +95,7 @@ export function useRipple() {
     const btns = document.querySelectorAll('.btn-p,.btn-sub,.nav-cta');
     const hs = [];
     btns.forEach(btn => {
-      if (!btn) return;                                // ← null guard
+      if (!btn) return;
       const fn = e => {
         const r = btn.getBoundingClientRect();
         const rp = document.createElement('span');
@@ -108,5 +109,5 @@ export function useRipple() {
       hs.push({ btn, fn });
     });
     return () => hs.forEach(({ btn, fn }) => btn.removeEventListener('click', fn));
-  }, []);                                              // ← empty array: run once
+  }, []);
 }
