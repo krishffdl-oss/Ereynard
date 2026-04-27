@@ -385,7 +385,46 @@ export const CLIENT_TESTIMONIALS = [
 
 // ── HERO SLIDES ──
 export const HERO_SLIDES = [
-  { bg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&auto=format&fit=crop&q=80', kicker: "India's Sharpest Digital Agency", headline: ['Outfox', 'Your', 'Competition'], strokeIdx: 1, sub: 'Data-driven strategies that turn brands into category leaders. Smart, sharp, results-obsessed.' },
-  { bg: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1920&auto=format&fit=crop&q=80', kicker: '200+ Brands Scaled Across India', headline: ['Growth', 'That', 'Compounds.'], strokeIdx: 1, sub: 'Every campaign engineered for real ROI — not vanity metrics. Your brand deserves better than vanilla.' },
-  { bg: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&auto=format&fit=crop&q=80', kicker: '7+ Years · ₹50Cr+ Ad Spend Managed', headline: ['Results', 'Not', 'Excuses.'], strokeIdx: 1, sub: '10x ROI. 340% sales. 225x traffic. Real numbers from real clients who trusted us to deliver.' },
+  {
+    bg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&auto=format&fit=crop&q=70',
+    kicker: "India's Sharpest Digital Agency · Udaipur",
+    headline: ['Outfox', 'Your', 'Competition'],
+    strokeIdx: 1,
+    sub: 'Data-driven strategies that turn brands into category leaders. Smart, sharp, results-obsessed.',
+  },
+  {
+    bg: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1920&auto=format&fit=crop&q=70',
+    kicker: '200+ Brands Scaled Across India',
+    headline: ['Growth', 'That', 'Compounds.'],
+    strokeIdx: 1,
+    sub: 'Every campaign engineered for real ROI — not vanity metrics. Your brand deserves better than vanilla.',
+  },
+  {
+    bg: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&auto=format&fit=crop&q=70',
+    kicker: '7+ Years · ₹50Cr+ Ad Spend Managed',
+    headline: ['Results', 'Not', 'Excuses.'],
+    strokeIdx: 1,
+    sub: '10x ROI. 340% sales. 225x traffic. Real numbers from real clients who trusted us to deliver.',
+  },
+  {
+    bg: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&auto=format&fit=crop&q=70',
+    kicker: 'Performance Marketing Experts',
+    headline: ['Every', 'Rupee', 'Works.'],
+    strokeIdx: 2,
+    sub: 'ROI-obsessed campaigns on Google & Meta. Rigorous A/B testing and relentless optimisation from day one.',
+  },
+  {
+    bg: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&auto=format&fit=crop&q=70',
+    kicker: 'Branding · SEO · Social · Content',
+    headline: ['Brands', 'That', 'Dominate.'],
+    strokeIdx: 0,
+    sub: 'Full-service digital agency. From brand identity to paid ads — one team, one strategy, unstoppable growth.',
+  },
+  {
+    bg: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1920&auto=format&fit=crop&q=70',
+    kicker: '98% Client Retention · Fox Method',
+    headline: ['Hunt.', 'Outfox.', 'Win.'],
+    strokeIdx: 1,
+    sub: 'We\'re cunning, precise, and always a few moves ahead. Like a fox in the digital wild — we always deliver.',
+  },
 ];
