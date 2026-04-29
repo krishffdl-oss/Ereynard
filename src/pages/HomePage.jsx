@@ -317,7 +317,7 @@ export default function HomePage({ openContact }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Best Digital Marketing Agency & Company | Expert Internet Marketing Services - Ereynard" />
         <meta name="twitter:description" content="Looking for the best digital marketing agency or firm? We help your business grow with result-driven strategies, ✓SEO ✓Social Media Marketing ✓SMO and more." />
-        <link rel="canonical" href="https://ereynard.com/" />
+        <link rel="canonical" href="https://ereynard.com" />
       </Helmet>
       <Hero openContact={openContact} />
       <Marquee />
