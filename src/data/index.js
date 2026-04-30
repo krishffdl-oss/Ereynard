@@ -271,7 +271,7 @@ export const BLOG_POSTS = [
   {
     id: 'google-invisible', cat: 'SEO',
     title: "Why Your Brand is Invisible on Google — And How to Fix It in 90 Days",
-    date: 'March 10, 2025', read: '8 min read',
+    date: 'March 10, 2026', read: '8 min read',
     img: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=900&auto=format&fit=crop&q=80',
     excerpt: "If you're not on page 1, you don't exist. Here's the exact framework we use to take brands from zero to #1 rankings.",
     lead: "Here's the uncomfortable truth: 91.5% of search traffic goes to page 1 results. If you're on page 2, you may as well not exist online.",
@@ -294,7 +294,7 @@ export const BLOG_POSTS = [
   {
     id: 'reels-formula', cat: 'Social Media',
     title: "The Reels Formula That Got Our Client 2.3M Views Overnight",
-    date: 'Feb 28, 2025', read: '6 min read',
+    date: 'Feb 28, 2026', read: '6 min read',
     img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=900&auto=format&fit=crop&q=80',
     excerpt: "The hook, structure, and strategy behind a viral reel — deconstructed for Indian D2C brands.",
     lead: "In February 2024, a LuxeThreads reel about 'Why Indian women are choosing ethnic over western for office wear' hit 2.3 million views in 48 hours.",
@@ -309,7 +309,7 @@ export const BLOG_POSTS = [
   {
     id: 'google-ads-mistakes', cat: 'Performance Ads',
     title: "Why Your Google Ads Are Burning Money — 7 Mistakes We Fixed",
-    date: 'Feb 15, 2025', read: '10 min read',
+    date: 'Feb 15, 2026', read: '10 min read',
     img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&auto=format&fit=crop&q=80',
     excerpt: "Most Indian SMBs are throwing ₹50,000/month into Google Ads with no return. Here's exactly why.",
     lead: "In 2024 alone, we audited 34 Google Ads accounts across India. The average wasted spend was 67%. Here are the 7 mistakes we see most often.",
@@ -324,7 +324,7 @@ export const BLOG_POSTS = [
   {
     id: 'brand-identity', cat: 'Branding',
     title: "Building a Brand Identity That Outlasts Your Competitors",
-    date: 'Jan 30, 2025', read: '7 min read',
+    date: 'Jan 30, 2026', read: '7 min read',
     img: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&auto=format&fit=crop&q=80',
     excerpt: "Brand isn't your logo. It's every touchpoint your customer experiences. Here's the framework we use.",
     lead: "We've built 50+ brand identities. The ones that outlast their competitors share one thing: strategic clarity before creative execution.",
@@ -337,7 +337,7 @@ export const BLOG_POSTS = [
   {
     id: '31-content-ideas', cat: 'Content Strategy',
     title: "31 Content Ideas for Indian D2C Brands That Actually Convert",
-    date: 'Jan 18, 2025', read: '12 min read',
+    date: 'Jan 18, 2026', read: '12 min read',
     img: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=900&auto=format&fit=crop&q=80',
     excerpt: "Content doesn't have to be boring. Here are 31 frameworks to turn your content into a lead and sales engine.",
     lead: "We manage content for 40+ Indian brands. These are the formats that consistently outperform everything else.",
@@ -348,8 +348,8 @@ export const BLOG_POSTS = [
   },
   {
     id: 'email-open-rates', cat: 'Email Marketing',
-    title: "How We Achieved 42% Email Open Rates for Our Clients in 2024",
-    date: 'Jan 5, 2025', read: '9 min read',
+    title: "How We Achieved 42% Email Open Rates for Our Clients in 2026",
+    date: 'Jan 5, 2026', read: '9 min read',
     img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&auto=format&fit=crop&q=80',
     excerpt: "The average email open rate in India is under 20%. We consistently hit 42%+. Here's the full playbook.",
     lead: "Email is still the highest-ROI digital channel when done right. The key word is 'right.' Most brands are doing it profoundly wrong.",
