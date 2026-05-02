@@ -126,7 +126,7 @@ export default function ServicesPage() {
   return (
     <>
       <Helmet>
-        <title>Digital Marketing Services — SEO, Ads, Social Media & More | Ereynard</title>
+        <title>Digital Marketing Services | Ereynard</title>
         <meta name="description" content="Ereynard ke 9 specialised digital marketing services — SEO, Google Ads, Meta Ads, Social Media, Content Strategy, Web Design, Branding, Email Marketing aur Influencer Marketing. India ka sharpest digital agency, Udaipur." />
         <meta name="keywords" content="digital marketing services india, SEO agency india, google ads agency, meta ads agency, social media marketing india, content strategy, web design agency udaipur, branding agency india, email marketing, influencer marketing india, ereynard services" />
         <meta name="author" content="Ereynard" />
