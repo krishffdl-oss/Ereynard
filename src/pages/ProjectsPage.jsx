@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import PageHero from '../components/PageHero.jsx';
 import { useReveal, useTilt, useRipple } from '../hooks/useReveal.js';
 
@@ -22,7 +23,7 @@ function WorkSection({ openCamp }) {
         <div className="work-grid">
           {projects.map(p => (
             <div key={p.k} className={`wi reveal ${p.feat ? 'feat' : ''}`} onClick={() => openCamp(p.k)}>
-              <div className="wi-bg"><img src={p.img} alt={p.title} /></div>
+              <div className="wi-bg"><img src={p.img} alt={p.title} loading="lazy" decoding="async" /></div>
               <div className="wi-ov">
                 <span className="wi-tag">{p.tag}</span>
                 <h3 className="wi-title">{p.title}</h3>
@@ -41,7 +42,53 @@ export default function ProjectsPage({ openCamp }) {
   useTilt(); useRipple();
   return (
     <>
-      <PageHero label="Selected Work" title="Our Campaigns" strokeWord="Campaigns" sub="Real brands. Real results. Real growth." />
+      <Helmet>
+        <title>Our Work & Case Studies | Ereynard — India's Sharpest Digital Agency</title>
+        <meta name="description" content="Ereynard ke real client campaigns aur case studies dekho. NovaBrand 10x ROI, LuxeThreads 340% sales, TechNest 225x traffic. Real brands, real results — India's sharpest digital marketing agency." />
+        <meta name="keywords" content="ereynard case studies, digital marketing results india, performance marketing campaigns, seo results india, social media growth india, google ads results, ereynard projects" />
+        <meta name="author" content="Ereynard" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.ereynard.com/projects" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Our Work & Case Studies | Ereynard — India's Sharpest Digital Agency" />
+        <meta property="og:description" content="Real brands. Real results. See how Ereynard delivered 10x ROI, 340% sales growth and 225x traffic for Indian brands. India's sharpest digital marketing agency." />
+        <meta property="og:url" content="https://www.ereynard.com/projects" />
+        <meta property="og:site_name" content="Ereynard" />
+        <meta property="og:image" content="https://www.ereynard.com/og-image.jpg" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Our Work & Case Studies | Ereynard" />
+        <meta name="twitter:description" content="Real brands. Real results. 10x ROI, 340% sales, 225x traffic — see Ereynard's client campaigns." />
+        <meta name="twitter:image" content="https://www.ereynard.com/og-image.jpg" />
+
+        {/* Schema */}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Ereynard Case Studies & Campaigns",
+          "description": "Real digital marketing case studies from Ereynard — India's sharpest digital agency. Performance marketing, SEO, social media and branding results.",
+          "url": "https://www.ereynard.com/projects",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Ereynard",
+            "url": "https://www.ereynard.com",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.ereynard.com/logo.jpg"
+            }
+          }
+        })}</script>
+      </Helmet>
+
+      <PageHero
+        label="Selected Work"
+        title="Our Campaigns"
+        strokeWord="Campaigns"
+        sub="Real brands. Real results. Real growth."
+      />
       <WorkSection openCamp={openCamp} />
     </>
   );

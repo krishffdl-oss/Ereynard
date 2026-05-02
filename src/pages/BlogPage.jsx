@@ -26,7 +26,7 @@ function BlogList() {
               onClick={() => navigate(`/blog/${p.id}`)}
             >
               <div className="blog-img">
-                <img src={p.img} alt={p.title} />
+                <img src={p.img} alt={p.title} loading="lazy" decoding="async" />
                 <div className="blog-img-ov" />
                 <span className="blog-cat">{p.cat}</span>
               </div>
@@ -62,7 +62,7 @@ export function BlogPostPage() {
   if (!post) return (
     <>
       <Helmet>
-        <title>Post Not Found — Ereynard Digital Blog</title>
+        <title>Post Not Found — Ereynard Blog</title>
         <meta name="robots" content="noindex" />
       </Helmet>
       <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--B3)' }}>
@@ -110,31 +110,32 @@ export function BlogPostPage() {
     return null;
   });
 
-  // ── Canonical URL ──
   const canonicalUrl = `https://www.ereynard.com/blog/${post.id}`;
 
   return (
     <>
-      {/* ── SSR Meta Tags — inject on server via react-helmet-async ── */}
       <Helmet>
-        <title>{post.title} — Ereynard Digital</title>
-        <meta name="description" content={post.excerpt} />
+        <title>{post.title} | Ereynard — India's Sharpest Marketing Blog</title>
+        <meta name="description" content={`${post.excerpt} Read expert digital marketing insights by Ereynard — India's leading performance marketing agency based in Udaipur.`} />
+        <meta name="keywords" content={`${post.cat}, digital marketing india, ereynard, marketing agency udaipur, ${post.title.toLowerCase().split(' ').slice(0, 5).join(', ')}`} />
+        <meta name="author" content="Ereynard" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonicalUrl} />
 
         {/* Open Graph */}
         <meta property="og:type" content="article" />
-        <meta property="og:title" content={`${post.title} — Ereynard Digital`} />
-        <meta property="og:description" content={post.excerpt} />
+        <meta property="og:title" content={`${post.title} | Ereynard Blog`} />
+        <meta property="og:description" content={`${post.excerpt} Expert insights by Ereynard — India's sharpest digital agency.`} />
         <meta property="og:image" content={post.img} />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:site_name" content="Ereynard Digital" />
+        <meta property="og:site_name" content="Ereynard" />
         <meta property="article:published_time" content={post.date} />
         <meta property="article:section" content={post.cat} />
+        <meta property="article:tag" content={post.cat} />
 
-        {/* Twitter Card */}
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${post.title} — Ereynard Digital`} />
+        <meta name="twitter:title" content={`${post.title} | Ereynard`} />
         <meta name="twitter:description" content={post.excerpt} />
         <meta name="twitter:image" content={post.img} />
 
@@ -148,12 +149,12 @@ export function BlogPostPage() {
           "datePublished": post.date,
           "author": {
             "@type": "Organization",
-            "name": "Ereynard Digital",
+            "name": "Ereynard",
             "url": "https://www.ereynard.com"
           },
           "publisher": {
             "@type": "Organization",
-            "name": "Ereynard Digital",
+            "name": "Ereynard",
             "logo": {
               "@type": "ImageObject",
               "url": "https://www.ereynard.com/logo.jpg"
@@ -161,10 +162,13 @@ export function BlogPostPage() {
           },
           "url": canonicalUrl,
           "articleSection": post.cat,
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": canonicalUrl
+          }
         })}</script>
       </Helmet>
 
-      {/* ── Article Content ── */}
       <div style={{ background: 'var(--B3)' }}>
         {/* Hero Image */}
         <div style={{ height: '50vh', overflow: 'hidden', position: 'relative', paddingTop: '80px' }}>
@@ -178,7 +182,6 @@ export function BlogPostPage() {
 
         {/* Article Body */}
         <div style={{ maxWidth: '740px', margin: '0 auto', padding: '48px 32px 80px' }}>
-          {/* Category Tag */}
           <span style={{
             fontSize: '9px', fontWeight: 700, letterSpacing: '.26em', textTransform: 'uppercase',
             color: 'var(--Y)', background: 'rgba(240,200,69,.1)', border: '1px solid rgba(240,200,69,.28)',
@@ -187,7 +190,6 @@ export function BlogPostPage() {
             {post.cat}
           </span>
 
-          {/* Title — H1 for SEO */}
           <h1 style={{
             fontFamily: 'var(--FM)', fontWeight: 800,
             fontSize: 'clamp(30px,4.5vw,58px)', color: 'var(--Y)',
@@ -196,16 +198,15 @@ export function BlogPostPage() {
             {post.title}
           </h1>
 
-          {/* Meta */}
           <div style={{
             fontSize: '10px', fontWeight: 600, color: 'rgba(240,200,69,.33)',
             letterSpacing: '.06em', display: 'flex', gap: '12px', marginBottom: '28px',
             paddingBottom: '22px', borderBottom: '1px solid rgba(240,200,69,.07)',
           }}>
             <span>{post.date}</span><span>·</span><span>{post.read}</span>
+            <span>·</span><span>By Ereynard</span>
           </div>
 
-          {/* Lead paragraph */}
           <p style={{
             fontFamily: 'var(--FI)', fontStyle: 'italic', fontSize: '17px',
             lineHeight: '1.7', color: 'rgba(240,200,69,.62)', marginBottom: '26px',
@@ -215,11 +216,32 @@ export function BlogPostPage() {
 
           <div style={{ height: '1px', background: 'rgba(240,200,69,.07)', margin: '28px 0' }} />
 
-          {/* Main content */}
           <div>{renderContent(post.content)}</div>
 
-          {/* Back button */}
-          <div style={{ marginTop: '48px', paddingTop: '28px', borderTop: '1px solid rgba(240,200,69,.07)' }}>
+          {/* CTA Box */}
+          <div style={{
+            marginTop: '48px',
+            background: 'rgba(240,200,69,.05)',
+            border: '1px solid rgba(240,200,69,.15)',
+            borderLeft: '3px solid var(--Y)',
+            padding: '28px 24px',
+          }}>
+            <p style={{ fontFamily: 'var(--FM)', fontSize: '16px', color: 'var(--Y)', marginBottom: '8px' }}>
+              Want results like these for your brand?
+            </p>
+            <p style={{ fontSize: '13px', color: 'rgba(240,200,69,.5)', lineHeight: '1.7', marginBottom: '16px' }}>
+              Ereynard helps Indian brands dominate search, social, and paid ads. Let's build your growth strategy.
+            </p>
+            <button
+              className="btn-p"
+              onClick={() => window.location.href = '/contact-us'}
+              style={{ fontSize: '11px', padding: '13px 28px' }}
+            >
+              <span>Get a Free Strategy Call</span><span>→</span>
+            </button>
+          </div>
+
+          <div style={{ marginTop: '32px', paddingTop: '28px', borderTop: '1px solid rgba(240,200,69,.07)' }}>
             <button className="btn-g" onClick={() => navigate('/blog')}>← Back to All Articles</button>
           </div>
         </div>
@@ -234,18 +256,44 @@ export default function BlogPage() {
   return (
     <>
       <Helmet>
-        <title>Digital Marketing Blog — Insights & Strategy | Ereynard Digital</title>
-        <meta name="description" content="Sharp insights on SEO, social media, performance ads, branding and email marketing from Ereynard Digital — India's sharpest digital agency." />
+        <title>Digital Marketing Blog India — SEO, Ads & Social Media Tips | Ereynard</title>
+        <meta name="description" content="Ereynard ka official blog — India ke sharpest digital marketing agency ke sharp insights, real data aur no-fluff strategies on SEO, Google Ads, Meta Ads, social media, branding aur email marketing. Based in Udaipur, serving brands across India." />
+        <meta name="keywords" content="digital marketing blog india, SEO tips india, google ads strategy, meta ads tips, social media marketing india, performance marketing, content strategy, email marketing india, ereynard, marketing agency udaipur" />
+        <meta name="author" content="Ereynard" />
+        <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.ereynard.com/blog" />
-        <meta property="og:title" content="Digital Marketing Blog — Ereynard Digital" />
-        <meta property="og:description" content="Sharp insights on SEO, social media, performance ads, branding and email marketing from India's sharpest digital agency." />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="Digital Marketing Blog India — SEO, Ads & Social Media | Ereynard" />
+        <meta property="og:description" content="Sharp insights on SEO, Google Ads, Meta Ads, social media, branding and email marketing from India's sharpest digital agency — Ereynard, Udaipur." />
         <meta property="og:url" content="https://www.ereynard.com/blog" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://www.ereynard.com/og-image.jpg" />
+        <meta property="og:site_name" content="Ereynard" />
+
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Digital Marketing Blog — Ereynard Digital" />
-        <meta name="twitter:description" content="Sharp insights on SEO, social media, performance ads, branding and email marketing." />
+        <meta name="twitter:title" content="Digital Marketing Blog India — Ereynard" />
+        <meta name="twitter:description" content="Sharp insights on SEO, Ads, Social Media & Branding from India's sharpest digital agency — Ereynard." />
         <meta name="twitter:image" content="https://www.ereynard.com/og-image.jpg" />
+
+        {/* Blog Schema */}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          "name": "Ereynard Blog",
+          "description": "Sharp digital marketing insights on SEO, performance ads, social media, branding and email marketing from India's leading digital agency.",
+          "url": "https://www.ereynard.com/blog",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Ereynard",
+            "url": "https://www.ereynard.com",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.ereynard.com/logo.jpg"
+            }
+          }
+        })}</script>
       </Helmet>
       <PageHero
         label="Fox Intelligence"
@@ -257,4 +305,3 @@ export default function BlogPage() {
     </>
   );
 }
-
