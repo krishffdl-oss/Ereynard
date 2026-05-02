@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import PageHero from '../components/PageHero.jsx';
 import ImageBand from '../components/ImageBand.jsx';
 import Stats from '../components/Stats.jsx';
@@ -105,7 +106,7 @@ function ProcessFull() {
         <div className="proc-steps-full">
           {steps.map((s,i) => (
             <div key={i} className="pstep-f reveal">
-              <div className="pstep-f-img"><img src={s.img} alt={s.t} /></div>
+              <div className="pstep-f-img"><img src={s.img} alt={s.t} loading="lazy" decoding="async" /></div>
               <div className="pstep-f-body">
                 <div className="pstep-f-num">STEP {s.n}</div>
                 <div className="pstep-f-title">{s.t}</div>
@@ -124,7 +125,57 @@ export default function ServicesPage() {
   useTilt(); useRipple();
   return (
     <>
-      <PageHero label="What We Do" title="Services & Process" strokeWord="Process" sub="9 specialised services + the Fox Method — every tool and tactic we use to grow your brand." />
+      <Helmet>
+        <title>Digital Marketing Services — SEO, Ads, Social Media & More | Ereynard</title>
+        <meta name="description" content="Ereynard ke 9 specialised digital marketing services — SEO, Google Ads, Meta Ads, Social Media, Content Strategy, Web Design, Branding, Email Marketing aur Influencer Marketing. India ka sharpest digital agency, Udaipur." />
+        <meta name="keywords" content="digital marketing services india, SEO agency india, google ads agency, meta ads agency, social media marketing india, content strategy, web design agency udaipur, branding agency india, email marketing, influencer marketing india, ereynard services" />
+        <meta name="author" content="Ereynard" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.ereynard.com/services" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Digital Marketing Services — SEO, Ads, Social Media & More | Ereynard" />
+        <meta property="og:description" content="9 specialised digital marketing services by Ereynard — SEO, Google Ads, Meta Ads, Social Media, Content, Web Design, Branding, Email & Influencer Marketing. India's sharpest agency." />
+        <meta property="og:url" content="https://www.ereynard.com/services" />
+        <meta property="og:site_name" content="Ereynard" />
+        <meta property="og:image" content="https://www.ereynard.com/og-image.jpg" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Digital Marketing Services | Ereynard" />
+        <meta name="twitter:description" content="SEO, Google Ads, Meta Ads, Social Media, Content, Web Design, Branding & more — 9 services by Ereynard, India's sharpest digital agency." />
+        <meta name="twitter:image" content="https://www.ereynard.com/og-image.jpg" />
+
+        {/* Schema */}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Digital Marketing Services by Ereynard",
+          "description": "9 specialised digital marketing services including SEO, Performance Advertising, Social Media Marketing, Content Strategy, Web Design, Branding, Email Marketing and Influencer Marketing.",
+          "provider": {
+            "@type": "Organization",
+            "name": "Ereynard",
+            "url": "https://www.ereynard.com",
+            "logo": "https://www.ereynard.com/logo.jpg",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Udaipur",
+              "addressRegion": "Rajasthan",
+              "addressCountry": "IN"
+            }
+          },
+          "url": "https://www.ereynard.com/services",
+          "areaServed": "IN"
+        })}</script>
+      </Helmet>
+
+      <PageHero
+        label="What We Do"
+        title="Services & Process"
+        strokeWord="Process"
+        sub="9 specialised services + the Fox Method — every tool and tactic we use to grow your brand."
+      />
       <ServicesFull />
       <ImageBand />
       <div style={{ background:'var(--B3)' }}>
