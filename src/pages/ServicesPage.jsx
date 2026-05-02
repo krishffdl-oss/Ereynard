@@ -135,7 +135,7 @@ export default function ServicesPage() {
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Digital Marketing Services — SEO, Ads, Social Media & More | Ereynard" />
+        <meta property="og:title" content="Digital Marketing Services | Ereynard" />
         <meta property="og:description" content="9 specialised digital marketing services by Ereynard — SEO, Google Ads, Meta Ads, Social Media, Content, Web Design, Branding, Email & Influencer Marketing. India's sharpest agency." />
         <meta property="og:url" content="https://www.ereynard.com/services" />
         <meta property="og:site_name" content="Ereynard" />
