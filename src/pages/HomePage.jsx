@@ -308,10 +308,10 @@ export default function HomePage({ openContact, openSvc }) {
     <>
       <Helmet>
         {/* Title: 58 chars ✅ */}
-        <title>Ereynard — Digital Marketing Agency India</title>
+        <title>Best Digital Marketing Agency in Udaipur | Ereynard</title>
 
-        {/* Description: 158 chars ✅ */}
-        <meta name="description" content="Ereynard is India's sharpest digital marketing agency. SEO, Google Ads, Meta Ads, Social Media & Branding. 200+ brands scaled. Based in Udaipur." />
+        {/* Description */}
+        <meta name="description" content="Hire a digital marketing company in Udaipur offering expert services for local businesses, brands, and growing companies across India." />
 
         <meta name="keywords" content="digital marketing agency india, SEO agency udaipur, google ads india, meta ads agency, social media marketing, ereynard" />
         <meta name="author" content="Ereynard" />
