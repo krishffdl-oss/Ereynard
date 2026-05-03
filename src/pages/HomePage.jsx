@@ -73,12 +73,12 @@ function AboutSection({ openSvc }) {
         <div className="ab-grid">
           <div className="ab-vis rev-l">
             <div className="ab-img-a shimmer">
-              <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&auto=format&fit=crop&q=80" alt="Agency team" />
+              <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&auto=format&fit=crop&q=80" alt="Ereynard agency team" loading="lazy" decoding="async" />
             </div>
             <div className="ab-stat-a"><div className="ab-stat-n">7+</div><div className="ab-stat-l">Years</div></div>
             <div className="ab-badge">🦊</div>
             <div className="ab-img-b shimmer">
-              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&auto=format&fit=crop&q=80" alt="Analytics" />
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&auto=format&fit=crop&q=80" alt="Digital marketing analytics" loading="lazy" decoding="async" />
             </div>
             <div className="ab-stat-b"><div className="ab-stat-n">200+</div><div className="ab-stat-l">Brands Scaled</div></div>
           </div>
@@ -115,7 +115,7 @@ function BrandStory() {
         </div>
         <div className="bs-two reveal" style={{ position: 'relative', zIndex: 1 }}>
           <div className="bs-img-wrap rev-l">
-            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=700&auto=format&fit=crop&q=80" alt="Old way" />
+            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=700&auto=format&fit=crop&q=80" alt="Old way of marketing" loading="lazy" decoding="async" />
             <div className="bs-img-lbl">The Old Way</div>
           </div>
           <div className="rev-r">
@@ -139,7 +139,7 @@ function BrandStory() {
               <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '.28em', textTransform: 'uppercase', color: 'rgba(14,16,75,.38)', marginBottom: '8px' }}>The Inspiration</p>
               <div className="bs-inspo-title">The Joy of 31 Flavors</div>
               <p className="bs-inspo-text" style={{ marginBottom: '9px' }}>In 1945, Baskin & Robbins transformed ice cream by offering 31 Flavors — a different choice for every day of the month. They promised variety, quality, and the perfect fit for every craving.</p>
-              <p className="bs-inspo-text"><strong style={{ color: 'var(--B)' }}>At Ereynard Digital, we believe your brand deserves that same commitment.</strong></p>
+              <p className="bs-inspo-text"><strong style={{ color: 'var(--B)' }}>At Ereynard, we believe your brand deserves that same commitment.</strong></p>
             </div>
           </div>
         </div>
@@ -216,9 +216,7 @@ function ServicesMini() {
         <div className="svc-mini">
           {svcs.map(s => (
             <div key={s.k} className="svc-mini-card reveal" onClick={() => navigate(`/services/${s.k}`)}>
-              <div className="svc-mini-icon-wrap">
-                {SVC_ICONS[s.k]}
-              </div>
+              <div className="svc-mini-icon-wrap">{SVC_ICONS[s.k]}</div>
               <span className="svc-mini-name">{s.t}</span>
               <span className="svc-mini-arrow">→</span>
             </div>
@@ -304,24 +302,63 @@ function WorkTeaser() {
   );
 }
 
-export default function HomePage({ openContact }) {
+export default function HomePage({ openContact, openSvc }) {
   useTilt(); useRipple();
   return (
     <>
       <Helmet>
-        <title>Best Digital Marketing Agency & Company | Expert Internet Marketing Services - Ereynard</title>
-        <meta name="description" content="Looking for the best digital marketing agency or firm? We help your business grow with result-driven strategies, ✓SEO ✓Social Media Marketing ✓SMO and more." />
+        {/* Title: 58 chars ✅ */}
+        <title>Ereynard — Digital Marketing Agency India</title>
+
+        {/* Description: 158 chars ✅ */}
+        <meta name="description" content="Ereynard is India's sharpest digital marketing agency. SEO, Google Ads, Meta Ads, Social Media & Branding. 200+ brands scaled. Based in Udaipur." />
+
+        <meta name="keywords" content="digital marketing agency india, SEO agency udaipur, google ads india, meta ads agency, social media marketing, ereynard" />
+        <meta name="author" content="Ereynard" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://www.ereynard.com" />
+
+        {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Best Digital Marketing Agency & Company | Expert Internet Marketing Services - Ereynard" />
-        <meta property="og:description" content="Looking for the best digital marketing agency or firm? We help your business grow with result-driven strategies, ✓SEO ✓Social Media Marketing ✓SMO and more." />
+        <meta property="og:title" content="Ereynard — Digital Marketing Agency India" />
+        <meta property="og:description" content="India's sharpest digital agency. SEO, Ads, Social Media & Branding for 200+ Indian brands. Udaipur-based, India-wide." />
+        <meta property="og:url" content="https://www.ereynard.com" />
+        <meta property="og:site_name" content="Ereynard" />
+        <meta property="og:image" content="https://www.ereynard.com/og-image.jpg" />
+
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Best Digital Marketing Agency & Company | Expert Internet Marketing Services - Ereynard" />
-        <meta name="twitter:description" content="Looking for the best digital marketing agency or firm? We help your business grow with result-driven strategies, ✓SEO ✓Social Media Marketing ✓SMO and more." />
-        <link rel="canonical" href="https://ereynard.com" />
+        <meta name="twitter:title" content="Ereynard — Digital Marketing Agency India" />
+        <meta name="twitter:description" content="India's sharpest digital agency. SEO, Ads, Social Media & Branding for 200+ Indian brands." />
+        <meta name="twitter:image" content="https://www.ereynard.com/og-image.jpg" />
+
+        {/* Local Business Schema */}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "name": "Ereynard",
+          "description": "India's sharpest digital marketing agency offering SEO, performance ads, social media, branding and content strategy.",
+          "url": "https://www.ereynard.com",
+          "logo": "https://www.ereynard.com/logo.jpg",
+          "image": "https://www.ereynard.com/og-image.jpg",
+          "foundingDate": "2017",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Udaipur",
+            "addressRegion": "Rajasthan",
+            "addressCountry": "IN"
+          },
+          "areaServed": "IN",
+          "sameAs": [
+            "https://www.instagram.com/ereynard",
+            "https://www.linkedin.com/company/ereynard"
+          ]
+        })}</script>
       </Helmet>
+
       <Hero openContact={openContact} />
       <Marquee />
-      <AboutSection />
+      <AboutSection openSvc={openSvc} />
       <BrandStory />
       <ServicesMini />
       <Stats />
