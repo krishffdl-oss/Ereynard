@@ -72,10 +72,40 @@ const SVC_META = {
     description: 'Hire a Google PPC expert from a best PPC agency for PPC ads, PPC marketing, and specialist campaign management to grow your business online.',
     canonical:   'https://ereynard.com/services/performance-advertising',
   },
+  content: {
+    title:       'Content Marketing & Strategy Agency | Ereynard',
+    description: 'Drive traffic and leads with expert content marketing services. We create SEO blogs, brand content, and strategy for businesses across India.',
+    canonical:   'https://ereynard.com/services/content-strategy',
+  },
   web: {
     title:       'Best Web Development Company | Web Design Agency | Ereynard',
     description: 'Choose a best web development company for web design services, custom websites, and Shopify web development solutions for your business.',
     canonical:   'https://ereynard.com/services/web-design-development',
+  },
+  analytics: {
+    title:       'Marketing Analytics & Reporting Agency | Ereynard',
+    description: 'Get clear insights with expert digital marketing analytics and reporting services. Track ROI, conversions, and growth metrics for your brand.',
+    canonical:   'https://ereynard.com/services/analytics-reporting',
+  },
+  branding: {
+    title:       'Branding Agency in India | Brand Identity Design | Ereynard',
+    description: 'Build a powerful brand with a top branding agency in India. We offer brand identity, logo design, and brand strategy for businesses across India.',
+    canonical:   'https://ereynard.com/services/branding-identity',
+  },
+  email: {
+    title:       'Email Marketing Services | Email Campaign Agency | Ereynard',
+    description: 'Grow your business with expert email marketing services. We design, write, and automate email campaigns that convert leads into loyal customers.',
+    canonical:   'https://ereynard.com/services/email-marketing',
+  },
+  influencer: {
+    title:       'Influencer Marketing Agency India | Ereynard',
+    description: 'Connect with the right creators through a top influencer marketing agency in India. We run result-driven influencer campaigns for brands across India.',
+    canonical:   'https://ereynard.com/services/influencer-marketing',
+  },
+  strategy: {
+    title:       'Digital Marketing Strategy Consultant | Ereynard',
+    description: 'Get a custom digital marketing strategy built for your business goals. Expert strategy consulting for startups, D2C brands, and enterprises across India.',
+    canonical:   'https://ereynard.com/services/digital-strategy',
   },
 };
 
