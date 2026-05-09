@@ -19,7 +19,7 @@ function TeamSection({ showAll = false }) {
         <div className="team-grid">
           {members.map((t, i) => (
             <div key={i} className="tm-card reveal">
-              <img className="tm-img" src={t.img} alt={t.name} />
+              <img className="tm-img" src={t.img} alt={t.name} width="300" height="300" />
               <div className="tm-info">
                 <div className="tm-nm">{t.name}</div>
                 <div className="tm-rl">{t.role}</div>
@@ -89,7 +89,13 @@ export default function AboutPage({ openContact }) {
             </div>
             <div className="rev-r" style={{ position: 'relative' }}>
               <div style={{ overflow: 'hidden', clipPath: 'polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%)', height: '380px' }}>
-                <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&auto=format&fit=crop&q=80" alt="Team collaboration" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(.5) contrast(1.1)' }} />
+                <img
+                  src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&auto=format&fit=crop&q=80"
+                  alt="Team collaboration at Ereynard digital marketing agency"
+                  width="800"
+                  height="534"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(.5) contrast(1.1)' }}
+                />
               </div>
               <div style={{ position: 'absolute', bottom: '-18px', left: '-18px', background: 'var(--Y)', padding: '18px 24px' }}>
                 <div style={{ fontFamily: 'var(--FM)', fontWeight: 800, fontSize: '40px', color: 'var(--B)', lineHeight: 1 }}>2017</div>

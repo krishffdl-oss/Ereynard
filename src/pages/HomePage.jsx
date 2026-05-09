@@ -73,12 +73,28 @@ function AboutSection({ openSvc }) {
         <div className="ab-grid">
           <div className="ab-vis rev-l">
             <div className="ab-img-a shimmer">
-              <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&auto=format&fit=crop&q=80" alt="Ereynard agency team" loading="lazy" decoding="async" />
+              <img
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&auto=format&fit=crop&q=80"
+                alt="Ereynard agency team"
+                width="700"
+                height="467"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low"
+              />
             </div>
             <div className="ab-stat-a"><div className="ab-stat-n">7+</div><div className="ab-stat-l">Years</div></div>
             <div className="ab-badge">🦊</div>
             <div className="ab-img-b shimmer">
-              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&auto=format&fit=crop&q=80" alt="Digital marketing analytics" loading="lazy" decoding="async" />
+              <img
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&auto=format&fit=crop&q=80"
+                alt="Digital marketing analytics"
+                width="700"
+                height="499"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low"
+              />
             </div>
             <div className="ab-stat-b"><div className="ab-stat-n">200+</div><div className="ab-stat-l">Brands Scaled</div></div>
           </div>
@@ -115,7 +131,15 @@ function BrandStory() {
         </div>
         <div className="bs-two reveal" style={{ position: 'relative', zIndex: 1 }}>
           <div className="bs-img-wrap rev-l">
-            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=700&auto=format&fit=crop&q=80" alt="Old way of marketing" loading="lazy" decoding="async" />
+            <img
+              src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=700&auto=format&fit=crop&q=80"
+              alt="Old way of marketing"
+              width="700"
+              height="466"
+              loading="lazy"
+              decoding="async"
+              fetchpriority="low"
+            />
             <div className="bs-img-lbl">The Old Way</div>
           </div>
           <div className="rev-r">
