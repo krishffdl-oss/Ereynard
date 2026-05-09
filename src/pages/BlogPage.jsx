@@ -26,7 +26,21 @@ function BlogList() {
               onClick={() => navigate(`/blog/${p.id}`)}
             >
               <div className="blog-img">
-                <img src={p.img} alt={p.title} loading="lazy" decoding="async" />
+                {/*
+                  FIX 1 — explicit width/height eliminates layout shift (CLS) and
+                  removes the SEO-extension "HTML -x-" warning.
+                  FIX 2 — first card uses eager + fetchpriority="high" (LCP image);
+                  all others stay lazy.
+                */}
+                <img
+                  src={p.img}
+                  alt={p.title}
+                  width={900}
+                  height={i === 0 ? 596 : 600}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={i === 0 ? 'high' : 'auto'}
+                  decoding={i === 0 ? 'sync' : 'async'}
+                />
                 <div className="blog-img-ov" />
                 <span className="blog-cat">{p.cat}</span>
               </div>
@@ -62,6 +76,7 @@ export function BlogPostPage() {
   if (!post) return (
     <>
       <Helmet>
+        {/* FIX 3 — title first, highest priority tag */}
         <title>Post Not Found — Ereynard Blog</title>
         <meta name="robots" content="noindex" />
       </Helmet>
@@ -115,12 +130,17 @@ export function BlogPostPage() {
   return (
     <>
       <Helmet>
+        {/*
+          FIX 3 — Helmet tag order matters for the SEO extension score.
+          Order: title → canonical → meta description → OG/Twitter → schema.
+          "keywords" meta removed — it is obsolete and flagged by the extension.
+        */}
         <title>{post.title} | Ereynard — India's Sharpest Marketing Blog</title>
+        <link rel="canonical" href={canonicalUrl} />
+
         <meta name="description" content={`${post.excerpt} Read expert digital marketing insights by Ereynard — India's leading performance marketing agency based in Udaipur.`} />
-        <meta name="keywords" content={`${post.cat}, digital marketing india, ereynard, marketing agency udaipur, ${post.title.toLowerCase().split(' ').slice(0, 5).join(', ')}`} />
         <meta name="author" content="Ereynard" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={canonicalUrl} />
 
         {/* Open Graph */}
         <meta property="og:type" content="article" />
@@ -170,11 +190,16 @@ export function BlogPostPage() {
       </Helmet>
 
       <div style={{ background: 'var(--B3)' }}>
-        {/* Hero Image */}
+        {/* Hero Image — LCP candidate: eager + high fetchpriority + explicit dimensions */}
         <div style={{ height: '50vh', overflow: 'hidden', position: 'relative', paddingTop: '80px' }}>
           <img
             src={post.img}
             alt={post.title}
+            width={1440}
+            height={600}
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
             style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(.32) contrast(1.1)' }}
           />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,var(--B3) 0%,rgba(14,16,75,.55) 60%,transparent)' }} />
@@ -256,12 +281,16 @@ export default function BlogPage() {
   return (
     <>
       <Helmet>
+        {/*
+          FIX 3 — title first, then canonical, then description.
+          FIX 4 — removed obsolete <meta name="keywords"> tag.
+        */}
         <title>Digital Marketing Blog India — SEO, Ads & Social Media Tips | Ereynard</title>
+        <link rel="canonical" href="https://www.ereynard.com/blog" />
+
         <meta name="description" content="Ereynard ka official blog — India ke sharpest digital marketing agency ke sharp insights, real data aur no-fluff strategies on SEO, Google Ads, Meta Ads, social media, branding aur email marketing. Based in Udaipur, serving brands across India." />
-        <meta name="keywords" content="digital marketing blog india, SEO tips india, google ads strategy, meta ads tips, social media marketing india, performance marketing, content strategy, email marketing india, ereynard, marketing agency udaipur" />
         <meta name="author" content="Ereynard" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://www.ereynard.com/blog" />
 
         {/* Open Graph */}
         <meta property="og:title" content="Digital Marketing Blog India — SEO, Ads & Social Media | Ereynard" />
