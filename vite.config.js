@@ -1,14 +1,21 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
 
   build: {
-    // ── Code splitting — reduces unused JS ──
+    // ── Inject built scripts/styles at end of <head>, after your static tags ──
+    // This prevents Vite's chunks from landing before <title> and <meta> tags
+    modulePreload: {
+      // Disable the inline polyfill script Vite injects
+      // (the "SCRIPT sync inline" flagged by the SEO extension)
+      polyfill: false,
+    },
+
     rollupOptions: {
       output: {
+        // ── Code splitting ──
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
           'router':       ['react-router-dom'],
@@ -18,7 +25,7 @@ export default defineConfig({
       },
     },
 
-    // ── Minification (terser npm install --save-dev terser) ──
+    // ── Minification ──
     minify: 'terser',
     terserOptions: {
       compress: {
