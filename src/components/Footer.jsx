@@ -105,7 +105,7 @@ export default function Footer({ openSvc }) {
           <ul>
             {[
               ['About Us',          '/about-us'],
-              ['Our Work',          '/projects'],
+              ['Our Work',          '/work'],
               ['Services & Process','/services'],
               ['Clients',           '/clients'],
               ['Blog',              '/blog'],

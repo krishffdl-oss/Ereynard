@@ -57,11 +57,11 @@ export default function ProjectsPage({ openCamp }) {
         <meta name="keywords" content="ereynard case studies, digital marketing results india, performance marketing, seo results india, social media growth, google ads campaigns" />
         <meta name="author" content="Ereynard" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://www.ereynard.com/projects" />
+        <link rel="canonical" href="https://www.ereynard.com/work" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Case Studies & Results | Ereynard" />
         <meta property="og:description" content="10x ROI, 340% sales, 225x traffic — real results from Ereynard's campaigns across India." />
-        <meta property="og:url" content="https://www.ereynard.com/projects" />
+        <meta property="og:url" content="https://www.ereynard.com/work" />
         <meta property="og:site_name" content="Ereynard" />
         <meta property="og:image" content="https://www.ereynard.com/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -73,7 +73,7 @@ export default function ProjectsPage({ openCamp }) {
           "@type": "CollectionPage",
           "name": "Ereynard Case Studies",
           "description": "Real digital marketing case studies — SEO, performance ads, social media results by Ereynard.",
-          "url": "https://www.ereynard.com/projects",
+          "url": "https://www.ereynard.com/work",
           "publisher": {
             "@type": "Organization",
             "name": "Ereynard",

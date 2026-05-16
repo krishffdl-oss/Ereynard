@@ -70,9 +70,8 @@ function AppInner() {
           <Route path="/"                    element={<HomePage {...pageProps} />} />
           <Route path="/about-us"            element={<AboutPage {...pageProps} />} />
           <Route path="/services"            element={<ServicesPage {...pageProps} />} />
-          {/* Single dynamic route — handles all service slugs */}
           <Route path="/services/:serviceId" element={<ServiceDetailPage {...pageProps} />} />
-          <Route path="/projects"            element={<ProjectsPage {...pageProps} />} />
+          <Route path="/work"                element={<ProjectsPage {...pageProps} />} />
           <Route path="/clients"             element={<ClientsPage />} />
           <Route path="/blog"                element={<BlogPage />} />
           <Route path="/blog/:postId"        element={<BlogPostPage />} />

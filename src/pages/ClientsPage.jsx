@@ -140,29 +140,22 @@ export default function ClientsPage() {
   return (
     <>
       <Helmet>
-        {/* Title: 44 chars ✅ */}
         <title>Our Clients — 200+ Brands | Ereynard</title>
-
-        {/* Description: 163 chars ✅ */}
         <meta name="description" content="200+ Indian brands trust Ereynard — E-Commerce, SaaS, EdTech, Fashion & D2C. 98% client retention, 10x ROI, 340% sales. India's sharpest digital agency, Udaipur." />
-
         <meta name="keywords" content="ereynard clients, brands scaled india, digital marketing portfolio, performance marketing results, client testimonials india, marketing agency udaipur" />
         <meta name="author" content="Ereynard" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.ereynard.com/clients" />
-
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Our Clients — 200+ Brands | Ereynard" />
         <meta property="og:description" content="200+ Indian brands trust Ereynard. 98% retention, 10x ROI, 340% sales across E-Commerce, SaaS, EdTech & more." />
         <meta property="og:url" content="https://www.ereynard.com/clients" />
         <meta property="og:site_name" content="Ereynard" />
         <meta property="og:image" content="https://www.ereynard.com/og-image.jpg" />
-
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Our Clients — 200+ Brands | Ereynard" />
         <meta name="twitter:description" content="200+ brands trust Ereynard. 98% retention, 10x ROI, 340% sales. India's sharpest digital agency." />
         <meta name="twitter:image" content="https://www.ereynard.com/og-image.jpg" />
-
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebPage",
@@ -305,7 +298,7 @@ export default function ClientsPage() {
             <button className="btn-p" onClick={()=>navigate('/contact-us')} style={{ background:'var(--B)' }}>
               <span style={{ color:'var(--Y)' }}>Get Free Proposal</span><span style={{ color:'var(--Y)' }}>→</span>
             </button>
-            <button className="btn-out" onClick={()=>navigate('/projects')}><span>See Case Studies</span><span>→</span></button>
+            <button className="btn-out" onClick={()=>navigate('/work')}><span>See Case Studies</span><span>→</span></button>
           </div>
         </div>
       </div>
