@@ -44,9 +44,9 @@ export default function Footer({ openSvc }) {
   const goTo = (path) => { navigate(path); window.scrollTo({ top: 0, behavior: 'instant' }); };
 
   const socials = [
-    { icon: Icons.linkedin,  url: 'https://linkedin.com',  label: 'LinkedIn'  },
-    { icon: Icons.instagram, url: 'https://instagram.com', label: 'Instagram' },
-    { icon: Icons.facebook,  url: 'https://facebook.com',  label: 'Facebook'  },
+    { icon: Icons.linkedin,  url: 'https://www.linkedin.com',  label: 'LinkedIn'  },
+    { icon: Icons.instagram, url: 'https://www.instagram.com/ereynardofficial/', label: 'Instagram' },
+    { icon: Icons.facebook,  url: 'https://www.facebook.com/ereynardofficial',  label: 'Facebook'  },
     { icon: Icons.youtube,   url: 'https://youtube.com',   label: 'YouTube'   },
   ];
 
