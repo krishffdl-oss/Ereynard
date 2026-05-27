@@ -138,10 +138,17 @@ export default function Footer({ openSvc }) {
               </a>
             </li>
             <li>
-              <span style={{ display:'flex', alignItems:'center', gap:'7px', color:'rgba(14,16,75,.46)', fontSize:'12px' }}>
+              <a
+                href="https://maps.google.com/?q=17+Panna+Vihar+New+Bhupalpura+Near+Sparsh+Hospital+Udaipur+Rajasthan"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display:'flex', alignItems:'center', gap:'7px', color:'rgba(14,16,75,.46)', fontSize:'12px', textDecoration:'none', transition:'color .2s' }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--B)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'rgba(14,16,75,.46)'}
+              >
                 <span style={{ flexShrink:0, opacity:.6 }}>{Icons.location}</span>
-                Udaipur, Rajasthan, India
-              </span>
+                17, Panna Vihar, New Bhupalpura, Near Sparsh Hospital, Udaipur, Rajasthan
+              </a>
             </li>
             <li style={{ marginTop:'6px' }}>
               <button onClick={() => goTo('/contact-us')}>Enquire Now →</button>
