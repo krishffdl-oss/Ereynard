@@ -39,6 +39,10 @@ const Icons = {
   ),
 };
 
+// Exact coordinates: 24°35'41.2"N 73°42'27.6"E
+const LAT = 24.594778;
+const LNG = 73.707667;
+
 export default function Footer({ openSvc }) {
   const navigate = useNavigate();
   const goTo = (path) => { navigate(path); window.scrollTo({ top: 0, behavior: 'instant' }); };
@@ -50,8 +54,41 @@ export default function Footer({ openSvc }) {
     { icon: Icons.youtube,   url: 'https://youtube.com',   label: 'YouTube'   },
   ];
 
+  const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${LNG - 0.008}%2C${LAT - 0.006}%2C${LNG + 0.008}%2C${LAT + 0.006}&layer=mapnik&marker=${LAT}%2C${LNG}`;
+  const mapsUrl = `https://maps.google.com/?q=${LAT},${LNG}`;
+
   return (
     <footer>
+
+      {/* ── Our Location Map Section ── */}
+      <div className="ft-map-section">
+        <div className="ft-map-label">
+          <span style={{ opacity: 0.5, marginRight: '8px', display: 'inline-flex', verticalAlign: 'middle' }}>{Icons.location}</span>
+          OUR LOCATION
+        </div>
+        <div className="ft-map-wrapper">
+          <iframe
+            src={mapSrc}
+            title="Ereynard Office Location"
+            width="100%"
+            height="200"
+            style={{ border: 'none', borderRadius: '12px', display: 'block' }}
+            loading="lazy"
+            allowFullScreen
+          />
+        </div>
+        <a
+          href={mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ft-map-addr"
+        >
+          <span style={{ opacity: 0.5, marginRight: '6px', flexShrink: 0, display: 'inline-flex' }}>{Icons.location}</span>
+          17, Panna Vihar, New Bhupalpura, Near Sparsh Hospital, Udaipur, Rajasthan
+        </a>
+      </div>
+
+      {/* ── Main Footer Grid ── */}
       <div className="ft-grid">
 
         {/* Brand */}
@@ -62,7 +99,7 @@ export default function Footer({ openSvc }) {
           </button>
           <p>Smart like a fox. Sharp in digital. We build brands that dominate the digital landscape.</p>
 
-          {/* Social icons — real SVGs */}
+          {/* Social icons */}
           <div className="ft-soc">
             {socials.map((s) => (
               <a
@@ -115,7 +152,7 @@ export default function Footer({ openSvc }) {
           </ul>
         </div>
 
-        {/* Contact — real icons */}
+        {/* Contact */}
         <div className="ft-col">
           <h4>Contact</h4>
           <ul>
@@ -139,7 +176,7 @@ export default function Footer({ openSvc }) {
             </li>
             <li>
               <a
-                href="https://maps.google.com/?q=17+Panna+Vihar+New+Bhupalpura+Near+Sparsh+Hospital+Udaipur+Rajasthan"
+                href={mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ display:'flex', alignItems:'center', gap:'7px', color:'rgba(14,16,75,.46)', fontSize:'12px', textDecoration:'none', transition:'color .2s' }}
