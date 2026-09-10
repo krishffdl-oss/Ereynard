@@ -54,39 +54,10 @@ export default function Footer({ openSvc }) {
     { icon: Icons.youtube,   url: 'https://youtube.com',   label: 'YouTube'   },
   ];
 
-  const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${LNG - 0.008}%2C${LAT - 0.006}%2C${LNG + 0.008}%2C${LAT + 0.006}&layer=mapnik&marker=${LAT}%2C${LNG}`;
   const mapsUrl = `https://maps.google.com/?q=${LAT},${LNG}`;
 
   return (
     <footer>
-
-      {/* ── Our Location Map Section ── */}
-      <div className="ft-map-section">
-        <div className="ft-map-label">
-          <span style={{ opacity: 0.5, marginRight: '8px', display: 'inline-flex', verticalAlign: 'middle' }}>{Icons.location}</span>
-          OUR LOCATION
-        </div>
-        <div className="ft-map-wrapper">
-          <iframe
-            src={mapSrc}
-            title="Ereynard Office Location"
-            width="100%"
-            height="200"
-            style={{ border: 'none', borderRadius: '12px', display: 'block' }}
-            loading="lazy"
-            allowFullScreen
-          />
-        </div>
-        <a
-          href={mapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="ft-map-addr"
-        >
-          <span style={{ opacity: 0.5, marginRight: '6px', flexShrink: 0, display: 'inline-flex' }}>{Icons.location}</span>
-          17, Panna Vihar, New Bhupalpura, Near Sparsh Hospital, Udaipur, Rajasthan
-        </a>
-      </div>
 
       {/* ── Main Footer Grid ── */}
       <div className="ft-grid">
